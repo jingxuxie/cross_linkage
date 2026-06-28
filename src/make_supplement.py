@@ -290,7 +290,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 250 --plan-only",
         "```",
         "",
-        "Expected pre-approval status after the compact pilot plus three cache-fill batches: `planned_calls=60`, `cached_calls=40`, `missing_calls=20`.",
+        "Expected pre-approval status after the compact pilot plus four cache-fill batches: `planned_calls=60`, `cached_calls=50`, `missing_calls=10`.",
         "",
         "The RAG API budget report splits the remaining optional RAG-generation calls into small approval units without making API calls:",
         "",
@@ -298,7 +298,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml",
         "```",
         "",
-        "Expected budget boundary: 2 remaining batches, 10 calls per batch, using batch-specific run names that fill the shared response cache.",
+        "Expected budget boundary: 1 remaining batch, 10 calls per batch, using batch-specific run names that fill the shared response cache.",
         "",
         "The API provenance manifest summarizes run names, cache completeness, token usage, claim status, and the `store=False` protocol without making API calls:",
         "",
@@ -306,7 +306,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml",
         "```",
         "",
-        "Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and evidence audits are fully cached; the optional 12-person RAG-generation plan remains `40/60` cached and is not a paper claim.",
+        "Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and evidence audits are fully cached; the optional 12-person RAG-generation plan remains `50/60` cached and is not a paper claim.",
         "",
     ]
     (out_dir / "reproducibility_checklist.md").write_text("\n".join(lines), encoding="utf-8")

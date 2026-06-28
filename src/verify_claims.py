@@ -1878,23 +1878,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=456 failures=0`." in reproduce_text,
+        "Expected current result: `checks=465 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=456 failures=0`.",
+        expected="Expected current result: `checks=465 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=456 failures=0`." in reproduce_text
+        if "Expected current result: `checks=465 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=456 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=465 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=456 failures=0`.",
+        expected="Main claim verifier: `checks=465 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=456 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=465 failures=0`." in readiness_text
         else "missing",
     )
     add_check(

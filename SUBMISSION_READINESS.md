@@ -29,7 +29,7 @@ Current verified state:
 - 120 synthetic personas and 480 synthetic documents.
 - 96 held-out personas for the main local evaluation.
 - No real people, public profiles, social-media posts, patient records, legal records, or customer records.
-- Main claim verifier: `checks=456 failures=0`.
+- Main claim verifier: `checks=465 failures=0`.
 - Current generic PDF length: 4 pages.
 - Current official COLM-template PDF length: 8 pages.
 - Noisy-style stress corpus: 480 synthetic rerendered documents, mean template similarity 0.306.
@@ -38,7 +38,7 @@ Current verified state:
 - Submission source package clean-room compile: passed.
 - GPT-5.5 audit is cached; the default reproduction path remains API-free.
 - API provenance manifest records run names, cache completeness, token usage, claim boundaries, and `store=False`.
-- Optional RAG-generation completion has three extra 10-call batches cached; the remaining work is budgeted as two 10-call batches and stays outside paper claims until approved and fully cached.
+- Optional RAG-generation completion has four extra 10-call batches cached; the remaining work is budgeted as one 10-call batch and stays outside paper claims until approved and fully cached.
 
 Venue facts verified from the workshop site on 2026-06-28:
 
