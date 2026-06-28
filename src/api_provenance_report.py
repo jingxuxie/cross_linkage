@@ -118,23 +118,39 @@ RUNS = [
         paper_claim_status="compact_pilot_not_paper_claim",
         boundary_note="Cached 2-person parsing pilot only; not a paper generation result.",
     ),
-    AuditRun(
-        run_id="gpt55_rag_12t3_batch01",
-        label="GPT-5.5 RAG generation cache-fill batch 01",
-        model="gpt-5.5",
-        task_family="RAG generation",
-        plan_path="results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
-        usage_path="results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
-        notes_path="results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
-        primary_outputs=(
-            "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
-            "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
-        ),
-        script="src/openai_rag_audit.py",
-        paper_claim_status="partial_cache_fill_not_paper_claim",
-        boundary_note="Completed 10-call batch that fills the shared 12-person RAG cache; not a standalone paper claim.",
-    ),
 ]
+
+
+def discover_rag_batch_runs(results_dir: Path) -> list[AuditRun]:
+    batch_runs = []
+    for plan_path in sorted(results_dir.glob("openai_gpt55_rag_12t3_batch*_audit_plan.csv")):
+        match = re.search(r"openai_(gpt55_rag_12t3_batch\d+)_audit_plan\.csv$", plan_path.name)
+        if not match:
+            continue
+        run_name = match.group(1)
+        batch_id = run_name.rsplit("batch", maxsplit=1)[-1]
+        batch_runs.append(
+            AuditRun(
+                run_id=run_name,
+                label=f"GPT-5.5 RAG generation cache-fill batch {batch_id}",
+                model="gpt-5.5",
+                task_family="RAG generation",
+                plan_path=f"results/openai_{run_name}_audit_plan.csv",
+                usage_path=f"results/openai_{run_name}_audit_usage.csv",
+                notes_path=f"results/openai_{run_name}_audit_notes.md",
+                primary_outputs=(
+                    f"results/openai_{run_name}_rag_generation_rows.csv",
+                    f"results/openai_{run_name}_rag_generation_summary.csv",
+                ),
+                script="src/openai_rag_audit.py",
+                paper_claim_status="partial_cache_fill_not_paper_claim",
+                boundary_note=(
+                    "Completed 10-call batch that fills the shared 12-person RAG cache; "
+                    "not a standalone paper claim."
+                ),
+            )
+        )
+    return batch_runs
 
 
 def read_text(path: Path) -> str:
@@ -241,7 +257,7 @@ def main() -> None:
     results_dir = root / cfg["results_dir"]
     results_dir.mkdir(parents=True, exist_ok=True)
 
-    rows = [summarize_run(root, spec) for spec in RUNS]
+    rows = [summarize_run(root, spec) for spec in [*RUNS, *discover_rag_batch_runs(results_dir)]]
     frame = pd.DataFrame(rows)
     csv_path = results_dir / "api_audit_provenance.csv"
     md_path = results_dir / "api_audit_provenance.md"

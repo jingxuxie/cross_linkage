@@ -245,13 +245,6 @@ def main() -> None:
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
-        "results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
-        "results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
-        "results/openai_gpt55_rag_12t3_batch01_audit_plan.md",
-        "results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
-        "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
-        "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
-        "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.md",
         "results/openai_gpt55_rag_12t3_budget.csv",
         "results/openai_gpt55_rag_12t3_budget.md",
         "results/api_audit_provenance.csv",
@@ -300,6 +293,24 @@ def main() -> None:
         "supplement/claim_trace.md",
         "supplement/supplement_manifest.json",
     ]
+    rag_batch_run_names = []
+    for plan_path in sorted(results_dir.glob("openai_gpt55_rag_12t3_batch*_audit_plan.csv")):
+        match = re.search(r"openai_(gpt55_rag_12t3_batch\d+)_audit_plan\.csv$", plan_path.name)
+        if not match:
+            continue
+        run_name = match.group(1)
+        rag_batch_run_names.append(run_name)
+        required_artifacts.extend(
+            [
+                f"results/openai_{run_name}_audit_notes.md",
+                f"results/openai_{run_name}_audit_plan.csv",
+                f"results/openai_{run_name}_audit_plan.md",
+                f"results/openai_{run_name}_audit_usage.csv",
+                f"results/openai_{run_name}_rag_generation_rows.csv",
+                f"results/openai_{run_name}_rag_generation_summary.csv",
+                f"results/openai_{run_name}_rag_generation_summary.md",
+            ]
+        )
     for rel in required_artifacts:
         path = root / rel
         add_check(
@@ -1627,18 +1638,23 @@ def main() -> None:
     rag_conditions = set(gpt55_rag_plan["condition"])
     rag_personas = set(gpt55_rag_plan["persona_id"])
     rag_cached = int(gpt55_rag_plan["cached"].sum())
+    expected_rag_cached = 10 + 10 * len(rag_batch_run_names)
+    expected_rag_pending = 60 - expected_rag_cached
     add_check(
         checks,
         "gpt55_rag_generation:plan_shape",
         len(gpt55_rag_plan) == 60
         and len(rag_conditions) == 5
         and len(rag_personas) == 12
-        and rag_cached == 20
+        and rag_cached == expected_rag_cached
         and "json_object" in set(gpt55_rag_plan.get("text_format", pd.Series(dtype=str)).astype(str))
         and set(gpt55_rag_plan.get("max_output_tokens", pd.Series(dtype=int)).astype(int)) == {250},
-        "optional GPT-5.5 RAG generation audit plan has compact pilot plus one cache-fill batch but is not claimed as completed",
+        "optional GPT-5.5 RAG generation audit plan has compact pilot plus completed cache-fill batches but is not claimed as completed",
         "results/openai_gpt55_rag_12t3_audit_plan.csv",
-        expected="60 planned calls, 5 conditions, 12 personas, compact JSON, 20 cached and 40 pending",
+        expected=(
+            "60 planned calls, 5 conditions, 12 personas, compact JSON, "
+            f"{expected_rag_cached} cached and {expected_rag_pending} pending"
+        ),
         observed=(
             f"{len(gpt55_rag_plan)} calls, {len(rag_conditions)} conditions, "
             f"{len(rag_personas)} personas, {rag_cached} cached, "
@@ -1666,43 +1682,43 @@ def main() -> None:
             f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
-    rag_batch01_rows = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv")
-    rag_batch01_summary = pd.read_csv(
-        results_dir / "openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv"
-    )
-    rag_batch01_plan = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_batch01_audit_plan.csv")
-    add_check(
-        checks,
-        "gpt55_rag_batch01:parse_success",
-        len(rag_batch01_rows) == 10
-        and len(set(rag_batch01_rows["condition"])) == 5
-        and len(set(rag_batch01_rows["persona_id"])) == 2
-        and bool(rag_batch01_rows["parse_success"].astype(bool).all())
-        and int(rag_batch01_plan["cached"].sum()) == 10
-        and float(rag_batch01_summary["parse_success_rate"].min()) == 1.0,
-        "first 10-call GPT-5.5 RAG cache-fill batch parsed cleanly but is not a full paper claim",
-        "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
-        expected="10 rows, 5 conditions, 2 personas, 10 cached calls, parse_success_rate 1.000",
-        observed=(
-            f"{len(rag_batch01_rows)} rows, {len(set(rag_batch01_rows['condition']))} conditions, "
-            f"{len(set(rag_batch01_rows['persona_id']))} personas, "
-            f"cached={int(rag_batch01_plan['cached'].sum())}, "
-            f"min_parse={float(rag_batch01_summary['parse_success_rate'].min()):.3f}"
-        ),
-    )
+    for run_name in rag_batch_run_names:
+        rag_batch_rows = pd.read_csv(results_dir / f"openai_{run_name}_rag_generation_rows.csv")
+        rag_batch_summary = pd.read_csv(results_dir / f"openai_{run_name}_rag_generation_summary.csv")
+        rag_batch_plan = pd.read_csv(results_dir / f"openai_{run_name}_audit_plan.csv")
+        add_check(
+            checks,
+            f"{run_name}:parse_success",
+            len(rag_batch_rows) == 10
+            and len(set(rag_batch_rows["condition"])) == 5
+            and len(set(rag_batch_rows["persona_id"])) == 2
+            and bool(rag_batch_rows["parse_success"].astype(bool).all())
+            and int(rag_batch_plan["cached"].sum()) == 10
+            and float(rag_batch_summary["parse_success_rate"].min()) == 1.0,
+            "10-call GPT-5.5 RAG cache-fill batch parsed cleanly but is not a full paper claim",
+            f"results/openai_{run_name}_rag_generation_rows.csv",
+            expected="10 rows, 5 conditions, 2 personas, 10 cached calls, parse_success_rate 1.000",
+            observed=(
+                f"{len(rag_batch_rows)} rows, {len(set(rag_batch_rows['condition']))} conditions, "
+                f"{len(set(rag_batch_rows['persona_id']))} personas, "
+                f"cached={int(rag_batch_plan['cached'].sum())}, "
+                f"min_parse={float(rag_batch_summary['parse_success_rate'].min()):.3f}"
+            ),
+        )
     rag_budget = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_budget.csv")
     rag_budget_md = (results_dir / "openai_gpt55_rag_12t3_budget.md").read_text(encoding="utf-8")
+    expected_remaining_batches = expected_rag_pending // 10
     add_check(
         checks,
         "gpt55_rag_budget:batch_shape",
-        len(rag_budget) == 4
-        and int(rag_budget["new_calls"].sum()) == 40
+        len(rag_budget) == expected_remaining_batches
+        and int(rag_budget["new_calls"].sum()) == expected_rag_pending
         and int(rag_budget["new_calls"].max()) == 10
         and int(rag_budget["conditions"].min()) == 5
         and int(rag_budget["estimated_total_tokens"].sum()) > 0,
         "RAG-generation API budget splits the remaining optional run into bounded approval batches",
         "results/openai_gpt55_rag_12t3_budget.csv",
-        expected="4 batches, 40 pending calls, max 10 calls per batch",
+        expected=f"{expected_remaining_batches} batches, {expected_rag_pending} pending calls, max 10 calls per batch",
         observed=(
             f"{len(rag_budget)} batches, {int(rag_budget['new_calls'].sum())} calls, "
             f"max={int(rag_budget['new_calls'].max())}, "
@@ -1715,7 +1731,7 @@ def main() -> None:
         rag_budget["command"].astype(str).str.contains("--persona-ids").all()
         and rag_budget["command"].astype(str).str.contains("--max-calls 10").all()
         and rag_budget["batch_run_name"].astype(str).str.startswith("gpt55_rag_12t3_batch").all()
-        and "gpt55_rag_12t3_batch01" not in set(rag_budget["batch_run_name"].astype(str))
+        and set(rag_budget["batch_run_name"].astype(str)).isdisjoint(set(rag_batch_run_names))
         and not has_local_path_marker("\n".join(rag_budget["command"].astype(str).tolist())),
         "RAG-generation batch commands use explicit persona subsets and no tracked local key path",
         "results/openai_gpt55_rag_12t3_budget.csv",
@@ -1742,8 +1758,8 @@ def main() -> None:
         "gpt55_evidence_24p",
         "gpt55_rag_12t3_plan",
         "gpt55_rag_compact_pilot_2t3",
-        "gpt55_rag_12t3_batch01",
     }
+    expected_provenance_runs.update(rag_batch_run_names)
     provenance_runs = set(provenance["run_id"].astype(str))
     add_check(
         checks,
@@ -1773,12 +1789,12 @@ def main() -> None:
         checks,
         "api_provenance:rag_generation_non_claim",
         int(rag_provenance["planned_calls"]) == 60
-        and int(rag_provenance["cached_calls"]) == 20
-        and int(rag_provenance["missing_calls"]) == 40
+        and int(rag_provenance["cached_calls"]) == expected_rag_cached
+        and int(rag_provenance["missing_calls"]) == expected_rag_pending
         and "not_paper_claim" in str(rag_provenance["paper_claim_status"]),
         "API provenance preserves the pending-call boundary for optional RAG generation",
         "results/api_audit_provenance.csv",
-        expected="60 planned, 20 cached, 40 missing, not paper claim",
+        expected=f"60 planned, {expected_rag_cached} cached, {expected_rag_pending} missing, not paper claim",
         observed=(
             f"{int(rag_provenance['planned_calls'])} planned, "
             f"{int(rag_provenance['cached_calls'])} cached, "
@@ -1786,24 +1802,25 @@ def main() -> None:
             f"{rag_provenance['paper_claim_status']}"
         ),
     )
-    rag_batch_provenance = provenance[provenance["run_id"] == "gpt55_rag_12t3_batch01"].iloc[0]
-    add_check(
-        checks,
-        "api_provenance:rag_batch01_non_claim",
-        int(rag_batch_provenance["planned_calls"]) == 10
-        and int(rag_batch_provenance["cached_calls"]) == 10
-        and int(rag_batch_provenance["missing_calls"]) == 0
-        and int(rag_batch_provenance["usage_total_tokens"]) > 0
-        and str(rag_batch_provenance["paper_claim_status"]) == "partial_cache_fill_not_paper_claim",
-        "API provenance records completed batch01 as a partial cache-fill run, not a paper claim",
-        "results/api_audit_provenance.csv",
-        expected="10 planned, 10 cached, partial cache-fill not paper claim",
-        observed=(
-            f"{int(rag_batch_provenance['planned_calls'])} planned, "
-            f"{int(rag_batch_provenance['cached_calls'])} cached, "
-            f"{rag_batch_provenance['paper_claim_status']}"
-        ),
-    )
+    for run_name in rag_batch_run_names:
+        rag_batch_provenance = provenance[provenance["run_id"] == run_name].iloc[0]
+        add_check(
+            checks,
+            f"api_provenance:{run_name}_non_claim",
+            int(rag_batch_provenance["planned_calls"]) == 10
+            and int(rag_batch_provenance["cached_calls"]) == 10
+            and int(rag_batch_provenance["missing_calls"]) == 0
+            and int(rag_batch_provenance["usage_total_tokens"]) > 0
+            and str(rag_batch_provenance["paper_claim_status"]) == "partial_cache_fill_not_paper_claim",
+            "API provenance records completed RAG batch as a partial cache-fill run, not a paper claim",
+            "results/api_audit_provenance.csv",
+            expected="10 planned, 10 cached, partial cache-fill not paper claim",
+            observed=(
+                f"{int(rag_batch_provenance['planned_calls'])} planned, "
+                f"{int(rag_batch_provenance['cached_calls'])} cached, "
+                f"{rag_batch_provenance['paper_claim_status']}"
+            ),
+        )
     add_check(
         checks,
         "api_provenance:privacy_protocol",
@@ -1833,10 +1850,14 @@ def main() -> None:
         checks,
         "result_brief:rag_generation_boundary",
         "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief
-        and "the 12-person audit still has 40 pending calls and is not a paper claim" in result_brief,
+        and (
+            f"the 12-person audit still has {expected_rag_pending} pending calls "
+            "and is not a paper claim"
+        )
+        in result_brief,
         "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
         "results/paper_ready_summary.md",
-        expected="compact RAG pilot documented as non-claim with 40 pending calls",
+        expected=f"compact RAG pilot documented as non-claim with {expected_rag_pending} pending calls",
         observed="ok" if "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief else "missing",
     )
     add_check(
@@ -1857,23 +1878,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=438 failures=0`." in reproduce_text,
+        "Expected current result: `checks=447 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=438 failures=0`.",
+        expected="Expected current result: `checks=447 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=438 failures=0`." in reproduce_text
+        if "Expected current result: `checks=447 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=438 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=447 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=438 failures=0`.",
+        expected="Main claim verifier: `checks=447 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=438 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=447 failures=0`." in readiness_text
         else "missing",
     )
     add_check(

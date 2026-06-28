@@ -29,7 +29,7 @@ Current verified state:
 - 120 synthetic personas and 480 synthetic documents.
 - 96 held-out personas for the main local evaluation.
 - No real people, public profiles, social-media posts, patient records, legal records, or customer records.
-- Main claim verifier: `checks=438 failures=0`.
+- Main claim verifier: `checks=447 failures=0`.
 - Current generic PDF length: 4 pages.
 - Current official COLM-template PDF length: 8 pages.
 - Noisy-style stress corpus: 480 synthetic rerendered documents, mean template similarity 0.306.
@@ -38,7 +38,7 @@ Current verified state:
 - Submission source package clean-room compile: passed.
 - GPT-5.5 audit is cached; the default reproduction path remains API-free.
 - API provenance manifest records run names, cache completeness, token usage, claim boundaries, and `store=False`.
-- Optional RAG-generation completion has one extra 10-call batch cached; the remaining work is budgeted as four 10-call batches and stays outside paper claims until approved and fully cached.
+- Optional RAG-generation completion has two extra 10-call batches cached; the remaining work is budgeted as three 10-call batches and stays outside paper claims until approved and fully cached.
 
 Venue facts verified from the workshop site on 2026-06-28:
 
@@ -65,7 +65,7 @@ Venue facts verified from the workshop site on 2026-06-28:
 - LinkGuard is a heuristic corpus-aware generalization method, not a formal privacy guarantee.
 - Utility is measured with issue labels, task retrieval, and lightweight fact checks, not full downstream deployment utility.
 - The GPT-5.5 audit is a time-stamped stress audit and should be described as corroborating evidence, not the main quantitative result.
-- The GPT-5.5 RAG-generation audit has only a compact 2-person pilot plus one 10-call cache-fill batch; do not report generation metrics unless the full live run is explicitly approved and verified.
+- The GPT-5.5 RAG-generation audit has only a compact 2-person pilot plus two 10-call cache-fill batches; do not report generation metrics unless the full live run is explicitly approved and verified.
 - The field-weighted attacker shows residual structured-context risk at `k=5`; the paper should not claim complete anonymization.
 
 ## Pre-Submission Checklist

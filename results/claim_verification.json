@@ -499,7 +499,7 @@
     "check_id": "artifact:results/openai_gpt55_rag_12t3_audit_plan.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "10295",
+    "observed": "10285",
     "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
     "status": "PASS"
   },
@@ -568,66 +568,10 @@
     "status": "PASS"
   },
   {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "2348",
-    "source": "results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "1845",
-    "source": "results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_plan.md",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "749",
-    "source": "results/openai_gpt55_rag_12t3_batch01_audit_plan.md",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "1255",
-    "source": "results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "14625",
-    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "757",
-    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
-    "status": "PASS"
-  },
-  {
-    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.md",
-    "detail": "required artifact exists and is non-empty",
-    "expected": "",
-    "observed": "1467",
-    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.md",
-    "status": "PASS"
-  },
-  {
     "check_id": "artifact:results/openai_gpt55_rag_12t3_budget.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "1563",
+    "observed": "1214",
     "source": "results/openai_gpt55_rag_12t3_budget.csv",
     "status": "PASS"
   },
@@ -635,7 +579,7 @@
     "check_id": "artifact:results/openai_gpt55_rag_12t3_budget.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "3078",
+    "observed": "2592",
     "source": "results/openai_gpt55_rag_12t3_budget.md",
     "status": "PASS"
   },
@@ -643,7 +587,7 @@
     "check_id": "artifact:results/api_audit_provenance.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4503",
+    "observed": "5185",
     "source": "results/api_audit_provenance.csv",
     "status": "PASS"
   },
@@ -651,7 +595,7 @@
     "check_id": "artifact:results/api_audit_provenance.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "3358",
+    "observed": "3676",
     "source": "results/api_audit_provenance.md",
     "status": "PASS"
   },
@@ -997,6 +941,118 @@
     "expected": "",
     "observed": "896",
     "source": "supplement/supplement_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2348",
+    "source": "results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1845",
+    "source": "results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_plan.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "749",
+    "source": "results/openai_gpt55_rag_12t3_batch01_audit_plan.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1255",
+    "source": "results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "14625",
+    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "757",
+    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1467",
+    "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2348",
+    "source": "results/openai_gpt55_rag_12t3_batch02_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1845",
+    "source": "results/openai_gpt55_rag_12t3_batch02_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_audit_plan.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "749",
+    "source": "results/openai_gpt55_rag_12t3_batch02_audit_plan.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1255",
+    "source": "results/openai_gpt55_rag_12t3_batch02_audit_usage.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_rag_generation_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "14299",
+    "source": "results/openai_gpt55_rag_12t3_batch02_rag_generation_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_rag_generation_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "725",
+    "source": "results/openai_gpt55_rag_12t3_batch02_rag_generation_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_batch02_rag_generation_summary.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1467",
+    "source": "results/openai_gpt55_rag_12t3_batch02_rag_generation_summary.md",
     "status": "PASS"
   },
   {
@@ -1482,8 +1538,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "ae5ca5f62cc6f7a4ba804558a9cc54f68734351a86632f850509087d99208fd7",
-    "observed": "ae5ca5f62cc6f7a4ba804558a9cc54f68734351a86632f850509087d99208fd7",
+    "expected": "607147efb513f6a8bbd6d3f5fc9c829252e8020af2bf5cea5c459a17beb8b434",
+    "observed": "607147efb513f6a8bbd6d3f5fc9c829252e8020af2bf5cea5c459a17beb8b434",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -3105,9 +3161,9 @@
   },
   {
     "check_id": "gpt55_rag_generation:plan_shape",
-    "detail": "optional GPT-5.5 RAG generation audit plan has compact pilot plus one cache-fill batch but is not claimed as completed",
-    "expected": "60 planned calls, 5 conditions, 12 personas, compact JSON, 20 cached and 40 pending",
-    "observed": "60 calls, 5 conditions, 12 personas, 20 cached, 40 pending",
+    "detail": "optional GPT-5.5 RAG generation audit plan has compact pilot plus completed cache-fill batches but is not claimed as completed",
+    "expected": "60 planned calls, 5 conditions, 12 personas, compact JSON, 30 cached and 30 pending",
+    "observed": "60 calls, 5 conditions, 12 personas, 30 cached, 30 pending",
     "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
     "status": "PASS"
   },
@@ -3120,18 +3176,26 @@
     "status": "PASS"
   },
   {
-    "check_id": "gpt55_rag_batch01:parse_success",
-    "detail": "first 10-call GPT-5.5 RAG cache-fill batch parsed cleanly but is not a full paper claim",
+    "check_id": "gpt55_rag_12t3_batch01:parse_success",
+    "detail": "10-call GPT-5.5 RAG cache-fill batch parsed cleanly but is not a full paper claim",
     "expected": "10 rows, 5 conditions, 2 personas, 10 cached calls, parse_success_rate 1.000",
     "observed": "10 rows, 5 conditions, 2 personas, cached=10, min_parse=1.000",
     "source": "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
     "status": "PASS"
   },
   {
+    "check_id": "gpt55_rag_12t3_batch02:parse_success",
+    "detail": "10-call GPT-5.5 RAG cache-fill batch parsed cleanly but is not a full paper claim",
+    "expected": "10 rows, 5 conditions, 2 personas, 10 cached calls, parse_success_rate 1.000",
+    "observed": "10 rows, 5 conditions, 2 personas, cached=10, min_parse=1.000",
+    "source": "results/openai_gpt55_rag_12t3_batch02_rag_generation_rows.csv",
+    "status": "PASS"
+  },
+  {
     "check_id": "gpt55_rag_budget:batch_shape",
     "detail": "RAG-generation API budget splits the remaining optional run into bounded approval batches",
-    "expected": "4 batches, 40 pending calls, max 10 calls per batch",
-    "observed": "4 batches, 40 calls, max=10, tokens=41322",
+    "expected": "3 batches, 30 pending calls, max 10 calls per batch",
+    "observed": "3 batches, 30 calls, max=10, tokens=30969",
     "source": "results/openai_gpt55_rag_12t3_budget.csv",
     "status": "PASS"
   },
@@ -3154,8 +3218,8 @@
   {
     "check_id": "api_provenance:run_inventory",
     "detail": "API provenance manifest covers all cached or planned OpenAI audit runs",
-    "expected": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_batch01;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
-    "observed": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_batch01;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
+    "expected": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_batch01;gpt55_rag_12t3_batch02;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
+    "observed": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_batch01;gpt55_rag_12t3_batch02;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
     "source": "results/api_audit_provenance.csv",
     "status": "PASS"
   },
@@ -3170,14 +3234,22 @@
   {
     "check_id": "api_provenance:rag_generation_non_claim",
     "detail": "API provenance preserves the pending-call boundary for optional RAG generation",
-    "expected": "60 planned, 20 cached, 40 missing, not paper claim",
-    "observed": "60 planned, 20 cached, 40 missing, planned_not_paper_claim_pending_calls",
+    "expected": "60 planned, 30 cached, 30 missing, not paper claim",
+    "observed": "60 planned, 30 cached, 30 missing, planned_not_paper_claim_pending_calls",
     "source": "results/api_audit_provenance.csv",
     "status": "PASS"
   },
   {
-    "check_id": "api_provenance:rag_batch01_non_claim",
-    "detail": "API provenance records completed batch01 as a partial cache-fill run, not a paper claim",
+    "check_id": "api_provenance:gpt55_rag_12t3_batch01_non_claim",
+    "detail": "API provenance records completed RAG batch as a partial cache-fill run, not a paper claim",
+    "expected": "10 planned, 10 cached, partial cache-fill not paper claim",
+    "observed": "10 planned, 10 cached, partial_cache_fill_not_paper_claim",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "api_provenance:gpt55_rag_12t3_batch02_non_claim",
+    "detail": "API provenance records completed RAG batch as a partial cache-fill run, not a paper claim",
     "expected": "10 planned, 10 cached, partial cache-fill not paper claim",
     "observed": "10 planned, 10 cached, partial_cache_fill_not_paper_claim",
     "source": "results/api_audit_provenance.csv",
@@ -3202,7 +3274,7 @@
   {
     "check_id": "result_brief:rag_generation_boundary",
     "detail": "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
-    "expected": "compact RAG pilot documented as non-claim with 40 pending calls",
+    "expected": "compact RAG pilot documented as non-claim with 30 pending calls",
     "observed": "ok",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
@@ -3218,7 +3290,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=438 failures=0`.",
+    "expected": "Expected current result: `checks=447 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -3226,7 +3298,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=438 failures=0`.",
+    "expected": "Main claim verifier: `checks=447 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
