@@ -29,9 +29,9 @@ conda run -n cross_linkage python src/reproduce_no_api.py
 ```
 
 See `REPRODUCE_RESULTS.md` for faster smoke commands, the cached OpenAI audit
-boundary, and the claim-verification gate. See `SUBMISSION_READINESS.md` for the
-current claim/caveat checklist before upload, and `SUBMISSION_UPLOAD_CHECKLIST.md`
-for the venue-specific upload steps.
+boundary, API provenance manifest, and the claim-verification gate. See
+`SUBMISSION_READINESS.md` for the current claim/caveat checklist before upload,
+and `SUBMISSION_UPLOAD_CHECKLIST.md` for the venue-specific upload steps.
 
 Run the LinkGuard target-k sensitivity experiment:
 
@@ -175,6 +175,13 @@ unless a full live run is explicitly approved. The earlier 3-person pilot is a
 debug artifact that exposed output truncation; the compact 2-person pilot fixes
 the prompt format and parses 10/10 responses, but the 12-person audit still has
 50 pending calls.
+
+Summarize cached API provenance, token usage, claim status, and the `store=False`
+protocol without making API calls:
+
+```bash
+conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml
+```
 
 Regenerate paper-facing tables, figures, and the result brief:
 

@@ -256,6 +256,11 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
             root,
         ),
         Step(
+            "api_provenance_report",
+            python_cmd(env, "src/api_provenance_report.py", "--config", config),
+            root,
+        ),
+        Step(
             "paper_assets",
             python_cmd(env, "src/make_paper_assets.py", "--config", config),
             root,

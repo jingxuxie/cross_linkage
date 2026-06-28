@@ -8,7 +8,7 @@ Run from the repository root.
 conda run -n cross_linkage python src/reproduce_no_api.py
 ```
 
-This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
+This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, API provenance reporting, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
 
 ## Fast Preview
 
@@ -74,3 +74,11 @@ conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprin
 ```
 
 Expected pre-approval status after the compact pilot: `planned_calls=60`, `cached_calls=10`, `missing_calls=50`.
+
+The API provenance manifest summarizes run names, cache completeness, token usage, claim status, and the `store=False` protocol without making API calls:
+
+```bash
+conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml
+```
+
+Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and evidence audits are fully cached; the optional 12-person RAG-generation plan remains `10/60` cached and is not a paper claim.

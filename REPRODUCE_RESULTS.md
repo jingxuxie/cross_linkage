@@ -157,6 +157,16 @@ conda run -n cross_linkage python src/openai_rag_audit.py \
 Expected pre-approval result after the compact pilot: `planned_calls=60`,
 `cached_calls=10`, and `missing_calls=50`.
 
+Regenerate the API provenance manifest without making API calls:
+
+```bash
+conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml
+```
+
+Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and
+evidence audits are fully cached; the optional 12-person RAG-generation plan is
+`10/60` cached and remains outside paper claims.
+
 ## Verification Gate
 
 The claim verifier checks that manuscript numbers, generated tables, PDFs, the
@@ -167,7 +177,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=417 failures=0`.
+Expected current result: `checks=424 failures=0`.
 
 The verifier writes:
 

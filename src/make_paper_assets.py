@@ -1255,6 +1255,7 @@ def write_summary(paths: any) -> None:
         )
     cache_usage = summarize_api_cache(paths.root / "cache" / "api_responses")
     if cache_usage["cached_calls"] > 0:
+        provenance_path = paths.results / "api_audit_provenance.csv"
         lines.extend(
             [
                 "",
@@ -1266,6 +1267,25 @@ def write_summary(paths: any) -> None:
                 "- The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.",
             ]
         )
+        if provenance_path.exists():
+            provenance = pd.read_csv(provenance_path)
+            paper_rows = provenance[
+                provenance["paper_claim_status"].astype(str).str.startswith("paper_facing")
+            ]
+            rag_plan = provenance[provenance["run_id"] == "gpt55_rag_12t3_plan"].iloc[0]
+            lines.extend(
+                [
+                    f"- API provenance manifest: `{provenance_path.relative_to(paths.root)}`.",
+                    (
+                        f"- Paper-facing GPT-5.5 API runs in the manifest: {len(paper_rows)}, "
+                        f"all cached with {int(paper_rows['usage_total_tokens'].sum())} run-specific tokens."
+                    ),
+                    (
+                        f"- Optional GPT-5.5 RAG-generation plan remains at "
+                        f"{int(rag_plan['cached_calls'])}/{int(rag_plan['planned_calls'])} cached calls."
+                    ),
+                ]
+            )
     lines.extend(
         [
             "",

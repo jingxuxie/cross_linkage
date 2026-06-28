@@ -245,6 +245,8 @@ def main() -> None:
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
+        "results/api_audit_provenance.csv",
+        "results/api_audit_provenance.md",
         "results/paper_ready_summary.md",
         "SUBMISSION_UPLOAD_CHECKLIST.md",
         "paper/tables/paper_main_results.tex",
@@ -1655,6 +1657,82 @@ def main() -> None:
             f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
+    provenance = pd.read_csv(results_dir / "api_audit_provenance.csv")
+    provenance_md = (results_dir / "api_audit_provenance.md").read_text(encoding="utf-8")
+    expected_provenance_runs = {
+        "legacy_openai_aux_doclocal",
+        "gpt55_aux_48p",
+        "gpt55_doclocal_24p",
+        "gpt55_evidence_24p",
+        "gpt55_rag_12t3_plan",
+        "gpt55_rag_compact_pilot_2t3",
+    }
+    provenance_runs = set(provenance["run_id"].astype(str))
+    add_check(
+        checks,
+        "api_provenance:run_inventory",
+        provenance_runs == expected_provenance_runs,
+        "API provenance manifest covers all cached or planned OpenAI audit runs",
+        "results/api_audit_provenance.csv",
+        expected=";".join(sorted(expected_provenance_runs)),
+        observed=";".join(sorted(provenance_runs)),
+    )
+    paper_api_runs = provenance[
+        provenance["paper_claim_status"].astype(str).str.startswith("paper_facing")
+    ]
+    add_check(
+        checks,
+        "api_provenance:paper_facing_runs_cached",
+        len(paper_api_runs) == 3
+        and int(paper_api_runs["missing_calls"].sum()) == 0
+        and set(paper_api_runs["run_id"]) == {"gpt55_aux_48p", "gpt55_doclocal_24p", "gpt55_evidence_24p"},
+        "paper-facing GPT-5.5 API stress audits are complete cached runs",
+        "results/api_audit_provenance.csv",
+        expected="3 paper-facing GPT-5.5 rows, zero missing calls",
+        observed=f"{len(paper_api_runs)} rows, {int(paper_api_runs['missing_calls'].sum())} missing",
+    )
+    rag_provenance = provenance[provenance["run_id"] == "gpt55_rag_12t3_plan"].iloc[0]
+    add_check(
+        checks,
+        "api_provenance:rag_generation_non_claim",
+        int(rag_provenance["planned_calls"]) == 60
+        and int(rag_provenance["cached_calls"]) == 10
+        and int(rag_provenance["missing_calls"]) == 50
+        and "not_paper_claim" in str(rag_provenance["paper_claim_status"]),
+        "API provenance preserves the pending-call boundary for optional RAG generation",
+        "results/api_audit_provenance.csv",
+        expected="60 planned, 10 cached, 50 missing, not paper claim",
+        observed=(
+            f"{int(rag_provenance['planned_calls'])} planned, "
+            f"{int(rag_provenance['cached_calls'])} cached, "
+            f"{int(rag_provenance['missing_calls'])} missing, "
+            f"{rag_provenance['paper_claim_status']}"
+        ),
+    )
+    add_check(
+        checks,
+        "api_provenance:privacy_protocol",
+        provenance["store_false_protocol"].astype(str).str.lower().eq("true").all()
+        and provenance["data_scope"].astype(str).eq("synthetic transformed benchmark records only").all(),
+        "API provenance records store=False and synthetic-data-only protocol",
+        "results/api_audit_provenance.csv",
+        expected="store_false_protocol true and synthetic transformed benchmark records only",
+        observed="ok"
+        if provenance["store_false_protocol"].astype(str).str.lower().eq("true").all()
+        else "missing store_false",
+    )
+    add_check(
+        checks,
+        "api_provenance:markdown_boundary",
+        "This command makes no API calls" in provenance_md
+        and "Full 12-person RAG-generation audit has pending calls and is not claimed" in provenance_md,
+        "API provenance markdown states the no-call generation path and RAG non-claim boundary",
+        "results/api_audit_provenance.md",
+        expected="no API calls and pending RAG non-claim language",
+        observed="ok"
+        if "This command makes no API calls" in provenance_md
+        else "missing no-call language",
+    )
     result_brief = (results_dir / "paper_ready_summary.md").read_text(encoding="utf-8")
     add_check(
         checks,
@@ -1684,23 +1762,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=417 failures=0`." in reproduce_text,
+        "Expected current result: `checks=424 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=417 failures=0`.",
+        expected="Expected current result: `checks=424 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=417 failures=0`." in reproduce_text
+        if "Expected current result: `checks=424 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=417 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=424 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=417 failures=0`.",
+        expected="Main claim verifier: `checks=424 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=417 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=424 failures=0`." in readiness_text
         else "missing",
     )
     add_check(

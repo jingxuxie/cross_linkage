@@ -285,7 +285,7 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 389.
+- Claim verifier checks: 424.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
@@ -295,6 +295,9 @@
 - Total cached token usage: 575034 input, 117651 output, 692685 total.
 - The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.
 - The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.
+- API provenance manifest: `results/api_audit_provenance.csv`.
+- Paper-facing GPT-5.5 API runs in the manifest: 3, all cached with 534535 run-specific tokens.
+- Optional GPT-5.5 RAG-generation plan remains at 10/60 cached calls.
 
 ## Claims Supported Now
 

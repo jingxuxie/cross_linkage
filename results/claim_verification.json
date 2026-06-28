@@ -568,10 +568,26 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:results/api_audit_provenance.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3821",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/api_audit_provenance.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2872",
+    "source": "results/api_audit_provenance.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "23946",
+    "observed": "24175",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -891,7 +907,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4454",
+    "observed": "4947",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1394,8 +1410,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "cf3ecd28f62852372078ce849deaa28cd7172b22f1a86d55347704df7c59efb9",
-    "observed": "cf3ecd28f62852372078ce849deaa28cd7172b22f1a86d55347704df7c59efb9",
+    "expected": "0e648fe2a53f303a04f40fc5dadc43c623e81efc2a38fa4639095c8111e6b435",
+    "observed": "0e648fe2a53f303a04f40fc5dadc43c623e81efc2a38fa4639095c8111e6b435",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -3032,6 +3048,46 @@
     "status": "PASS"
   },
   {
+    "check_id": "api_provenance:run_inventory",
+    "detail": "API provenance manifest covers all cached or planned OpenAI audit runs",
+    "expected": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
+    "observed": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "api_provenance:paper_facing_runs_cached",
+    "detail": "paper-facing GPT-5.5 API stress audits are complete cached runs",
+    "expected": "3 paper-facing GPT-5.5 rows, zero missing calls",
+    "observed": "3 rows, 0 missing",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "api_provenance:rag_generation_non_claim",
+    "detail": "API provenance preserves the pending-call boundary for optional RAG generation",
+    "expected": "60 planned, 10 cached, 50 missing, not paper claim",
+    "observed": "60 planned, 10 cached, 50 missing, planned_not_paper_claim_pending_calls",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "api_provenance:privacy_protocol",
+    "detail": "API provenance records store=False and synthetic-data-only protocol",
+    "expected": "store_false_protocol true and synthetic transformed benchmark records only",
+    "observed": "ok",
+    "source": "results/api_audit_provenance.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "api_provenance:markdown_boundary",
+    "detail": "API provenance markdown states the no-call generation path and RAG non-claim boundary",
+    "expected": "no API calls and pending RAG non-claim language",
+    "observed": "ok",
+    "source": "results/api_audit_provenance.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "result_brief:rag_generation_boundary",
     "detail": "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
     "expected": "compact RAG pilot documented as non-claim with 50 pending calls",
@@ -3050,7 +3106,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=417 failures=0`.",
+    "expected": "Expected current result: `checks=424 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -3058,7 +3114,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=417 failures=0`.",
+    "expected": "Main claim verifier: `checks=424 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
