@@ -803,6 +803,14 @@ def main() -> None:
         "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
         "Noisy-style synthetic rerendering preserves the ordering",
         "results/noisy_style_stress/noisy_style_results.csv",
+        "Reviewer Risk Checklist",
+        "Synthetic-only external validity",
+        "Document-local anonymization baseline",
+        "LLM audit reproducibility",
+        "Corpus-level versus document-level privacy",
+        "Heuristic method guarantees",
+        "Residual risk after LinkGuard",
+        "API privacy boundary",
     ]:
         add_check(
             checks,
@@ -1951,23 +1959,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=486 failures=0`." in reproduce_text,
+        "Expected current result: `checks=494 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=486 failures=0`.",
+        expected="Expected current result: `checks=494 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=486 failures=0`." in reproduce_text
+        if "Expected current result: `checks=494 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=486 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=494 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=486 failures=0`.",
+        expected="Main claim verifier: `checks=494 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=486 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=494 failures=0`." in readiness_text
         else "missing",
     )
     readiness_rag_claim = (

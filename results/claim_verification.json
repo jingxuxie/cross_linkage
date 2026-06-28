@@ -987,7 +987,7 @@
     "check_id": "artifact:supplement/claim_trace.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "3333",
+    "observed": "6891",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1770,8 +1770,8 @@
   {
     "check_id": "supplement:claim_trace.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "875caac4d77198c22b08bac768e89acf88a0fe3e05027143d3ecaa94109f3ad8",
-    "observed": "875caac4d77198c22b08bac768e89acf88a0fe3e05027143d3ecaa94109f3ad8",
+    "expected": "d46b8093b4b53693555fb8dd2a716d57c10e4a0eceb98071ba0b182165d58f0b",
+    "observed": "d46b8093b4b53693555fb8dd2a716d57c10e4a0eceb98071ba0b182165d58f0b",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -2068,6 +2068,70 @@
     "detail": "claim trace contains results/noisy_style_stress/noisy_style_results.csv",
     "expected": "results/noisy_style_stress/noisy_style_results.csv",
     "observed": "results/noisy_style_stress/noisy_style_results.csv",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Reviewer Risk Checklist",
+    "detail": "claim trace contains Reviewer Risk Checklist",
+    "expected": "Reviewer Risk Checklist",
+    "observed": "Reviewer Risk Checklist",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Synthetic-only external ",
+    "detail": "claim trace contains Synthetic-only external validity",
+    "expected": "Synthetic-only external validity",
+    "observed": "Synthetic-only external validity",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Document-local anonymiza",
+    "detail": "claim trace contains Document-local anonymization baseline",
+    "expected": "Document-local anonymization baseline",
+    "observed": "Document-local anonymization baseline",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:LLM audit reproducibilit",
+    "detail": "claim trace contains LLM audit reproducibility",
+    "expected": "LLM audit reproducibility",
+    "observed": "LLM audit reproducibility",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Corpus-level versus docu",
+    "detail": "claim trace contains Corpus-level versus document-level privacy",
+    "expected": "Corpus-level versus document-level privacy",
+    "observed": "Corpus-level versus document-level privacy",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Heuristic method guarant",
+    "detail": "claim trace contains Heuristic method guarantees",
+    "expected": "Heuristic method guarantees",
+    "observed": "Heuristic method guarantees",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Residual risk after Link",
+    "detail": "claim trace contains Residual risk after LinkGuard",
+    "expected": "Residual risk after LinkGuard",
+    "observed": "Residual risk after LinkGuard",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:API privacy boundary",
+    "detail": "claim trace contains API privacy boundary",
+    "expected": "API privacy boundary",
+    "observed": "API privacy boundary",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -3594,7 +3658,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=486 failures=0`.",
+    "expected": "Expected current result: `checks=494 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -3602,7 +3666,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=486 failures=0`.",
+    "expected": "Main claim verifier: `checks=494 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"

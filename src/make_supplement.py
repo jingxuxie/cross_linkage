@@ -436,6 +436,58 @@ def write_claim_trace(
         "",
         dataframe_to_markdown(rows, floatfmt=".3f"),
         "",
+        "## Reviewer Risk Checklist",
+        "",
+        "This checklist keeps the main claim boundaries explicit and points each likely reviewer concern to the artifact that should be inspected.",
+        "",
+        dataframe_to_markdown(
+            pd.DataFrame(
+                [
+                    {
+                        "reviewer concern": "Synthetic-only external validity.",
+                        "bounded answer": "The benchmark supports controlled corpus-level evidence, not real-world re-identification rates; the noisy-style stress test and API audits also use synthetic records only.",
+                        "artifacts": "supplement/benchmark_card.md; results/noisy_style_stress/noisy_style_results.csv; results/api_audit_provenance.md",
+                    },
+                    {
+                        "reviewer concern": "Document-local anonymization baseline.",
+                        "bounded answer": "The paper includes both the local document-local proxy and a cached GPT-5.5 document-local baseline, and compares them against corpus-aware LinkGuard.",
+                        "artifacts": "results/main_results.csv; results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+                    },
+                    {
+                        "reviewer concern": "LLM audit reproducibility.",
+                        "bounded answer": "GPT-5.5 outputs are treated as time-stamped cached stress audits; the default reproduction path is API-free and checks cache completeness.",
+                        "artifacts": "supplement/reproducibility_checklist.md; results/api_audit_provenance.md",
+                    },
+                    {
+                        "reviewer concern": "Corpus-level versus document-level privacy.",
+                        "bounded answer": "Claims are about repeated quasi-identifiers across records; the corpus-awareness ablation tests whether corpus co-occurrence statistics matter for planning.",
+                        "artifacts": "results/corpus_awareness_ablation.csv; results/corpus_awareness_ablation.md",
+                    },
+                    {
+                        "reviewer concern": "Heuristic method guarantees.",
+                        "bounded answer": "LinkGuard is presented as a heuristic privacy-utility method, not a formal anonymity guarantee or deployment-safety certificate.",
+                        "artifacts": "supplement/benchmark_card.md; SUBMISSION_READINESS.md",
+                    },
+                    {
+                        "reviewer concern": "Residual risk after LinkGuard.",
+                        "bounded answer": "The field-aware stress attacker, target-k sensitivity, and RAG-generation audit explicitly record residual structured-context risk.",
+                        "artifacts": "results/linkguard_sensitivity.csv; results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+                    },
+                    {
+                        "reviewer concern": "Utility scope.",
+                        "bounded answer": "Utility claims are limited to issue labels, retrieval, fact preservation, and body-only stress checks, not full downstream deployment utility.",
+                        "artifacts": "results/main_results.csv; results/utility_stress.csv; supplement/benchmark_card.md",
+                    },
+                    {
+                        "reviewer concern": "API privacy boundary.",
+                        "bounded answer": "No real-person records are used in any audit; API provenance records synthetic-data-only prompts, run names, cache completeness, token usage, and store=False.",
+                        "artifacts": "results/api_audit_provenance.csv; results/api_audit_provenance.md",
+                    },
+                ]
+            ),
+            floatfmt=".3f",
+        ),
+        "",
     ]
     (out_dir / "claim_trace.md").write_text("\n".join(lines), encoding="utf-8")
 
