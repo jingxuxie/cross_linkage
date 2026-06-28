@@ -1512,6 +1512,29 @@ def main() -> None:
             f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
+    result_brief = (results_dir / "paper_ready_summary.md").read_text(encoding="utf-8")
+    add_check(
+        checks,
+        "result_brief:rag_generation_boundary",
+        "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief
+        and "the 12-person audit still has 50 pending calls and is not a paper claim" in result_brief,
+        "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
+        "results/paper_ready_summary.md",
+        expected="compact RAG pilot documented as non-claim with 50 pending calls",
+        observed="ok" if "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief else "missing",
+    )
+    add_check(
+        checks,
+        "result_brief:gpt55_caveat_current",
+        "GPT-5.5 audits are cached, time-stamped synthetic subset stress audits" in result_brief
+        and "The OpenAI audit is a small subset" not in result_brief,
+        "paper-ready result brief has current GPT-5.5 audit caveat language",
+        "results/paper_ready_summary.md",
+        expected="current GPT-5.5 caveat and no stale small-audit caveat",
+        observed="ok"
+        if "GPT-5.5 audits are cached, time-stamped synthetic subset stress audits" in result_brief
+        else "missing",
+    )
 
     # Check that paper tables reflect the generated sources for core tables.
     table_checks = {

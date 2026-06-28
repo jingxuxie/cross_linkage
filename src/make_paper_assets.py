@@ -958,6 +958,61 @@ def write_summary(paths: any) -> None:
                 dataframe_to_markdown(rag_context_t3, floatfmt=".3f"),
             ]
         )
+    rag_generation_pilot_path = (
+        paths.results / "openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv"
+    )
+    rag_generation_plan_path = paths.results / "openai_gpt55_rag_12t3_audit_plan.csv"
+    if rag_generation_pilot_path.exists() and rag_generation_plan_path.exists():
+        rag_generation_pilot = pd.read_csv(rag_generation_pilot_path)
+        rag_generation_plan = pd.read_csv(rag_generation_plan_path)
+        cached_calls = int(rag_generation_plan["cached"].sum())
+        pending_calls = int(len(rag_generation_plan) - cached_calls)
+        min_parse = float(rag_generation_pilot["parse_success_rate"].min())
+
+        def pilot_value(condition: str, metric: str) -> float:
+            match = rag_generation_pilot[rag_generation_pilot["condition"] == condition]
+            return float(match[metric].iloc[0]) if not match.empty else float("nan")
+
+        pilot_table = rag_generation_pilot[
+            [
+                "condition",
+                "n",
+                "n_parsed",
+                "parse_success_rate",
+                "retrieval_hit_at_5",
+                "likely_same_person_rate",
+                "exact_field_match_rate",
+                "uncertain_rate",
+            ]
+        ].copy()
+        pilot_table["condition"] = pilot_table["condition"].map(PAPER_LABELS).fillna(
+            pilot_table["condition"]
+        )
+        pilot_table = pilot_table.rename(
+            columns={
+                "condition": "Cond.",
+                "n": "n",
+                "n_parsed": "parsed",
+                "parse_success_rate": "Parse",
+                "retrieval_hit_at_5": "Hit@5",
+                "likely_same_person_rate": "Same",
+                "exact_field_match_rate": "Exact",
+                "uncertain_rate": "Unc.",
+            }
+        )
+
+        lines.extend(
+            [
+                "",
+                "## GPT-5.5 RAG Generation Pilot (Not Paper Claim)",
+                "",
+                f"- A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate {min_parse:.3f}) and used 10 cached calls.",
+                f"- In the pilot, direct redaction and the document-local proxy have likely-same-person rate {pilot_value('c1_direct_redaction', 'likely_same_person_rate'):.3f} and {pilot_value('c4_doc_local_anon', 'likely_same_person_rate'):.3f}; LinkGuard and aggressive redaction are {pilot_value('c5_linkguard', 'likely_same_person_rate'):.3f} and {pilot_value('c6_aggressive_redaction', 'likely_same_person_rate'):.3f}.",
+                f"- This validates the compact RAG-generation protocol only; the 12-person audit still has {pending_calls} pending calls and is not a paper claim.",
+                "",
+                dataframe_to_markdown(pilot_table, floatfmt=".3f"),
+            ]
+        )
     failure_path = paths.results / "linkguard_failure_analysis.csv"
     if failure_path.exists():
         failures = pd.read_csv(failure_path)
@@ -1076,7 +1131,8 @@ def write_summary(paths: any) -> None:
                 "",
                 f"- Cached API responses: {cache_usage['cached_calls']}.",
                 f"- Total cached token usage: {cache_usage['input_tokens']} input, {cache_usage['output_tokens']} output, {cache_usage['total_tokens']} total.",
-                "- The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.",
+                "- The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.",
+                "- The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.",
             ]
         )
     lines.extend(
@@ -1089,13 +1145,16 @@ def write_summary(paths: any) -> None:
             "3. Document-local anonymization can miss combinations that are risky at corpus scale.",
             "4. Exact quasi-identifier recovery provides a structured profile-reconstruction signal in addition to auxiliary matching.",
             "5. Profile-query RAG retrieval can expose high-linkage transformed records even when direct PII is removed.",
-            "6. Corpus-aware generalization gives a better privacy-utility point than blanket aggressive redaction in this synthetic sprint.",
+            "6. GPT-5.5 auxiliary, document-local, and evidence stress audits corroborate the corpus-level linkage story on synthetic subsets.",
+            "7. A noisy-style synthetic rerendering preserves the main privacy-utility ordering.",
+            "8. Corpus-aware generalization gives a better privacy-utility point than blanket aggressive redaction in this synthetic sprint.",
             "",
             "## Caveats To Keep In The Paper",
             "",
             "- The benchmark is synthetic and uses controlled template families; this is a feature for controlled ground truth, but limits external validity.",
             "- The threshold graph clustering attack is brittle outside the stable-pseudonym condition, so clustering claims should emphasize consistent pseudonymization and fixed-K/auxiliary-matching results.",
-            "- The OpenAI audit is a small subset. The main reported numbers should remain the deterministic local sweep unless a larger cached audit is run.",
+            "- GPT-5.5 audits are cached, time-stamped synthetic subset stress audits; deterministic local sweeps remain the main reproducible evidence.",
+            "- The compact RAG-generation pilot validates the protocol but is not a paper result until the full 12-person run is approved and verified.",
             "- LinkGuard is a heuristic generalization method, not a formal privacy guarantee.",
         ]
     )

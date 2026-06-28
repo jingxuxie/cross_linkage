@@ -499,7 +499,7 @@
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "20293",
+    "observed": "21768",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -2701,6 +2701,22 @@
     "expected": "10 rows, 5 conditions, 2 personas, parse_success_rate 1.000",
     "observed": "10 rows, 5 conditions, 2 personas, min_parse=1.000",
     "source": "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "result_brief:rag_generation_boundary",
+    "detail": "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
+    "expected": "compact RAG pilot documented as non-claim with 50 pending calls",
+    "observed": "ok",
+    "source": "results/paper_ready_summary.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "result_brief:gpt55_caveat_current",
+    "detail": "paper-ready result brief has current GPT-5.5 audit caveat language",
+    "expected": "current GPT-5.5 caveat and no stale small-audit caveat",
+    "observed": "ok",
+    "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
   {

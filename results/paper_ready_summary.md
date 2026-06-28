@@ -203,6 +203,20 @@
 | C5 LG        | 0.312 | 0.000     | 0.040      | 0.000  | 0.438   |
 | C6 Agg       | 0.031 | 0.000     | 0.000      | 0.000  | 0.000   |
 
+## GPT-5.5 RAG Generation Pilot (Not Paper Claim)
+
+- A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate 1.000) and used 10 cached calls.
+- In the pilot, direct redaction and the document-local proxy have likely-same-person rate 1.000 and 1.000; LinkGuard and aggressive redaction are 0.000 and 0.000.
+- This validates the compact RAG-generation protocol only; the 12-person audit still has 50 pending calls and is not a paper claim.
+
+| Cond.        | n | parsed | Parse | Hit@5 | Same  | Exact | Unc.  |
+| ------------ | - | ------ | ----- | ----- | ----- | ----- | ----- |
+| C1 Redact    | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.250 | 0.000 |
+| C1b Presidio | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.200 | 0.500 |
+| C4 Local     | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.250 | 0.000 |
+| C5 LG        | 2 | 2      | 1.000 | 1.000 | 0.000 | 0.000 | 1.000 |
+| C6 Agg       | 2 | 2      | 1.000 | 0.000 | 0.000 | 0.000 | 1.000 |
+
 ## LinkGuard Residual Failure Analysis
 
 - LinkGuard has 4 top-1 residual matches and 21 additional top-3 residual matches under the main word TF-IDF attacker.
@@ -247,15 +261,16 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 356.
+- Claim verifier checks: 366.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 615.
-- Total cached token usage: 566136 input, 116236 output, 682372 total.
-- The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.
+- Cached API responses: 625.
+- Total cached token usage: 575034 input, 117651 output, 692685 total.
+- The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.
+- The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.
 
 ## Claims Supported Now
 
@@ -264,11 +279,14 @@
 3. Document-local anonymization can miss combinations that are risky at corpus scale.
 4. Exact quasi-identifier recovery provides a structured profile-reconstruction signal in addition to auxiliary matching.
 5. Profile-query RAG retrieval can expose high-linkage transformed records even when direct PII is removed.
-6. Corpus-aware generalization gives a better privacy-utility point than blanket aggressive redaction in this synthetic sprint.
+6. GPT-5.5 auxiliary, document-local, and evidence stress audits corroborate the corpus-level linkage story on synthetic subsets.
+7. A noisy-style synthetic rerendering preserves the main privacy-utility ordering.
+8. Corpus-aware generalization gives a better privacy-utility point than blanket aggressive redaction in this synthetic sprint.
 
 ## Caveats To Keep In The Paper
 
 - The benchmark is synthetic and uses controlled template families; this is a feature for controlled ground truth, but limits external validity.
 - The threshold graph clustering attack is brittle outside the stable-pseudonym condition, so clustering claims should emphasize consistent pseudonymization and fixed-K/auxiliary-matching results.
-- The OpenAI audit is a small subset. The main reported numbers should remain the deterministic local sweep unless a larger cached audit is run.
+- GPT-5.5 audits are cached, time-stamped synthetic subset stress audits; deterministic local sweeps remain the main reproducible evidence.
+- The compact RAG-generation pilot validates the protocol but is not a paper result until the full 12-person run is approved and verified.
 - LinkGuard is a heuristic generalization method, not a formal privacy guarantee.
