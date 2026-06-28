@@ -19,19 +19,19 @@
     "status": true,
     "temp_dir": ""
   },
-  "created_utc": "2026-06-28T11:11:39+00:00",
+  "created_utc": "2026-06-28T11:28:47+00:00",
   "package_dir": "submission",
   "paper_pdf": {
-    "bytes": 152091,
+    "bytes": 152090,
     "pages": 8,
     "path": "paper/colm2026_submission.pdf",
-    "sha256": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32"
+    "sha256": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6"
   },
   "paper_source_files": [
     {
-      "bytes": 32566,
+      "bytes": 32536,
       "path": "paper/colm2026_submission.tex",
-      "sha256": "e8895f2622469a4ee604493f418858a9fa1ad1209a4d41ea43ae76b93a56848e"
+      "sha256": "ea0b5e065c546d929f405dab36b0b14db1ae365228fc9c3157cdc724fa92dead"
     },
     {
       "bytes": 7727,
@@ -62,9 +62,9 @@
   "source_dir": "submission/colm2026_source",
   "source_files": [
     {
-      "bytes": 32566,
+      "bytes": 32536,
       "path": "colm2026_source/colm2026_submission.tex",
-      "sha256": "e8895f2622469a4ee604493f418858a9fa1ad1209a4d41ea43ae76b93a56848e"
+      "sha256": "ea0b5e065c546d929f405dab36b0b14db1ae365228fc9c3157cdc724fa92dead"
     },
     {
       "bytes": 7727,
@@ -98,7 +98,7 @@
     }
   ],
   "source_zip": {
-    "bytes": 41767,
+    "bytes": 41782,
     "members": [
       "colm2026_submission.tex",
       "colm2026_conference.sty",
@@ -109,12 +109,12 @@
       "README_SUBMISSION_PACKAGE.md"
     ],
     "path": "submission/colm2026_submission_source.zip",
-    "sha256": "25c02cbe2a3bed35335af93292f70c53358061006d6ad785497406fae643aa40"
+    "sha256": "ff6bcd17a22d6bd2ce0bc7b2b3faf7a8fbfb12de9b7a221593f31375435d5c1c"
   },
   "submission_pdf": {
-    "bytes": 152091,
+    "bytes": 152090,
     "pages": 8,
     "path": "submission/colm2026_submission.pdf",
-    "sha256": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32"
+    "sha256": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6"
   }
 }

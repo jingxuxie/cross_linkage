@@ -555,7 +555,7 @@
     "check_id": "artifact:paper/short_paper.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "298485",
+    "observed": "298473",
     "source": "paper/short_paper.pdf",
     "status": "PASS"
   },
@@ -563,7 +563,7 @@
     "check_id": "artifact:paper/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "32566",
+    "observed": "32536",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -571,7 +571,7 @@
     "check_id": "artifact:paper/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "152091",
+    "observed": "152090",
     "source": "paper/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -619,7 +619,7 @@
     "check_id": "artifact:submission/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "152091",
+    "observed": "152090",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -627,7 +627,7 @@
     "check_id": "artifact:submission/colm2026_source/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "32566",
+    "observed": "32536",
     "source": "submission/colm2026_source/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -683,7 +683,7 @@
     "check_id": "artifact:submission/colm2026_submission_source.zip",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "41767",
+    "observed": "41782",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -1130,8 +1130,8 @@
   {
     "check_id": "submission_zip:sha256_matches_manifest",
     "detail": "submission source zip SHA-256 matches manifest",
-    "expected": "25c02cbe2a3bed35335af93292f70c53358061006d6ad785497406fae643aa40",
-    "observed": "25c02cbe2a3bed35335af93292f70c53358061006d6ad785497406fae643aa40",
+    "expected": "ff6bcd17a22d6bd2ce0bc7b2b3faf7a8fbfb12de9b7a221593f31375435d5c1c",
+    "observed": "ff6bcd17a22d6bd2ce0bc7b2b3faf7a8fbfb12de9b7a221593f31375435d5c1c",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -1146,8 +1146,8 @@
   {
     "check_id": "submission_pdf:matches_paper_pdf",
     "detail": "packaged submission PDF matches the compiled COLM PDF",
-    "expected": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32",
-    "observed": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32",
+    "expected": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6",
+    "observed": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },

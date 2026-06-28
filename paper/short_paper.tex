@@ -25,10 +25,9 @@ Sensitive text corpora are commonly de-identified one document at a time before 
 We study a corpus-level failure mode for LLM-ready data: records with no direct identifiers can remain linkable through repeated quasi-identifiers such as role, region, schedule, institution type, family context, health context, and rare events.
 We introduce \bench, a fully synthetic multi-document benchmark with 120 controlled personas, 480 documents, risk tiers, decoy auxiliary profiles, varied template families, and utility labels.
 Direct redaction leaves auxiliary-profile matching unchanged at 0.708 top-1, while an off-the-shelf Presidio-style PII baseline remains highly matchable at 0.594.
-Consistent pseudonyms make linkage nearly trivial, with pairwise linkage F1 of 0.979.
 We propose \method, a simple corpus-aware generalization procedure that estimates cross-document linkage risk and generalizes high-risk quasi-identifiers until a target anonymity set is reached.
 At target $k=5$, \method{} reduces auxiliary top-1 accuracy to 0.042 while preserving issue classification and retrieval utility at 1.000; aggressive redaction reaches similar privacy but reduces issue accuracy to 0.350 and retrieval Recall@5 to 0.312.
-These synthetic results suggest that privacy evaluation for LLM-ready corpora should move beyond document-local PII removal and measure corpus-level linkage resistance.
+A cached GPT-5.5 stress audit on 48 T2/T3 personas preserves this ordering, reinforcing that privacy evaluation for LLM-ready corpora should move beyond document-local PII removal and measure corpus-level linkage resistance.
 \end{abstract}
 
 \section{Introduction}

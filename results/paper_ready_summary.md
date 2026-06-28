@@ -247,14 +247,14 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 341.
+- Claim verifier checks: 356.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 600.
-- Total cached token usage: 553822 input, 109953 output, 663775 total.
+- Cached API responses: 615.
+- Total cached token usage: 566136 input, 116236 output, 682372 total.
 - The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.
 
 ## Claims Supported Now
