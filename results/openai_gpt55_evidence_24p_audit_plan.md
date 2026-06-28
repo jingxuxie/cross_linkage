@@ -4,7 +4,7 @@ Run name: `gpt55_evidence_24p`
 Model: `gpt-5.5`
 Reasoning effort: `none`
 Max output tokens: `650`
-Git commit: `73e1d13`
+Git commit: `6b1880a`
 Total planned calls: 24
 Cached calls: 24
 Missing calls: 0

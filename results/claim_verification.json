@@ -731,7 +731,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "2415",
+    "observed": "4166",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1234,8 +1234,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "2cf111e60d3037f17c9939e1fb12b29062cc1f0a361eaad95e46e3e900b55910",
-    "observed": "2cf111e60d3037f17c9939e1fb12b29062cc1f0a361eaad95e46e3e900b55910",
+    "expected": "f2c96d4ea470a089801d073ccf741fe5df9bc8fbd5c1f7c0fdedb0be1360f72f",
+    "observed": "f2c96d4ea470a089801d073ccf741fe5df9bc8fbd5c1f7c0fdedb0be1360f72f",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },

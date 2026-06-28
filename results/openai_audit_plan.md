@@ -5,7 +5,7 @@ Model: `gpt-5.4-nano`
 Reasoning effort: `default`
 Aux compact output: `False`
 Aux max output tokens: `800`
-Git commit: `6839b4f`
+Git commit: `6b1880a`
 Conditions: c1_direct_redaction, c1b_presidio_redaction, c4_doc_local_anon, c4_openai_doc_local, c5_linkguard, c6_aggressive_redaction
 Personas planned: P0001, P0002, P0004, P0005, P0007, P0008, P0010, P0011, P0013, P0014, P0016, P0017
 Total planned calls: 120
