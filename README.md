@@ -173,8 +173,8 @@ conda run -n cross_linkage python src/openai_evidence_audit.py \
 The GPT-5.5 RAG-generation audit is intentionally excluded from paper claims
 unless a full live run is explicitly approved. The earlier 3-person pilot is a
 debug artifact that exposed output truncation; the compact 2-person pilot fixes
-the prompt format and parses 10/10 responses. Two additional 10-call batches are
-cached, but the 12-person audit still has 30 pending calls.
+the prompt format and parses 10/10 responses. Three additional 10-call batches are
+cached, but the 12-person audit still has 20 pending calls.
 
 Regenerate the no-API budget plan for completing the optional RAG-generation
 audit in 10-call batches:
