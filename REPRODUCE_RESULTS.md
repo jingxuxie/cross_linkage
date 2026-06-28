@@ -85,7 +85,7 @@ conda run -n cross_linkage python src/openai_rag_audit.py \
   --tier T3 \
   --max-calls 60 \
   --reasoning-effort none \
-  --max-output-tokens 550 \
+  --max-output-tokens 900 \
   --plan-only
 ```
 

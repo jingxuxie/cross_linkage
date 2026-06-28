@@ -261,7 +261,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "The optional GPT-5.5 RAG-generation audit is planned but not part of the default paper claims until a live run is explicitly approved:",
         "",
         "```bash",
-        "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 550 --plan-only",
+        "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 900 --plan-only",
         "```",
         "",
         "Expected pre-approval status: `planned_calls=60`, `cached_calls=0`, `missing_calls=60`.",

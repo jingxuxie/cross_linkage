@@ -1234,8 +1234,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "7cf559ee5660eef06ff2337db439d4ec7089febc12bc5393d108f894b1741d8a",
-    "observed": "7cf559ee5660eef06ff2337db439d4ec7089febc12bc5393d108f894b1741d8a",
+    "expected": "2cf111e60d3037f17c9939e1fb12b29062cc1f0a361eaad95e46e3e900b55910",
+    "observed": "2cf111e60d3037f17c9939e1fb12b29062cc1f0a361eaad95e46e3e900b55910",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },

@@ -209,6 +209,8 @@ def rag_prompt(case: dict[str, Any]) -> tuple[str, str]:
         "or paraphrase from retrieved documents, at most 12 words. specificity is high, medium, or low.\n"
         "- exposed_domains: array chosen from healthcare, legal, financial, hr.\n"
         "- summary: at most 30 words.\n"
+        "Keep the JSON compact. Include at most six sensitive_contexts, prioritizing the most specific "
+        "contexts that are actually present in the retrieved documents. Do not include markdown.\n"
     )
     return instructions, prompt
 
@@ -317,10 +319,11 @@ def run_rag_audit(
             prompt,
             max_output_tokens=max_output_tokens,
         )
-        parsed = result.get("parsed") if isinstance(result.get("parsed"), dict) else {}
-        contexts = normalize_contexts(parsed.get("sensitive_contexts") if isinstance(parsed, dict) else [])
-        inferred = normalize_string_list(parsed.get("inferred_contexts") if isinstance(parsed, dict) else [])
-        exposed_domains = normalize_string_list(parsed.get("exposed_domains") if isinstance(parsed, dict) else [])
+        parse_success = isinstance(result.get("parsed"), dict)
+        parsed = result.get("parsed") if parse_success else {}
+        contexts = normalize_contexts(parsed.get("sensitive_contexts"))
+        inferred = normalize_string_list(parsed.get("inferred_contexts"))
+        exposed_domains = normalize_string_list(parsed.get("exposed_domains"))
         persona = persona_by_id[case["persona_id"]]
         exact_matches = exact_field_matches(persona, contexts)
         sensitive_mentions = field_mentions(contexts, SENSITIVE_FIELDS)
@@ -339,22 +342,23 @@ def run_rag_audit(
                 "target_docs_at_k": case["target_docs_at_k"],
                 "top_doc_persona": case["top_doc_persona"],
                 "top_doc_is_target": case["top_doc_is_target"],
-                "likely_same_person": boolish(
-                    parsed.get("likely_same_person") if isinstance(parsed, dict) else None
+                "parse_success": parse_success,
+                "likely_same_person": boolish(parsed.get("likely_same_person")) if parse_success else None,
+                "confidence": as_float(parsed.get("confidence")) if parse_success else None,
+                "uncertain": boolish(parsed.get("uncertain")) if parse_success else None,
+                "inferred_context_count": len(inferred) if parse_success else None,
+                "sensitive_context_count": len(contexts) if parse_success else None,
+                "high_specificity_context_count": high_specificity if parse_success else None,
+                "sensitive_field_mentions": len(sensitive_mentions) if parse_success else None,
+                "coarse_field_mentions": len(coarse_mentions) if parse_success else None,
+                "exact_field_matches": len(exact_matches) if parse_success else None,
+                "exact_field_match_rate": (
+                    len(exact_matches) / len(SENSITIVE_FIELDS) if parse_success else None
                 ),
-                "confidence": as_float(parsed.get("confidence") if isinstance(parsed, dict) else None),
-                "uncertain": boolish(parsed.get("uncertain") if isinstance(parsed, dict) else None),
-                "inferred_context_count": len(inferred),
-                "sensitive_context_count": len(contexts),
-                "high_specificity_context_count": high_specificity,
-                "sensitive_field_mentions": len(sensitive_mentions),
-                "coarse_field_mentions": len(coarse_mentions),
-                "exact_field_matches": len(exact_matches),
-                "exact_field_match_rate": len(exact_matches) / len(SENSITIVE_FIELDS),
                 "sensitive_contexts_json": json.dumps(contexts, sort_keys=True),
                 "inferred_contexts_json": json.dumps(inferred, sort_keys=True),
                 "exposed_domains_json": json.dumps(exposed_domains, sort_keys=True),
-                "summary": parsed.get("summary", "") if isinstance(parsed, dict) else "",
+                "summary": parsed.get("summary", "") if parse_success else "",
                 "raw_text": result.get("text", ""),
             }
         )
@@ -365,30 +369,57 @@ def run_rag_audit(
 
 def summarize(rows: pd.DataFrame, paths: Any, run_name: str) -> pd.DataFrame:
     work = rows.copy()
+    if "parse_success" not in work.columns:
+        work["parse_success"] = work["raw_text"].astype(str).str.strip().ne("") & work[
+            "likely_same_person"
+        ].notna()
+    work["parse_success"] = work["parse_success"].fillna(False).astype(bool)
+    parsed_metric_cols = [
+        "likely_same_person",
+        "confidence",
+        "uncertain",
+        "inferred_context_count",
+        "sensitive_context_count",
+        "high_specificity_context_count",
+        "sensitive_field_mentions",
+        "coarse_field_mentions",
+        "exact_field_matches",
+        "exact_field_match_rate",
+    ]
+    for col in parsed_metric_cols:
+        if col in work.columns:
+            work.loc[~work["parse_success"], col] = np.nan
     for col in ["likely_same_person", "uncertain"]:
-        work[col] = work[col].fillna(False).astype(bool)
-    summary = (
-        work.groupby(["condition", "condition_label"], sort=False)
-        .agg(
-            n=("persona_id", "count"),
-            retrieval_hit_at_5=("retrieval_hit_at_k", "mean"),
-            target_docs_at_5=("target_docs_at_k", "mean"),
-            likely_same_person_rate=("likely_same_person", "mean"),
-            sensitive_contexts_mean=("sensitive_context_count", "mean"),
-            high_specificity_contexts_mean=("high_specificity_context_count", "mean"),
-            sensitive_field_mentions_mean=("sensitive_field_mentions", "mean"),
-            exact_field_match_rate=("exact_field_match_rate", "mean"),
-            coarse_field_mentions_mean=("coarse_field_mentions", "mean"),
-            uncertain_rate=("uncertain", "mean"),
-            mean_confidence=("confidence", "mean"),
-        )
-        .reset_index()
-    )
+        work[col] = work[col].map(boolish)
+
+    def bool_mean(series: pd.Series) -> float:
+        clean = series.dropna()
+        if clean.empty:
+            return float("nan")
+        return float(clean.astype(bool).mean())
+
+    summary = work.groupby(["condition", "condition_label"], sort=False).agg(
+        n=("persona_id", "count"),
+        n_parsed=("parse_success", "sum"),
+        parse_success_rate=("parse_success", "mean"),
+        retrieval_hit_at_5=("retrieval_hit_at_k", "mean"),
+        target_docs_at_5=("target_docs_at_k", "mean"),
+        likely_same_person_rate=("likely_same_person", bool_mean),
+        sensitive_contexts_mean=("sensitive_context_count", "mean"),
+        high_specificity_contexts_mean=("high_specificity_context_count", "mean"),
+        sensitive_field_mentions_mean=("sensitive_field_mentions", "mean"),
+        exact_field_match_rate=("exact_field_match_rate", "mean"),
+        coarse_field_mentions_mean=("coarse_field_mentions", "mean"),
+        uncertain_rate=("uncertain", bool_mean),
+        mean_confidence=("confidence", "mean"),
+    ).reset_index()
     summary.to_csv(openai_result_path(paths, run_name, "rag_generation_summary", "csv"), index=False)
     paper = summary[
         [
             "condition_label",
             "n",
+            "n_parsed",
+            "parse_success_rate",
             "retrieval_hit_at_5",
             "likely_same_person_rate",
             "sensitive_contexts_mean",
@@ -403,8 +434,9 @@ def summarize(rows: pd.DataFrame, paths: Any, run_name: str) -> pd.DataFrame:
         "# GPT-5.5 RAG Generation Exposure Audit",
         "",
         "Local profile-query retrieval supplies the top-5 transformed documents; GPT-5.5 then reports what the retrieved documents expose.",
+        "Generation metrics are averaged over parsed JSON responses; parse success is reported separately.",
         "",
-        dataframe_to_markdown(paper, floatfmt=".3f"),
+        dataframe_to_markdown(paper.astype(object).where(pd.notna(paper), "NA"), floatfmt=".3f"),
         "",
     ]
     openai_result_path(paths, run_name, "rag_generation_summary", "md").write_text(
@@ -492,6 +524,18 @@ def write_notes(
     ]
     summary_path = openai_result_path(paths, run_name, "rag_generation_summary", "md")
     if summary_path.exists():
+        summary_csv = openai_result_path(paths, run_name, "rag_generation_summary", "csv")
+        if summary_csv.exists():
+            summary = pd.read_csv(summary_csv)
+            min_parse = float(summary["parse_success_rate"].min()) if not summary.empty else 0.0
+            if min_parse < 1.0:
+                lines.extend(
+                    [
+                        "",
+                        "Warning: at least one condition has parse_success_rate below 1.000. "
+                        "Treat this run as a pilot/debug artifact, not as paper-ready generation evidence.",
+                    ]
+                )
         lines.extend(["", "## RAG Generation Summary", "", summary_path.read_text(encoding="utf-8")])
     notes_path = openai_result_path(paths, run_name, "audit_notes", "md")
     notes_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
@@ -512,7 +556,7 @@ def main() -> None:
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--max-calls", type=int, default=60)
     parser.add_argument("--reasoning-effort", default="")
-    parser.add_argument("--max-output-tokens", type=int, default=550)
+    parser.add_argument("--max-output-tokens", type=int, default=900)
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()

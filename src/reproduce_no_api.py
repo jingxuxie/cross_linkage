@@ -167,7 +167,7 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
                 "--reasoning-effort",
                 "none",
                 "--max-output-tokens",
-                "550",
+                "900",
                 "--plan-only",
             ),
             root,
