@@ -1,0 +1,720 @@
+bucket,condition,persona_id,risk_tier,source_rank,source_top1,source_top3,source_uncertain,source_signals,model,run_name,condition_label,bucket_label,top_signals_json,signal_labels,role_signal,location_signal,institution_signal,rare_event_signal,schedule_signal,family_signal,would_match_without_role,would_match_without_location,residual_risk_category,residual_risk_summary,utility_loss_summary,confidence,explanation_uncertain,raw_text
+direct_success,c1_direct_redaction,P0002,T3,1,1,1,False,"[""location"", ""role"", ""schedule""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""tenant advocate at a municipal agency"", ""signal"": ""role"", ""specificity"": ""high""}, {""evidence"": ""located in Tucson"", ""signal"": ""location"", ""specificity"": ""medium""}, {""evidence"": ""early-morning bus route"", ""signal"": ""schedule"", ""specificity"": ""high""}, {""evidence"": ""caregiver for an older parent"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""wildfire evacuation volunteer shift"", ""signal"": ""rare_event"", ""specificity"": ""high""}]",role|location|schedule|family|rare_event,1,1,0,1,1,1,True,True,role_location,"Direct identifiers are removed, but repeated role, location, schedule, family, and event details still support cross-document linkage.","Contact and account fields are redacted, reducing operational follow-up while preserving contextual case details.",0.96,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""role"",
+      ""evidence"": ""tenant advocate at a municipal agency"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""location"",
+      ""evidence"": ""located in Tucson"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""early-morning bus route"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""caregiver for an older parent"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""rare_event"",
+      ""evidence"": ""wildfire evacuation volunteer shift"",
+      ""specificity"": ""high""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""role_location"",
+  ""residual_risk_summary"": ""Direct identifiers are removed, but repeated role, location, schedule, family, and event details still support cross-document linkage."",
+  ""utility_loss_summary"": ""Contact and account fields are redacted, reducing operational follow-up while preserving contextual case details."",
+  ""confidence"": 0.96,
+  ""uncertain"": false
+}"
+direct_success,c1_direct_redaction,P0005,T3,1,1,1,False,"[""role"", ""location"", ""medical""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""tenant advocate at a credit union"", ""signal"": ""role"", ""specificity"": ""high""}, {""evidence"": ""located in Green Bay"", ""signal"": ""location"", ""specificity"": ""medium""}, {""evidence"": ""diabetes medication management"", ""signal"": ""medical"", ""specificity"": ""high""}, {""evidence"": ""split custody weekends"", ""signal"": ""schedule"", ""specificity"": ""high""}, {""evidence"": ""parent of twins"", ""signal"": ""family"", ""specificity"": ""high""}]",role|location|medical|schedule|family,1,1,0,0,1,1,True,True,role_location,"Direct identifiers are removed, but distinctive role, location, medical, schedule, and family details still support cross-document linkage.","Direct contact fields are unavailable, but contextual content remains useful for service triage and case understanding.",0.93,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""role"",
+      ""evidence"": ""tenant advocate at a credit union"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""location"",
+      ""evidence"": ""located in Green Bay"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""diabetes medication management"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""split custody weekends"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""parent of twins"",
+      ""specificity"": ""high""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""role_location"",
+  ""residual_risk_summary"": ""Direct identifiers are removed, but distinctive role, location, medical, schedule, and family details still support cross-document linkage."",
+  ""utility_loss_summary"": ""Direct contact fields are unavailable, but contextual content remains useful for service triage and case understanding."",
+  ""confidence"": 0.93,
+  ""uncertain"": false
+}"
+direct_success,c1_direct_redaction,P0008,T3,1,1,1,False,"[""role"", ""location"", ""rare_event""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""municipal water inspector at a county legal aid office"", ""signal"": ""role"", ""specificity"": ""high""}, {""evidence"": ""located in Durham"", ""signal"": ""location"", ""specificity"": ""medium""}, {""evidence"": ""robotics vendor breach"", ""signal"": ""rare_event"", ""specificity"": ""high""}, {""evidence"": ""night shifts"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""caregiver for an older parent"", ""signal"": ""family"", ""specificity"": ""medium""}]",role|location|rare_event|schedule|family,1,1,0,1,1,1,True,True,rare_event,"Direct identifiers are removed, but rare event plus role, schedule, caregiving, and Durham still support cross-document linkage.","Contact fields and account identifiers are unavailable, but contextual case details remain useful for analysis.",0.95,False,"{""top_signals"":[{""signal"":""role"",""evidence"":""municipal water inspector at a county legal aid office"",""specificity"":""high""},{""signal"":""location"",""evidence"":""located in Durham"",""specificity"":""medium""},{""signal"":""rare_event"",""evidence"":""robotics vendor breach"",""specificity"":""high""},{""signal"":""schedule"",""evidence"":""night shifts"",""specificity"":""medium""},{""signal"":""family"",""evidence"":""caregiver for an older parent"",""specificity"":""medium""}],""would_match_without_role"":true,""would_match_without_location"":true,""residual_risk_category"":""rare_event"",""residual_risk_summary"":""Direct identifiers are removed, but rare event plus role, schedule, caregiving, and Durham still support cross-document linkage."",""utility_loss_summary"":""Contact fields and account identifiers are unavailable, but contextual case details remain useful for analysis."",""confidence"":0.95,""uncertain"":false}"
+direct_success,c1_direct_redaction,P0011,T3,1,1,1,False,"[""role"", ""location"", ""rare_event""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""benefits caseworker at a veterans clinic"", ""signal"": ""role"", ""specificity"": ""high""}, {""evidence"": ""located in Duluth"", ""signal"": ""location"", ""specificity"": ""medium""}, {""evidence"": ""recover funds after a robotics vendor breach"", ""signal"": ""rare_event"", ""specificity"": ""high""}, {""evidence"": ""split custody weekends"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""regional chess club"", ""signal"": ""affiliation"", ""specificity"": ""medium""}]",role|location|rare_event|schedule|affiliation,1,1,0,1,1,0,True,True,rare_event,"Direct identifiers are removed, but rare event, role-institution, schedule, and location still support linkage to the auxiliary profile.","Contact details and account identifiers are unavailable, but contextual case facts remain highly useful.",0.96,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""role"",
+      ""evidence"": ""benefits caseworker at a veterans clinic"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""location"",
+      ""evidence"": ""located in Duluth"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""rare_event"",
+      ""evidence"": ""recover funds after a robotics vendor breach"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""split custody weekends"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""affiliation"",
+      ""evidence"": ""regional chess club"",
+      ""specificity"": ""medium""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""rare_event"",
+  ""residual_risk_summary"": ""Direct identifiers are removed, but rare event, role-institution, schedule, and location still support linkage to the auxiliary profile."",
+  ""utility_loss_summary"": ""Contact details and account identifiers are unavailable, but contextual case facts remain highly useful."",
+  ""confidence"": 0.96,
+  ""uncertain"": false
+}"
+direct_success,c1_direct_redaction,P0001,T2,1,1,1,False,"[""location"", ""institution"", ""schedule""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""Mesa in the Southwest"", ""signal"": ""location"", ""specificity"": ""high""}, {""evidence"": ""at a veterans clinic"", ""signal"": ""institution"", ""specificity"": ""high""}, {""evidence"": ""transportation schedule constraint"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""family caregiving responsibility"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""medium""}]",location|institution|schedule|family|medical,0,1,1,0,1,1,True,True,role_location,"Redaction removed direct identifiers, but location, workplace institution, schedule, family, and medical context still support linkage.",Direct contact and account details are removed; contextual utility remains for cross-document analysis.,0.93,False,"{""top_signals"":[{""signal"":""location"",""evidence"":""Mesa in the Southwest"",""specificity"":""high""},{""signal"":""institution"",""evidence"":""at a veterans clinic"",""specificity"":""high""},{""signal"":""schedule"",""evidence"":""transportation schedule constraint"",""specificity"":""medium""},{""signal"":""family"",""evidence"":""family caregiving responsibility"",""specificity"":""medium""},{""signal"":""medical"",""evidence"":""chronic health condition"",""specificity"":""medium""}],""would_match_without_role"":true,""would_match_without_location"":true,""residual_risk_category"":""role_location"",""residual_risk_summary"":""Redaction removed direct identifiers, but location, workplace institution, schedule, family, and medical context still support linkage."",""utility_loss_summary"":""Direct contact and account details are removed; contextual utility remains for cross-document analysis."",""confidence"":0.93,""uncertain"":false}"
+direct_success,c1_direct_redaction,P0004,T2,1,1,1,False,"[""role"", ""location"", ""institution""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""work as a legal worker"", ""signal"": ""role"", ""specificity"": ""high""}, {""evidence"": ""Providence in the Northeast"", ""signal"": ""location"", ""specificity"": ""high""}, {""evidence"": ""nonprofit housing center"", ""signal"": ""institution"", ""specificity"": ""high""}, {""evidence"": ""ongoing treatment schedule"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""family scheduling constraint"", ""signal"": ""family"", ""specificity"": ""medium""}]",role|location|institution|schedule|family,1,1,1,0,1,1,True,True,role_location,"Direct identifiers are removed, but repeated role, location, institution, treatment schedule, and family scheduling cues support linkage across documents.","Names, contact details, addresses, and account identifiers are redacted, reducing direct contact and account-specific utility.",0.9,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""role"",
+      ""evidence"": ""work as a legal worker"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""location"",
+      ""evidence"": ""Providence in the Northeast"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""institution"",
+      ""evidence"": ""nonprofit housing center"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""ongoing treatment schedule"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family scheduling constraint"",
+      ""specificity"": ""medium""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""role_location"",
+  ""residual_risk_summary"": ""Direct identifiers are removed, but repeated role, location, institution, treatment schedule, and family scheduling cues support linkage across documents."",
+  ""utility_loss_summary"": ""Names, contact details, addresses, and account identifiers are redacted, reducing direct contact and account-specific utility."",
+  ""confidence"": 0.9,
+  ""uncertain"": false
+}"
+direct_success,c1_direct_redaction,P0007,T2,1,1,1,False,"[""location"", ""institution"", ""family""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""Reno in the Mountain West"", ""signal"": ""location"", ""specificity"": ""high""}, {""evidence"": ""retail healthcare worker"", ""signal"": ""role"", ""specificity"": ""medium""}, {""evidence"": ""public school district"", ""signal"": ""institution"", ""specificity"": ""medium""}, {""evidence"": ""childcare responsibilities"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""low""}]",location|role|institution|family|medical,1,1,1,0,0,1,True,True,role_location,"Direct identifiers are removed, but shared location, role, institution, family constraints, and medical context still support linkage.","Names, contact details, address, and account identifiers are removed, while contextual request details remain usable.",0.87,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""location"",
+      ""evidence"": ""Reno in the Mountain West"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""role"",
+      ""evidence"": ""retail healthcare worker"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""institution"",
+      ""evidence"": ""public school district"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""childcare responsibilities"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""role_location"",
+  ""residual_risk_summary"": ""Direct identifiers are removed, but shared location, role, institution, family constraints, and medical context still support linkage."",
+  ""utility_loss_summary"": ""Names, contact details, address, and account identifiers are removed, while contextual request details remain usable."",
+  ""confidence"": 0.87,
+  ""uncertain"": false
+}"
+direct_success,c1_direct_redaction,P0010,T2,1,1,1,False,"[""location"", ""institution"", ""schedule""]",gpt-5.5,gpt55_evidence_24p,C1 direct redaction,Direct-redaction successful match,"[{""evidence"": ""Mesa in the Southwest"", ""signal"": ""location"", ""specificity"": ""high""}, {""evidence"": ""nonprofit housing center"", ""signal"": ""institution"", ""specificity"": ""high""}, {""evidence"": ""education schedule constraint"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""family scheduling responsibility"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""ongoing treatment schedule"", ""signal"": ""medical"", ""specificity"": ""medium""}]",location|institution|schedule|family|medical,0,1,1,0,1,1,True,True,role_location,"Redaction removed direct identifiers, but shared location, institution, role, treatment, and schedule constraints still support linkage across documents.","Direct contact details and account identifiers are removed, reducing identity utility while preserving contextual case information.",0.88,False,"{""top_signals"":[{""signal"":""location"",""evidence"":""Mesa in the Southwest"",""specificity"":""high""},{""signal"":""institution"",""evidence"":""nonprofit housing center"",""specificity"":""high""},{""signal"":""schedule"",""evidence"":""education schedule constraint"",""specificity"":""medium""},{""signal"":""family"",""evidence"":""family scheduling responsibility"",""specificity"":""medium""},{""signal"":""medical"",""evidence"":""ongoing treatment schedule"",""specificity"":""medium""}],""would_match_without_role"":true,""would_match_without_location"":true,""residual_risk_category"":""role_location"",""residual_risk_summary"":""Redaction removed direct identifiers, but shared location, institution, role, treatment, and schedule constraints still support linkage across documents."",""utility_loss_summary"":""Direct contact details and account identifiers are removed, reducing identity utility while preserving contextual case information."",""confidence"":0.88,""uncertain"":false}"
+linkguard_residual,c5_linkguard,P0002,T3,1,1,1,True,"[""medical"", ""legal"", ""financial""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""contact fields are bracketed placeholders"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""medical, legal, financial, and HR contexts"", ""signal"": ""coarse_context"", ""specificity"": ""medium""}, {""evidence"": ""family responsibility affects timing"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""low""}]",information_removed|coarse_context|family|schedule|medical,0,0,0,0,1,1,,,coarse_context_only,"Linkage rests on broad repeated contexts, not unique identifiers; role and location are generalized, limiting confidence.","Direct identifiers and distinctive profile details were removed, reducing linkage and domain-specific interpretability.",0.68,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""contact fields are bracketed placeholders"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""medical, legal, financial, and HR contexts"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility affects timing"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""coarse_context_only"",
+  ""residual_risk_summary"": ""Linkage rests on broad repeated contexts, not unique identifiers; role and location are generalized, limiting confidence."",
+  ""utility_loss_summary"": ""Direct identifiers and distinctive profile details were removed, reducing linkage and domain-specific interpretability."",
+  ""confidence"": 0.68,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0005,T3,1,1,1,True,"[""medical"", ""financial"", ""legal""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""contact placeholders replace direct identifiers"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""family responsibility affects timing"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""benefits appeal connected to education legal issue"", ""signal"": ""legal"", ""specificity"": ""medium""}]",information_removed|medical|schedule|family|legal,0,0,0,0,1,1,,,coarse_context_only,"Documents retain broad medical, financial, legal, schedule, and family themes, but transformed details are too generalized for reliable linkage.","Direct identifiers and specific occupation, city, institution, event, education, and family details were removed or generalized.",0.78,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""contact placeholders replace direct identifiers"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility affects timing"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""benefits appeal connected to education legal issue"",
+      ""specificity"": ""medium""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""coarse_context_only"",
+  ""residual_risk_summary"": ""Documents retain broad medical, financial, legal, schedule, and family themes, but transformed details are too generalized for reliable linkage."",
+  ""utility_loss_summary"": ""Direct identifiers and specific occupation, city, institution, event, education, and family details were removed or generalized."",
+  ""confidence"": 0.78,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0011,T3,1,1,1,True,"[""financial"", ""legal"", ""schedule""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""reimbursement delay"", ""signal"": ""financial"", ""specificity"": ""medium""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""family responsibility affects timing"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""broad location and general worker"", ""signal"": ""information_removed"", ""specificity"": ""low""}]",financial|schedule|family|medical|information_removed,0,0,0,0,1,1,True,True,schedule_family_combo,"Linkage remains plausible through combined reimbursement, scheduling, family, medical, and legal context despite removed direct identifiers and generalized role/location.","Generalization removes precise location, workplace, role, education, affiliation, and event details, reducing linkage specificity and analytic utility.",0.74,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""financial"",
+      ""evidence"": ""reimbursement delay"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility affects timing"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location and general worker"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""schedule_family_combo"",
+  ""residual_risk_summary"": ""Linkage remains plausible through combined reimbursement, scheduling, family, medical, and legal context despite removed direct identifiers and generalized role/location."",
+  ""utility_loss_summary"": ""Generalization removes precise location, workplace, role, education, affiliation, and event details, reducing linkage specificity and analytic utility."",
+  ""confidence"": 0.74,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0014,T3,1,1,1,True,"[""medical"", ""financial"", ""family""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""medium""}, {""evidence"": ""medical expense hardship"", ""signal"": ""financial"", ""specificity"": ""medium""}, {""evidence"": ""family responsibility affects timing"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""broad location and general worker"", ""signal"": ""information_removed"", ""specificity"": ""low""}]",medical|financial|family|schedule|information_removed,0,0,0,0,1,1,True,True,schedule_family_combo,"Linkage remains possible through recurring medical, financial, family, and schedule themes, but direct identifiers and precise role/location are removed.","Transformation removes precise occupation, institution, location, contacts, and account details, reducing confidence in exact cross-document matching.",0.74,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""financial"",
+      ""evidence"": ""medical expense hardship"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility affects timing"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location and general worker"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""schedule_family_combo"",
+  ""residual_risk_summary"": ""Linkage remains possible through recurring medical, financial, family, and schedule themes, but direct identifiers and precise role/location are removed."",
+  ""utility_loss_summary"": ""Transformation removes precise occupation, institution, location, contacts, and account details, reducing confidence in exact cross-document matching."",
+  ""confidence"": 0.74,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0007,T2,1,1,1,False,"[""medical"", ""financial"", ""family""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""medium""}, {""evidence"": ""housing-related financial hardship"", ""signal"": ""financial"", ""specificity"": ""medium""}, {""evidence"": ""family responsibility constraint"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""broad location"", ""signal"": ""information_removed"", ""specificity"": ""low""}]",medical|financial|family|schedule|information_removed,0,0,0,0,1,1,True,True,schedule_family_combo,"Linkage remains supported by recurring medical, financial, family, and availability themes despite direct identifiers and specific location being removed.","Specific role, institution, event, education, and precise location are generalized, reducing analytic detail while preserving broad case context.",0.78,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""financial"",
+      ""evidence"": ""housing-related financial hardship"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility constraint"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""schedule_family_combo"",
+  ""residual_risk_summary"": ""Linkage remains supported by recurring medical, financial, family, and availability themes despite direct identifiers and specific location being removed."",
+  ""utility_loss_summary"": ""Specific role, institution, event, education, and precise location are generalized, reducing analytic detail while preserving broad case context."",
+  ""confidence"": 0.78,
+  ""uncertain"": false
+}"
+linkguard_residual,c5_linkguard,P0019,T2,1,1,1,False,"[""medical"", ""family"", ""legal""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""chronic health condition"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""family responsibility constraint"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""housing issue"", ""signal"": ""legal"", ""specificity"": ""low""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""broad location and general worker"", ""signal"": ""information_removed"", ""specificity"": ""high""}]",medical|family|legal|schedule|information_removed,0,0,0,0,1,1,,,coarse_context_only,"Documents share broad medical, family, legal, and schedule themes, but transformed details remove distinctive identifiers needed for confident linkage.","Specific role, location, institution, event, and account details are generalized or redacted, reducing analytic utility.",0.82,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""chronic health condition"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""housing issue"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location and general worker"",
+      ""specificity"": ""high""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""coarse_context_only"",
+  ""residual_risk_summary"": ""Documents share broad medical, family, legal, and schedule themes, but transformed details remove distinctive identifiers needed for confident linkage."",
+  ""utility_loss_summary"": ""Specific role, location, institution, event, and account details are generalized or redacted, reducing analytic utility."",
+  ""confidence"": 0.82,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0025,T2,1,1,1,True,"[""schedule"", ""family"", ""legal""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""medium""}, {""evidence"": ""family responsibility constraint"", ""signal"": ""family"", ""specificity"": ""medium""}, {""evidence"": ""health context is colliding"", ""signal"": ""medical"", ""specificity"": ""medium""}, {""evidence"": ""education legal issue"", ""signal"": ""legal"", ""specificity"": ""medium""}, {""evidence"": ""broad location"", ""signal"": ""information_removed"", ""specificity"": ""low""}]",schedule|family|medical|legal|information_removed,0,0,0,0,1,1,True,True,schedule_family_combo,"Linkage remains plausible through recurring availability, family responsibility, health, legal, and financial themes despite removed direct identifiers and coarse role/location.","Specific names, contacts, precise location, employer, medical schedule, and event details are removed, limiting confident attribution.",0.78,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility constraint"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""health context is colliding"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""education legal issue"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""schedule_family_combo"",
+  ""residual_risk_summary"": ""Linkage remains plausible through recurring availability, family responsibility, health, legal, and financial themes despite removed direct identifiers and coarse role/location."",
+  ""utility_loss_summary"": ""Specific names, contacts, precise location, employer, medical schedule, and event details are removed, limiting confident attribution."",
+  ""confidence"": 0.78,
+  ""uncertain"": true
+}"
+linkguard_residual,c5_linkguard,P0037,T2,1,1,1,True,"[""medical"", ""financial"", ""family""]",gpt-5.5,gpt55_evidence_24p,C5 LinkGuard,LinkGuard residual match,"[{""evidence"": ""health context colliding with availability constraint"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""account security issue"", ""signal"": ""financial"", ""specificity"": ""medium""}, {""evidence"": ""family responsibility constraint"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""availability constraint"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""broad location and general worker"", ""signal"": ""information_removed"", ""specificity"": ""low""}]",medical|financial|family|schedule|information_removed,0,0,0,0,1,1,True,True,schedule_family_combo,"Linkage remains plausible through repeated medical, financial, family, and availability themes, but most role and location identifiers were generalized.","Specific identity, workplace, location, and account details are removed, reducing auditability and factual discrimination.",0.72,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""health context colliding with availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""financial"",
+      ""evidence"": ""account security issue"",
+      ""specificity"": ""medium""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family responsibility constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability constraint"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""broad location and general worker"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": true,
+  ""would_match_without_location"": true,
+  ""residual_risk_category"": ""schedule_family_combo"",
+  ""residual_risk_summary"": ""Linkage remains plausible through repeated medical, financial, family, and availability themes, but most role and location identifiers were generalized."",
+  ""utility_loss_summary"": ""Specific identity, workplace, location, and account details are removed, reducing auditability and factual discrimination."",
+  ""confidence"": 0.72,
+  ""uncertain"": true
+}"
+aggressive_failure,c6_aggressive_redaction,P0002,T3,4,0,0,True,"[""institution"", ""medical"", ""financial""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""placeholders replace direct and contextual details"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""healthcare legal financial HR domains remain"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""timing appears across multiple records"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""home or family timing constraints recur"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""specific profile facts are not visible"", ""signal"": ""model_over_inference"", ""specificity"": ""medium""}]",information_removed|coarse_context|schedule|family|model_over_inference,0,0,0,0,1,1,,,information_removed,"Aggressive redaction leaves only broad domains and generic recurring themes, insufficient for reliable cross-document linkage to the auxiliary profile.","Most actionable attributes are removed, greatly reducing analytic utility for matching or auditing fine-grained linkage signals.",0.9,True,"{""top_signals"":[{""signal"":""information_removed"",""evidence"":""placeholders replace direct and contextual details"",""specificity"":""high""},{""signal"":""coarse_context"",""evidence"":""healthcare legal financial HR domains remain"",""specificity"":""low""},{""signal"":""schedule"",""evidence"":""timing appears across multiple records"",""specificity"":""low""},{""signal"":""family"",""evidence"":""home or family timing constraints recur"",""specificity"":""low""},{""signal"":""model_over_inference"",""evidence"":""specific profile facts are not visible"",""specificity"":""medium""}],""would_match_without_role"":null,""would_match_without_location"":null,""residual_risk_category"":""information_removed"",""residual_risk_summary"":""Aggressive redaction leaves only broad domains and generic recurring themes, insufficient for reliable cross-document linkage to the auxiliary profile."",""utility_loss_summary"":""Most actionable attributes are removed, greatly reducing analytic utility for matching or auditing fine-grained linkage signals."",""confidence"":0.9,""uncertain"":true}"
+aggressive_failure,c6_aggressive_redaction,P0008,T3,4,0,0,True,"[""coarse_context"", ""schedule"", ""legal""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""direct identifiers and key attributes replaced"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""healthcare, legal, financial, and HR contexts"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""timing appears across multiple documents"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""asking about issue connected to legal context"", ""signal"": ""legal"", ""specificity"": ""low""}, {""evidence"": ""family context affects timing"", ""signal"": ""family"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|legal|family,0,0,0,0,1,1,,,information_removed,"Aggressive placeholder redaction removes distinctive values, leaving only broad cross-domain structure and weak timing/family/legal hints.","Most analytic detail is lost because roles, locations, contexts, and identifiers are replaced by generic placeholders.",0.86,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""direct identifiers and key attributes replaced"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""healthcare, legal, financial, and HR contexts"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""timing appears across multiple documents"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""asking about issue connected to legal context"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family context affects timing"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive placeholder redaction removes distinctive values, leaving only broad cross-domain structure and weak timing/family/legal hints."",
+  ""utility_loss_summary"": ""Most analytic detail is lost because roles, locations, contexts, and identifiers are replaced by generic placeholders."",
+  ""confidence"": 0.86,
+  ""uncertain"": true
+}"
+aggressive_failure,c6_aggressive_redaction,P0017,T3,5,0,0,True,"[""location"", ""schedule"", ""legal""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""placeholders replace contact and substantive details"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""same broad life domains appear across records"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""timing references appear in multiple contexts"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""legal context is only bracketed"", ""signal"": ""legal"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|legal,0,0,0,0,1,0,,,information_removed,"Aggressive redaction leaves mostly placeholders and generic domain overlap, so cross-document linkage is not supported without over-inference.","Key analytic details are removed, leaving little basis to assess identity linkage or case-specific continuity.",0.86,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""placeholders replace contact and substantive details"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""same broad life domains appear across records"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""timing references appear in multiple contexts"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""legal context is only bracketed"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive redaction leaves mostly placeholders and generic domain overlap, so cross-document linkage is not supported without over-inference."",
+  ""utility_loss_summary"": ""Key analytic details are removed, leaving little basis to assess identity linkage or case-specific continuity."",
+  ""confidence"": 0.86,
+  ""uncertain"": true
+}"
+aggressive_failure,c6_aggressive_redaction,P0020,T3,4,0,0,False,"[""role"", ""medical"", ""family""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""contact fields and substantive values are placeholders"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""work as a role"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""records after schedule"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""family context affects timing"", ""signal"": ""family"", ""specificity"": ""low""}, {""evidence"": ""timing involves medical context"", ""signal"": ""medical"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|family|medical,0,0,0,0,1,1,,,information_removed,"Aggressive redaction leaves only generic category placeholders, not enough for reliable cross-document linkage to the auxiliary profile.","Specific facts needed for linkage analysis are removed, leaving limited utility beyond document type and field-category presence.",0.92,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""contact fields and substantive values are placeholders"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""work as a role"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""records after schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family context affects timing"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""timing involves medical context"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive redaction leaves only generic category placeholders, not enough for reliable cross-document linkage to the auxiliary profile."",
+  ""utility_loss_summary"": ""Specific facts needed for linkage analysis are removed, leaving limited utility beyond document type and field-category presence."",
+  ""confidence"": 0.92,
+  ""uncertain"": false
+}"
+aggressive_failure,c6_aggressive_redaction,P0001,T2,4,0,0,True,"[""role"", ""institution"", ""medical""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""direct identifiers and attributes are placeholders"", ""signal"": ""information_removed"", ""specificity"": ""low""}, {""evidence"": ""generic cross-domain request templates remain"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""availability is shaped by schedule"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""medical context colliding with schedule"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""family constraint affects availability"", ""signal"": ""family"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|medical|family,0,0,0,0,1,1,,,information_removed,"Aggressive placeholder redaction removes distinguishing values; remaining links are generic category overlaps, not reliable person-level linkage.","High utility loss: most substantive attributes are replaced by labels, limiting auditability and downstream interpretation.",0.89,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""direct identifiers and attributes are placeholders"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""generic cross-domain request templates remain"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability is shaped by schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""medical context colliding with schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family constraint affects availability"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive placeholder redaction removes distinguishing values; remaining links are generic category overlaps, not reliable person-level linkage."",
+  ""utility_loss_summary"": ""High utility loss: most substantive attributes are replaced by labels, limiting auditability and downstream interpretation."",
+  ""confidence"": 0.89,
+  ""uncertain"": true
+}"
+aggressive_failure,c6_aggressive_redaction,P0016,T2,5,0,0,False,"[""location"", ""schedule"", ""medical""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""identity and contextual fields are placeholders"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""location in region"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""availability shaped by schedule"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""medical context colliding with schedule"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""family constraint affects timing"", ""signal"": ""family"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|medical|family,0,0,0,0,1,1,,,information_removed,Aggressive placeholders remove the specific cross-document anchors needed to link the records to the auxiliary profile.,Utility is heavily reduced: documents retain domain structure but lose nearly all discriminating factual content.,0.89,False,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""identity and contextual fields are placeholders"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""location in region"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability shaped by schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""medical context colliding with schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""family constraint affects timing"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive placeholders remove the specific cross-document anchors needed to link the records to the auxiliary profile."",
+  ""utility_loss_summary"": ""Utility is heavily reduced: documents retain domain structure but lose nearly all discriminating factual content."",
+  ""confidence"": 0.89,
+  ""uncertain"": false
+}"
+aggressive_failure,c6_aggressive_redaction,P0028,T2,4,0,0,True,"[""legal"", ""schedule"", ""medical""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""identity and contextual fields replaced by placeholders"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""availability is shaped by schedule"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""medical context is colliding with schedule"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""issue relates to legal context"", ""signal"": ""legal"", ""specificity"": ""low""}, {""evidence"": ""location in region and job role placeholders"", ""signal"": ""coarse_context"", ""specificity"": ""low""}]",information_removed|schedule|medical|legal|coarse_context,0,0,0,0,1,0,,,information_removed,Aggressive placeholder redaction removes distinctive profile values; remaining cross-document signals are generic category overlaps with little linkage support.,High utility loss: documents retain domain structure but not the specific facts needed to validate or refute linkage.,0.86,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""identity and contextual fields replaced by placeholders"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability is shaped by schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""medical context is colliding with schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""legal"",
+      ""evidence"": ""issue relates to legal context"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""location in region and job role placeholders"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive placeholder redaction removes distinctive profile values; remaining cross-document signals are generic category overlaps with little linkage support."",
+  ""utility_loss_summary"": ""High utility loss: documents retain domain structure but not the specific facts needed to validate or refute linkage."",
+  ""confidence"": 0.86,
+  ""uncertain"": true
+}"
+aggressive_failure,c6_aggressive_redaction,P0034,T2,4,0,0,True,"[""location"", ""medical"", ""schedule""]",gpt-5.5,gpt55_evidence_24p,C6 aggressive redaction,Aggressive low-signal contrast,"[{""evidence"": ""identity and contextual fields are bracketed"", ""signal"": ""information_removed"", ""specificity"": ""high""}, {""evidence"": ""multiple domains share generic issue framing"", ""signal"": ""coarse_context"", ""specificity"": ""low""}, {""evidence"": ""availability is shaped by schedule"", ""signal"": ""schedule"", ""specificity"": ""low""}, {""evidence"": ""medical context colliding with schedule"", ""signal"": ""medical"", ""specificity"": ""low""}, {""evidence"": ""household schedule involves family context"", ""signal"": ""family"", ""specificity"": ""low""}]",information_removed|coarse_context|schedule|medical|family,0,0,0,0,1,1,,,information_removed,"Aggressive redaction removes specific identifiers and most quasi-identifiers, leaving only low-signal placeholders and generic cross-domain structure.","Redaction substantially reduces analytic utility by suppressing concrete role, location, medical, family, legal, financial, and affiliation details.",0.86,True,"{
+  ""top_signals"": [
+    {
+      ""signal"": ""information_removed"",
+      ""evidence"": ""identity and contextual fields are bracketed"",
+      ""specificity"": ""high""
+    },
+    {
+      ""signal"": ""coarse_context"",
+      ""evidence"": ""multiple domains share generic issue framing"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""schedule"",
+      ""evidence"": ""availability is shaped by schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""medical"",
+      ""evidence"": ""medical context colliding with schedule"",
+      ""specificity"": ""low""
+    },
+    {
+      ""signal"": ""family"",
+      ""evidence"": ""household schedule involves family context"",
+      ""specificity"": ""low""
+    }
+  ],
+  ""would_match_without_role"": null,
+  ""would_match_without_location"": null,
+  ""residual_risk_category"": ""information_removed"",
+  ""residual_risk_summary"": ""Aggressive redaction removes specific identifiers and most quasi-identifiers, leaving only low-signal placeholders and generic cross-domain structure."",
+  ""utility_loss_summary"": ""Redaction substantially reduces analytic utility by suppressing concrete role, location, medical, family, legal, financial, and affiliation details."",
+  ""confidence"": 0.86,
+  ""uncertain"": true
+}"

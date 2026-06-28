@@ -304,13 +304,32 @@ This means that \method{} does not eliminate all matching signal, but the remain
 The RAG-style exposure diagnostic shows why linkage evaluation matters for LLM-ready corpora.
 For high-linkage T3 personas, exact synthetic profile queries retrieve at least one target document in the top five for every direct-redacted, Presidio-redacted, and document-local corpus, and retrieve multiple target documents in the top ten for every such persona.
 \method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000; aggressive redaction reduces Hit@5 further to 0.031 but at much higher utility cost.
+A deterministic top-5 RAG context-recovery scan on the same T3 profiles shows that direct redaction exposes 9.781 exact quasi-identifier fields on average and the document-local proxy exposes 7.844 exact / 9.469 coarse fields, while \method{} exposes 0.000 exact / 0.438 coarse fields.
 This diagnostic is not a full RAG attack, but it shows that transformed corpora can remain searchable by auxiliary profiles.
 
 Finally, we ran a time-stamped GPT-5.5 auxiliary-matching audit on 48 T2/T3 personas, using synthetic data only, capped calls, cached responses, and \texttt{store=false}.
 Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.000, 0.979, and 1.000 top-1.
 \method{} lowers top-1 to 0.438, with top-3 at 0.708 and model-reported uncertainty at 0.917; aggressive redaction is 0.333.
 A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
+An additional 24-case GPT-5.5 evidence-extraction audit explains the gap: direct-redaction successful matches cite location in 1.000 and role in 0.750 of cases, while \method{} residual matches cite role, location, and institution at 0.000 and are uncertain in 0.875.
 Because API model behavior can change, we treat this as a stress audit rather than the main statistical evidence.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{GPT-5.5 qualitative evidence extraction over 24 selected synthetic cases. Entries are case-level rates for signal families in the extracted explanations.}
+\label{tab:gpt55_evidence_signals}
+\begin{tabular}{lrrrrrr}
+\toprule
+Case & n & Role & Loc. & Inst. & High-spec. & Unc. \\
+\midrule
+Direct success & 8 & 0.750 & 1.000 & 0.500 & 0.475 & 0.000 \\
+LG residual & 8 & 0.000 & 0.000 & 0.000 & 0.075 & 0.875 \\
+Agg failure & 8 & 0.000 & 0.000 & 0.000 & 0.179 & 0.750 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Related Work}
 

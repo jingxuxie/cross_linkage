@@ -1,0 +1,25 @@
+condition,condition_label,risk_tier,n_personas,retrieval_hit_at_k,target_docs_at_k,top_doc_is_target,exact_field_recovery,coarse_field_recovery,exact_fields_recovered,coarse_fields_recovered
+original,C0 original,T2,32,0.0,0.0,0.0,0.4517045454545454,0.4517045454545454,4.96875,4.96875
+original,C0 original,T3,32,1.0,2.90625,1.0,0.8721590909090909,0.8721590909090909,9.59375,9.59375
+original,C0 original,T1,32,0.0,0.0,0.0,0.4460227272727273,0.4460227272727273,4.90625,4.90625
+c1_direct_redaction,C1 direct redaction,T2,32,0.0,0.0,0.0,0.4460227272727273,0.4460227272727273,4.90625,4.90625
+c1_direct_redaction,C1 direct redaction,T3,32,1.0,3.03125,1.0,0.8892045454545454,0.8892045454545454,9.78125,9.78125
+c1_direct_redaction,C1 direct redaction,T1,32,0.0,0.0,0.0,0.44886363636363635,0.44886363636363635,4.9375,4.9375
+c1b_presidio_redaction,C1b Presidio redaction,T2,32,0.0,0.0,0.0,0.3806818181818182,0.3806818181818182,4.1875,4.1875
+c1b_presidio_redaction,C1b Presidio redaction,T3,32,1.0,2.9375,1.0,0.7840909090909091,0.7840909090909091,8.625,8.625
+c1b_presidio_redaction,C1b Presidio redaction,T1,32,0.0,0.0,0.0,0.40625,0.40625,4.46875,4.46875
+c2_consistent_pseudonym,C2 consistent pseudonym,T2,32,0.0,0.0,0.0,0.39488636363636365,0.39488636363636365,4.34375,4.34375
+c2_consistent_pseudonym,C2 consistent pseudonym,T3,32,1.0,2.625,1.0,0.6761363636363636,0.6761363636363636,7.4375,7.4375
+c2_consistent_pseudonym,C2 consistent pseudonym,T1,32,0.0,0.0,0.0,0.39204545454545453,0.39204545454545453,4.3125,4.3125
+c3_per_doc_pseudonym,C3 per-doc pseudonym,T2,32,0.0,0.0,0.0,0.39488636363636365,0.39488636363636365,4.34375,4.34375
+c3_per_doc_pseudonym,C3 per-doc pseudonym,T3,32,1.0,2.625,1.0,0.6761363636363636,0.6761363636363636,7.4375,7.4375
+c3_per_doc_pseudonym,C3 per-doc pseudonym,T1,32,0.0,0.0,0.0,0.39204545454545453,0.39204545454545453,4.3125,4.3125
+c4_doc_local_anon,C4 doc-local proxy,T2,32,0.0,0.0,0.0,0.40909090909090906,0.4318181818181818,4.5,4.75
+c4_doc_local_anon,C4 doc-local proxy,T3,32,1.0,3.0,1.0,0.7130681818181819,0.8607954545454546,7.84375,9.46875
+c4_doc_local_anon,C4 doc-local proxy,T1,32,0.0,0.0,0.0,0.4034090909090909,0.42329545454545453,4.4375,4.65625
+c5_linkguard,C5 LinkGuard,T2,32,0.28125,0.28125,0.0625,0.0,0.06534090909090909,0.0,0.71875
+c5_linkguard,C5 LinkGuard,T3,32,0.3125,0.3125,0.125,0.0,0.03977272727272727,0.0,0.4375
+c5_linkguard,C5 LinkGuard,T1,32,0.03125,0.03125,0.0,0.0,0.03977272727272727,0.0,0.4375
+c6_aggressive_redaction,C6 aggressive redaction,T2,32,0.03125,0.03125,0.0,0.0,0.0,0.0,0.0
+c6_aggressive_redaction,C6 aggressive redaction,T3,32,0.03125,0.03125,0.0,0.0,0.0,0.0,0.0
+c6_aggressive_redaction,C6 aggressive redaction,T1,32,0.0,0.0,0.0,0.0,0.0,0.0,0.0

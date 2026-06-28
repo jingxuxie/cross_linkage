@@ -139,6 +139,7 @@ def copy_sources(paper_dir: Path, source_dir: Path) -> list[Path]:
         dst = source_dir / name
         if not src.exists() or src.stat().st_size == 0:
             raise FileNotFoundError(src)
+        dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
         copied.append(dst)
     readme = source_dir / README_NAME

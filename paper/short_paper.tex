@@ -130,6 +130,7 @@ Expanding the auxiliary candidate pool from 10 to 50 candidates preserves the or
 Across word, character, hybrid TF-IDF, and field-weighted auxiliary matchers, direct redaction remains at 0.510--0.979 top-1 and the document-local proxy at 0.479--0.979, while \method{} remains lower at 0.031--0.240.
 The field-weighted attacker is strongest because it scans exact and generalized quasi-identifier fields; it exposes residual structured-context risk under \method{}, but still leaves a large gap from document-local baselines.
 In the RAG exposure diagnostic, exact profile queries against high-linkage T3 personas retrieve at least one target document in the top five for every direct-redacted, Presidio-redacted, and document-local corpus (Hit@5 1.000), and retrieve multiple target documents in the top ten for every such persona (Multi@10 1.000); \method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000.
+A deterministic top-5 RAG context-recovery scan on T3 profiles recovers 9.781 exact fields under direct redaction and 7.844 exact / 9.469 coarse fields under document-local anonymization, but only 0.000 exact / 0.438 coarse fields under \method{}.
 
 \input{tables/paper_main_results}
 
@@ -168,6 +169,7 @@ Because API model behavior can change, we treat this as corroborating stress evi
 Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.000, 0.979, and 1.000 top-1.
 \method{} lowers top-1 to 0.438, with high model-reported uncertainty, while aggressive redaction is 0.333.
 A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
+An additional 24-case GPT-5.5 evidence-extraction audit finds that direct-redaction successful matches cite location in 1.000 and role in 0.750 of cases, while \method{} residual matches cite role, location, and institution at 0.000 and are uncertain in 0.875.
 
 \input{tables/gpt55_aux_audit}
 

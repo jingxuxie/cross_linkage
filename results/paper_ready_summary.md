@@ -84,6 +84,18 @@
 | C5 LinkGuard            | 24 | 0.333 | 0.625 | 0.250   | 0.417   |
 | C6 aggressive redaction | 24 | 0.292 | 0.583 | 0.417   | 0.167   |
 
+## GPT-5.5 Evidence Extraction
+
+- On 8 direct-redaction successful matches, GPT-5.5 cites location in 1.000 of explanations and role in 0.750.
+- On 8 LinkGuard residual matches, it cites role, location, and institution at 0.000 and marks 0.875 of explanations uncertain.
+- On 8 aggressive-redaction top-3 failures, explanations are mostly information-removed or coarse-context contrasts with uncertainty 0.750.
+
+| Case           | n | Role  | Loc.  | Inst. | High-spec. | Unc.  |
+| -------------- | - | ----- | ----- | ----- | ---------- | ----- |
+| Direct success | 8 | 0.750 | 1.000 | 0.500 | 0.475      | 0.000 |
+| LG residual    | 8 | 0.000 | 0.000 | 0.000 | 0.075      | 0.875 |
+| Agg failure    | 8 | 0.000 | 0.000 | 0.000 | 0.179      | 0.750 |
+
 ## Small OpenAI Audit
 
 - Corrected 12-person audit: direct redaction top-1 0.750; Presidio top-1 0.500; OpenAI document-local top-1 0.667; LinkGuard top-1 0.250.
@@ -178,6 +190,19 @@
 | C5 LG        | 0.312 | 0.000    | 0.180     | 0.259 |
 | C6 Agg       | 0.031 | 0.000    | 0.031     | 0.041 |
 
+## RAG Context Recovery
+
+- In T3 top-5 retrieval results, direct redaction exposes 9.781 exact quasi-identifier fields on average, Presidio exposes 8.625, and the document-local proxy exposes 7.844 exact / 9.469 coarse fields.
+- LinkGuard reduces the same T3 context recovery to 0.000 exact and 0.438 coarse fields; aggressive redaction is 0.000/0.000.
+
+| Cond.        | Hit@5 | ExactRate | CoarseRate | Exact# | Coarse# |
+| ------------ | ----- | --------- | ---------- | ------ | ------- |
+| C1 Redact    | 1.000 | 0.889     | 0.889      | 9.781  | 9.781   |
+| C1b Presidio | 1.000 | 0.784     | 0.784      | 8.625  | 8.625   |
+| C4 Local     | 1.000 | 0.713     | 0.861      | 7.844  | 9.469   |
+| C5 LG        | 0.312 | 0.000     | 0.040      | 0.000  | 0.438   |
+| C6 Agg       | 0.031 | 0.000     | 0.000      | 0.000  | 0.000   |
+
 ## LinkGuard Residual Failure Analysis
 
 - LinkGuard has 4 top-1 residual matches and 21 additional top-3 residual matches under the main word TF-IDF attacker.
@@ -222,14 +247,14 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 301.
+- Claim verifier checks: 341.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 576.
-- Total cached token usage: 535574 input, 103694 output, 639268 total.
+- Cached API responses: 600.
+- Total cached token usage: 553822 input, 109953 output, 663775 total.
 - The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.
 
 ## Claims Supported Now

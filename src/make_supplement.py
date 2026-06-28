@@ -225,7 +225,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "conda run -n cross_linkage python src/reproduce_no_api.py",
         "```",
         "",
-        "This runs the synthetic benchmark, validation, robustness checks, noisy-style stress test, cached-only OpenAI plan check, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.",
+        "This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.",
         "",
         "## Fast Preview",
         "",
@@ -246,7 +246,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml",
         "```",
         "",
-        "Expected gate status: zero benchmark-validation failures, four-page PDFs, clean submission-package compile, and zero claim-verifier failures.",
+        "Expected gate status: zero benchmark-validation failures, a 4-page short PDF, an 8-page COLM PDF, clean submission-package compile, and zero claim-verifier failures.",
         "",
         "## API Boundary",
         "",
@@ -258,6 +258,14 @@ def write_repro_checklist(out_dir: Path) -> None:
         "",
         "Expected cached audit status: `planned_calls=120`, `cached_calls=120`, `missing_or_dependent_calls=0`.",
         "",
+        "The optional GPT-5.5 RAG-generation audit is planned but not part of the default paper claims until a live run is explicitly approved:",
+        "",
+        "```bash",
+        "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 550 --plan-only",
+        "```",
+        "",
+        "Expected pre-approval status: `planned_calls=60`, `cached_calls=0`, `missing_calls=60`.",
+        "",
     ]
     (out_dir / "reproducibility_checklist.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -267,6 +275,7 @@ def write_claim_trace(
     main: pd.DataFrame,
     noisy: pd.DataFrame,
     rag_tier: pd.DataFrame,
+    rag_context_tier: pd.DataFrame,
     sensitivity: pd.DataFrame,
 ) -> None:
     direct = row(main, "c1_direct_redaction")
@@ -285,6 +294,14 @@ def write_claim_trace(
     ].iloc[0]
     rag_direct = rag_tier[
         (rag_tier["condition"] == "c1_direct_redaction") & (rag_tier["risk_tier"] == "T3")
+    ].iloc[0]
+    rag_context_direct = rag_context_tier[
+        (rag_context_tier["condition"] == "c1_direct_redaction")
+        & (rag_context_tier["risk_tier"] == "T3")
+    ].iloc[0]
+    rag_context_lg = rag_context_tier[
+        (rag_context_tier["condition"] == "c5_linkguard")
+        & (rag_context_tier["risk_tier"] == "T3")
     ].iloc[0]
     rows = pd.DataFrame(
         [
@@ -322,6 +339,11 @@ def write_claim_trace(
                 "claim": "Profile-query RAG retrieval exposes high-linkage direct-redacted records.",
                 "evidence": f"T3 direct Hit@5 {fmt(rag_direct['hit_at_5'])}, LinkGuard Hit@5 {fmt(rag_lg['hit_at_5'])}",
                 "artifact": "results/rag_exposure_by_tier.csv",
+            },
+            {
+                "claim": "Retrieved profile-query contexts expose quasi-identifiers under direct baselines.",
+                "evidence": f"T3 direct exact fields {fmt(rag_context_direct['exact_fields_recovered'])}, LinkGuard exact/coarse {fmt(rag_context_lg['exact_fields_recovered'])}/{fmt(rag_context_lg['coarse_fields_recovered'])}",
+                "artifact": "results/rag_context_recovery_by_tier.csv",
             },
             {
                 "claim": "Noisy-style synthetic rerendering preserves the ordering.",
@@ -378,13 +400,14 @@ def main() -> None:
     noisy = pd.read_csv(paths.results / "noisy_style_stress" / "noisy_style_results.csv")
     noisy_diag = pd.read_csv(paths.results / "noisy_style_stress" / "noisy_style_diagnostic_summary.csv").iloc[0]
     rag_tier = pd.read_csv(paths.results / "rag_exposure_by_tier.csv")
+    rag_context_tier = pd.read_csv(paths.results / "rag_context_recovery_by_tier.csv")
     sensitivity = pd.read_csv(paths.results / "linkguard_sensitivity.csv")
 
     write_index(out_dir)
     write_benchmark_card(out_dir, cfg, personas, docs, main_results, noisy_diag)
     write_noisy_examples(out_dir, paths.root)
     write_repro_checklist(out_dir)
-    write_claim_trace(out_dir, main_results, noisy, rag_tier, sensitivity)
+    write_claim_trace(out_dir, main_results, noisy, rag_tier, rag_context_tier, sensitivity)
     write_manifest(out_dir)
     print(out_dir / "SUPPLEMENT_INDEX.md")
 

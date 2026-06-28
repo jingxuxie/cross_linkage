@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{T3 quasi-identifier context recovery from top-5 profile-query retrieval results.}
+\label{tab:rag_context_recovery_t3}
+\begin{tabular}{lrrrrr}
+\toprule
+Cond. & Hit@5 & ExactRate & CoarseRate & Exact\# & Coarse\# \\
+\midrule
+C1 Redact & 1.000 & 0.889 & 0.889 & 9.781 & 9.781 \\
+C1b Presidio & 1.000 & 0.784 & 0.784 & 8.625 & 8.625 \\
+C4 Local & 1.000 & 0.713 & 0.861 & 7.844 & 9.469 \\
+C5 LG & 0.312 & 0.000 & 0.040 & 0.000 & 0.438 \\
+C6 Agg & 0.031 & 0.000 & 0.000 & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}

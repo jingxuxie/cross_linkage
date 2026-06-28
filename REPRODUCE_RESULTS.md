@@ -73,6 +73,25 @@ conda run -n cross_linkage python src/openai_audit.py \
 Expected current result: `planned_calls=120`, `cached_calls=120`, and
 `missing_or_dependent_calls=0`.
 
+The optional GPT-5.5 RAG-generation audit is plan-only unless a live API run is
+explicitly approved:
+
+```bash
+conda run -n cross_linkage python src/openai_rag_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_rag_12t3 \
+  --max-personas 12 \
+  --tier T3 \
+  --max-calls 60 \
+  --reasoning-effort none \
+  --max-output-tokens 550 \
+  --plan-only
+```
+
+Expected pre-approval result: `planned_calls=60`, `cached_calls=0`, and
+`missing_calls=60`.
+
 ## Verification Gate
 
 The claim verifier checks that manuscript numbers, generated tables, PDFs, the
@@ -83,7 +102,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=318 failures=0`.
+Expected current result: `checks=356 failures=0`.
 
 The verifier writes:
 

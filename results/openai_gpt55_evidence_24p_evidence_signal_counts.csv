@@ -1,0 +1,23 @@
+bucket,bucket_label,condition,condition_label,signal,count,case_rate
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,affiliation,1,0.125
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,family,7,0.875
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,institution,4,0.5
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,location,8,1.0
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,medical,4,0.5
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,rare_event,3,0.375
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,role,6,0.75
+direct_success,Direct-redaction successful match,c1_direct_redaction,C1 direct redaction,schedule,7,0.875
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,coarse_context,1,0.125
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,family,8,1.0
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,financial,4,0.5
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,information_removed,8,1.0
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,legal,3,0.375
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,medical,8,1.0
+linkguard_residual,LinkGuard residual match,c5_linkguard,C5 LinkGuard,schedule,8,1.0
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,coarse_context,8,1.0
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,family,6,0.75
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,information_removed,8,1.0
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,legal,3,0.375
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,medical,5,0.625
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,model_over_inference,1,0.125
+aggressive_failure,Aggressive low-signal contrast,c6_aggressive_redaction,C6 aggressive redaction,schedule,8,1.0

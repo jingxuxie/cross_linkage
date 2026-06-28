@@ -1,6 +1,6 @@
 # Submission Package Manifest
 
-- Created UTC: `2026-06-28T10:38:51+00:00`
+- Created UTC: `2026-06-28T11:11:39+00:00`
 - Source zip: `submission/colm2026_submission_source.zip`
 - PDF: `submission/colm2026_submission.pdf`
 - PDF pages: 8
@@ -12,7 +12,7 @@
 
 | path | bytes | sha256 prefix |
 | --- | ---: | --- |
-| `colm2026_source/colm2026_submission.tex` | 31434 | `67d3359d71a9` |
+| `colm2026_source/colm2026_submission.tex` | 32566 | `e8895f262246` |
 | `colm2026_source/colm2026_conference.sty` | 7727 | `55962ae80c25` |
 | `colm2026_source/colm2026_conference.bst` | 26973 | `2d67552db7ed` |
 | `colm2026_source/natbib.sty` | 45154 | `88bc70c0e484` |

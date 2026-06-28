@@ -192,6 +192,11 @@ def main() -> None:
         "results/rag_exposure.csv",
         "results/rag_exposure_rows.csv",
         "results/rag_exposure_by_tier.csv",
+        "results/rag_context_recovery.csv",
+        "results/rag_context_recovery_rows.csv",
+        "results/rag_context_recovery_field_rows.csv",
+        "results/rag_context_recovery_by_tier.csv",
+        "results/rag_context_recovery.md",
         "results/noisy_style_stress/noisy_style_results.csv",
         "results/noisy_style_stress/noisy_style_compact_results.csv",
         "results/noisy_style_stress/noisy_style_diagnostic_summary.csv",
@@ -215,6 +220,15 @@ def main() -> None:
         "results/openai_gpt55_doclocal_24p_audit_plan.csv",
         "results/openai_gpt55_doclocal_24p_audit_notes.md",
         "results/openai_gpt55_doclocal_24p_audit_usage.csv",
+        "results/openai_gpt55_evidence_24p_evidence_rows.csv",
+        "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+        "results/openai_gpt55_evidence_24p_evidence_summary.md",
+        "results/openai_gpt55_evidence_24p_evidence_signal_counts.csv",
+        "results/openai_gpt55_evidence_24p_audit_plan.csv",
+        "results/openai_gpt55_evidence_24p_audit_notes.md",
+        "results/openai_gpt55_evidence_24p_audit_usage.csv",
+        "results/openai_gpt55_rag_12t3_audit_plan.csv",
+        "results/openai_gpt55_rag_12t3_audit_plan.md",
         "results/paper_ready_summary.md",
         "SUBMISSION_UPLOAD_CHECKLIST.md",
         "paper/tables/paper_main_results.tex",
@@ -225,7 +239,9 @@ def main() -> None:
         "paper/tables/gpt55_aux_bootstrap_ci.csv",
         "paper/tables/gpt55_doclocal_audit.tex",
         "paper/tables/gpt55_doclocal_bootstrap_ci.csv",
+        "paper/tables/gpt55_evidence_signals.tex",
         "paper/tables/rag_exposure_t3.tex",
+        "paper/tables/rag_context_recovery_t3.tex",
         "paper/tables/noisy_style_stress.tex",
         "paper/short_paper.pdf",
         "paper/colm2026_submission.tex",
@@ -1195,9 +1211,64 @@ def main() -> None:
             observed=fragment if contains(paper_text, fragment) else "missing",
         )
 
+    rag_context = pd.read_csv(results_dir / "rag_context_recovery_by_tier.csv")
+
+    def rag_context_t3_value(condition: str, metric: str) -> float:
+        match = rag_context[
+            (rag_context["condition"] == condition)
+            & (rag_context["risk_tier"] == "T3")
+        ]
+        if match.empty:
+            raise KeyError(f"{condition}:T3:{metric}")
+        return float(match[metric].iloc[0])
+
+    rag_context_fragments = {
+        "direct_exact_fields": fmt(
+            rag_context_t3_value("c1_direct_redaction", "exact_fields_recovered")
+        ),
+        "doclocal_exact_fields": fmt(
+            rag_context_t3_value("c4_doc_local_anon", "exact_fields_recovered")
+        ),
+        "doclocal_coarse_fields": fmt(
+            rag_context_t3_value("c4_doc_local_anon", "coarse_fields_recovered")
+        ),
+        "lg_coarse_fields": fmt(
+            rag_context_t3_value("c5_linkguard", "coarse_fields_recovered")
+        ),
+    }
+    for name, fragment in rag_context_fragments.items():
+        add_check(
+            checks,
+            f"rag_context:paper_fragment:{name}",
+            contains(paper_text, fragment) and contains(colm_text, fragment),
+            f"both paper drafts contain RAG context recovery value {fragment}",
+            "results/rag_context_recovery_by_tier.csv",
+            expected=fragment,
+            observed=fragment
+            if contains(paper_text, fragment) and contains(colm_text, fragment)
+            else "missing",
+        )
+
     openai = pd.read_csv(results_dir / "openai_aux_match_summary.csv")
     gpt55 = pd.read_csv(results_dir / "openai_gpt55_48p_aux_match_summary.csv")
     gpt55_doclocal = pd.read_csv(results_dir / "openai_gpt55_doclocal_24p_aux_match_summary.csv")
+    gpt55_evidence = pd.read_csv(results_dir / "openai_gpt55_evidence_24p_evidence_summary.csv")
+    gpt55_evidence_rows = pd.read_csv(results_dir / "openai_gpt55_evidence_24p_evidence_rows.csv")
+    evidence_bucket_counts = gpt55_evidence_rows.groupby("bucket").size().to_dict()
+    add_check(
+        checks,
+        "gpt55_evidence:row_count_and_parse",
+        len(gpt55_evidence_rows) == 24
+        and evidence_bucket_counts.get("direct_success") == 8
+        and evidence_bucket_counts.get("linkguard_residual") == 8
+        and evidence_bucket_counts.get("aggressive_failure") == 8
+        and gpt55_evidence_rows["signal_labels"].notna().all()
+        and gpt55_evidence_rows["residual_risk_category"].astype(str).str.len().gt(0).all(),
+        "GPT-5.5 evidence extraction produced 24 parsed cases across the intended buckets",
+        "results/openai_gpt55_evidence_24p_evidence_rows.csv",
+        expected="24 rows, 8/8/8 buckets, parsed signals/categories",
+        observed=f"{len(gpt55_evidence_rows)} rows, {evidence_bucket_counts}",
+    )
     for condition in [
         "c1_direct_redaction",
         "c1b_presidio_redaction",
@@ -1230,6 +1301,22 @@ def main() -> None:
             "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
             expected=f"n=24,{fragment}",
             observed=f"n={stats['n']},{fragment if contains(paper_text, fragment) else 'missing'}",
+        )
+    evidence_fragments = [
+        "24-case GPT-5.5 evidence-extraction audit",
+        "direct-redaction successful matches cite location in 1.000 and role in 0.750",
+        "residual matches cite role, location, and institution at 0.000",
+        "uncertain in 0.875",
+    ]
+    for fragment in evidence_fragments:
+        add_check(
+            checks,
+            f"gpt55_evidence:paper_fragment:{fragment[:32]}",
+            contains(paper_text, fragment) and contains(colm_text, fragment),
+            f"both paper drafts contain GPT-5.5 evidence audit fragment {fragment}",
+            "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+            expected=fragment,
+            observed=fragment if contains(paper_text, fragment) and contains(colm_text, fragment) else "missing",
         )
 
     colm_core_claims = {
@@ -1286,6 +1373,12 @@ def main() -> None:
         "field_k20": fmt(k20["field_aux_top1"]),
         "rag_lg_t3_hit5": fmt(rag_t3_value("c5_linkguard", "hit_at_5")),
         "rag_lg_t3_multi10": "Multi@10 to 0.000",
+        "rag_context_direct_exact": fmt(
+            rag_context_t3_value("c1_direct_redaction", "exact_fields_recovered")
+        ),
+        "rag_context_lg_coarse": fmt(
+            rag_context_t3_value("c5_linkguard", "coarse_fields_recovered")
+        ),
         "gpt55_direct": fmt(weighted_openai(gpt55, "c1_direct_redaction")["top1"]),
         "gpt55_presidio": fmt(weighted_openai(gpt55, "c1b_presidio_redaction")["top1"]),
         "gpt55_local": fmt(weighted_openai(gpt55, "c4_doc_local_anon")["top1"]),
@@ -1302,6 +1395,21 @@ def main() -> None:
         ),
         "gpt55_doclocal_lg_subset": fmt(
             weighted_openai(gpt55_doclocal, "c5_linkguard")["top1"]
+        ),
+        "gpt55_evidence_direct_location": fmt(
+            gpt55_evidence[gpt55_evidence["bucket"] == "direct_success"][
+                "location_signal_rate"
+            ].iloc[0]
+        ),
+        "gpt55_evidence_direct_role": fmt(
+            gpt55_evidence[gpt55_evidence["bucket"] == "direct_success"][
+                "role_signal_rate"
+            ].iloc[0]
+        ),
+        "gpt55_evidence_lg_uncertain": fmt(
+            gpt55_evidence[gpt55_evidence["bucket"] == "linkguard_residual"][
+                "uncertain_rate"
+            ].iloc[0]
         ),
     }
     for name, fragment in colm_core_claims.items():
@@ -1344,6 +1452,34 @@ def main() -> None:
         expected=str(len(gpt55_doclocal_plan)),
         observed=str(int(gpt55_doclocal_plan["cached"].sum())),
     )
+    gpt55_evidence_plan = pd.read_csv(results_dir / "openai_gpt55_evidence_24p_audit_plan.csv")
+    add_check(
+        checks,
+        "gpt55_evidence:plan_fully_cached",
+        len(gpt55_evidence_plan) == int(gpt55_evidence_plan["cached"].sum()),
+        "GPT-5.5 evidence audit plan has no missing calls",
+        "results/openai_gpt55_evidence_24p_audit_plan.csv",
+        expected=str(len(gpt55_evidence_plan)),
+        observed=str(int(gpt55_evidence_plan["cached"].sum())),
+    )
+    gpt55_rag_plan = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_audit_plan.csv")
+    rag_conditions = set(gpt55_rag_plan["condition"])
+    rag_personas = set(gpt55_rag_plan["persona_id"])
+    add_check(
+        checks,
+        "gpt55_rag_generation:plan_shape",
+        len(gpt55_rag_plan) == 60
+        and len(rag_conditions) == 5
+        and len(rag_personas) == 12
+        and int(gpt55_rag_plan["cached"].sum()) == 0,
+        "optional GPT-5.5 RAG generation audit plan is present but not claimed as completed",
+        "results/openai_gpt55_rag_12t3_audit_plan.csv",
+        expected="60 planned calls, 5 conditions, 12 personas, 0 cached before live approval",
+        observed=(
+            f"{len(gpt55_rag_plan)} calls, {len(rag_conditions)} conditions, "
+            f"{len(rag_personas)} personas, {int(gpt55_rag_plan['cached'].sum())} cached"
+        ),
+    )
 
     # Check that paper tables reflect the generated sources for core tables.
     table_checks = {
@@ -1359,6 +1495,19 @@ def main() -> None:
             fmt(weighted_openai(gpt55_doclocal, "c5_linkguard")["top1"]),
             "24",
         ],
+        "paper/tables/gpt55_evidence_signals.tex": [
+            "Direct success",
+            fmt(
+                gpt55_evidence[gpt55_evidence["bucket"] == "direct_success"][
+                    "role_signal_rate"
+                ].iloc[0]
+            ),
+            fmt(
+                gpt55_evidence[gpt55_evidence["bucket"] == "linkguard_residual"][
+                    "uncertain_rate"
+                ].iloc[0]
+            ),
+        ],
         "paper/tables/linkguard_sensitivity.tex": [
             fmt(k2["aux_top1"]),
             fmt(k5["attr_exact_recovery"]),
@@ -1371,6 +1520,11 @@ def main() -> None:
         "paper/tables/rag_exposure_t3.tex": [
             fmt(rag_t3_value("c5_linkguard", "hit_at_5")),
             fmt(rag_t3_value("c1_direct_redaction", "multi_doc_at_10")),
+        ],
+        "paper/tables/rag_context_recovery_t3.tex": [
+            fmt(rag_context_t3_value("c1_direct_redaction", "exact_fields_recovered")),
+            fmt(rag_context_t3_value("c4_doc_local_anon", "coarse_fields_recovered")),
+            fmt(rag_context_t3_value("c5_linkguard", "coarse_fields_recovered")),
         ],
         "paper/tables/noisy_style_stress.tex": [
             fmt(noisy_direct["aux_top1"]),

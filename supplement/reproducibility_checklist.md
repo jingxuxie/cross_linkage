@@ -8,7 +8,7 @@ Run from the repository root.
 conda run -n cross_linkage python src/reproduce_no_api.py
 ```
 
-This runs the synthetic benchmark, validation, robustness checks, noisy-style stress test, cached-only OpenAI plan check, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
+This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
 
 ## Fast Preview
 
@@ -29,7 +29,7 @@ conda run -n cross_linkage python src/make_supplement.py --config configs/sprint
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected gate status: zero benchmark-validation failures, four-page PDFs, clean submission-package compile, and zero claim-verifier failures.
+Expected gate status: zero benchmark-validation failures, a 4-page short PDF, an 8-page COLM PDF, clean submission-package compile, and zero claim-verifier failures.
 
 ## API Boundary
 
@@ -40,3 +40,11 @@ conda run -n cross_linkage python src/openai_audit.py --model gpt-5.4-nano --max
 ```
 
 Expected cached audit status: `planned_calls=120`, `cached_calls=120`, `missing_or_dependent_calls=0`.
+
+The optional GPT-5.5 RAG-generation audit is planned but not part of the default paper claims until a live run is explicitly approved:
+
+```bash
+conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 550 --plan-only
+```
+
+Expected pre-approval status: `planned_calls=60`, `cached_calls=0`, `missing_calls=60`.

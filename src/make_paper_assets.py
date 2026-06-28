@@ -170,6 +170,37 @@ def paper_gpt55_table(summary: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def paper_evidence_table(summary: pd.DataFrame) -> pd.DataFrame:
+    cols = [
+        "bucket_label",
+        "n",
+        "role_signal_rate",
+        "location_signal_rate",
+        "institution_signal_rate",
+        "high_specificity_signal_rate",
+        "uncertain_rate",
+    ]
+    out = summary[cols].copy()
+    out = out.rename(
+        columns={
+            "bucket_label": "Case",
+            "role_signal_rate": "Role",
+            "location_signal_rate": "Loc.",
+            "institution_signal_rate": "Inst.",
+            "high_specificity_signal_rate": "High-spec.",
+            "uncertain_rate": "Unc.",
+        }
+    )
+    out["Case"] = out["Case"].replace(
+        {
+            "Direct-redaction successful match": "Direct success",
+            "LinkGuard residual match": "LG residual",
+            "Aggressive low-signal contrast": "Agg failure",
+        }
+    )
+    return out
+
+
 def compact_sensitivity_table(df: pd.DataFrame) -> pd.DataFrame:
     cols = [
         "target_k",
@@ -359,6 +390,35 @@ def paper_rag_t3_table(df: pd.DataFrame) -> pd.DataFrame:
     return focus.sort_values("_order").drop(columns="_order")
 
 
+def paper_rag_context_t3_table(df: pd.DataFrame) -> pd.DataFrame:
+    focus = df[
+        (df["condition"].isin(RAG_FOCUS_CONDITIONS))
+        & (df["risk_tier"] == "T3")
+    ].copy()
+    focus["Cond."] = focus["condition"].map(PAPER_LABELS).fillna(focus["condition"])
+    focus = focus[
+        [
+            "Cond.",
+            "retrieval_hit_at_k",
+            "exact_field_recovery",
+            "coarse_field_recovery",
+            "exact_fields_recovered",
+            "coarse_fields_recovered",
+        ]
+    ].rename(
+        columns={
+            "retrieval_hit_at_k": "Hit@5",
+            "exact_field_recovery": "ExactRate",
+            "coarse_field_recovery": "CoarseRate",
+            "exact_fields_recovered": "Exact#",
+            "coarse_fields_recovered": "Coarse#",
+        }
+    )
+    order = [PAPER_LABELS[condition] for condition in RAG_FOCUS_CONDITIONS]
+    focus["_order"] = focus["Cond."].map({label: idx for idx, label in enumerate(order)})
+    return focus.sort_values("_order").drop(columns="_order")
+
+
 def paper_tier_aux_table(df: pd.DataFrame) -> pd.DataFrame:
     focus = df[df["condition"].isin(TIER_FOCUS_CONDITIONS)].copy()
     focus["Cond."] = focus["condition"].map(PAPER_LABELS).fillna(focus["condition"])
@@ -518,6 +578,19 @@ def write_summary(paths: any) -> None:
                 tables_dir / "gpt55_doclocal_bootstrap_ci.csv", index=False
             )
 
+    gpt55_evidence_summary_path = paths.results / "openai_gpt55_evidence_24p_evidence_summary.csv"
+    gpt55_evidence = None
+    if gpt55_evidence_summary_path.exists():
+        gpt55_evidence = pd.read_csv(gpt55_evidence_summary_path)
+        paper_evidence = paper_evidence_table(gpt55_evidence)
+        paper_evidence.to_csv(tables_dir / "gpt55_evidence_signals.csv", index=False)
+        to_latex_table(
+            paper_evidence,
+            tables_dir / "gpt55_evidence_signals.tex",
+            "GPT-5.5 qualitative evidence extraction over 24 selected synthetic cases. Entries are case-level rates for signal families in the extracted explanations.",
+            "tab:gpt55_evidence_signals",
+        )
+
     fig_src = paths.results / "privacy_utility.png"
     fig_dst = figures_dir / "privacy_utility.png"
     if fig_src.exists():
@@ -655,6 +728,22 @@ def write_summary(paths: any) -> None:
                 "- This supports the corpus-level argument: a strong document-local anonymizer can still preserve repeated quasi-identifier combinations.",
                 "",
                 dataframe_to_markdown(gpt55_doclocal_compact, floatfmt=".3f"),
+            ]
+        )
+    if gpt55_evidence is not None:
+        direct_ev = gpt55_evidence[gpt55_evidence["bucket"] == "direct_success"].iloc[0]
+        lg_ev = gpt55_evidence[gpt55_evidence["bucket"] == "linkguard_residual"].iloc[0]
+        agg_ev = gpt55_evidence[gpt55_evidence["bucket"] == "aggressive_failure"].iloc[0]
+        lines.extend(
+            [
+                "",
+                "## GPT-5.5 Evidence Extraction",
+                "",
+                f"- On {int(direct_ev['n'])} direct-redaction successful matches, GPT-5.5 cites location in {direct_ev['location_signal_rate']:.3f} of explanations and role in {direct_ev['role_signal_rate']:.3f}.",
+                f"- On {int(lg_ev['n'])} LinkGuard residual matches, it cites role, location, and institution at 0.000 and marks {lg_ev['uncertain_rate']:.3f} of explanations uncertain.",
+                f"- On {int(agg_ev['n'])} aggressive-redaction top-3 failures, explanations are mostly information-removed or coarse-context contrasts with uncertainty {agg_ev['uncertain_rate']:.3f}.",
+                "",
+                dataframe_to_markdown(paper_evidence_table(gpt55_evidence), floatfmt=".3f"),
             ]
         )
     if openai_compact is not None:
@@ -837,6 +926,36 @@ def write_summary(paths: any) -> None:
                 f"- For high-linkage T3 personas, direct redaction, Presidio, and the document-local proxy all have Hit@5 {rag_value('c1_direct_redaction', 'hit_at_5', 'T3'):.3f} and Multi@10 {rag_value('c1_direct_redaction', 'multi_doc_at_10', 'T3'):.3f}; LinkGuard reduces T3 Hit@5 to {rag_value('c5_linkguard', 'hit_at_5', 'T3'):.3f} and Multi@10 to {rag_value('c5_linkguard', 'multi_doc_at_10', 'T3'):.3f}.",
                 "",
                 dataframe_to_markdown(rag_t3_table, floatfmt=".3f"),
+            ]
+        )
+    rag_context_path = paths.results / "rag_context_recovery_by_tier.csv"
+    if rag_context_path.exists():
+        rag_context = pd.read_csv(rag_context_path)
+        rag_context_t3 = paper_rag_context_t3_table(rag_context)
+        rag_context_t3.to_csv(tables_dir / "rag_context_recovery_t3.csv", index=False)
+        to_latex_table(
+            rag_context_t3,
+            tables_dir / "rag_context_recovery_t3.tex",
+            "T3 quasi-identifier context recovery from top-5 profile-query retrieval results.",
+            "tab:rag_context_recovery_t3",
+        )
+
+        def ctx_value(condition: str, metric: str) -> float:
+            match = rag_context[
+                (rag_context["condition"] == condition)
+                & (rag_context["risk_tier"] == "T3")
+            ]
+            return float(match[metric].iloc[0])
+
+        lines.extend(
+            [
+                "",
+                "## RAG Context Recovery",
+                "",
+                f"- In T3 top-5 retrieval results, direct redaction exposes {ctx_value('c1_direct_redaction', 'exact_fields_recovered'):.3f} exact quasi-identifier fields on average, Presidio exposes {ctx_value('c1b_presidio_redaction', 'exact_fields_recovered'):.3f}, and the document-local proxy exposes {ctx_value('c4_doc_local_anon', 'exact_fields_recovered'):.3f} exact / {ctx_value('c4_doc_local_anon', 'coarse_fields_recovered'):.3f} coarse fields.",
+                f"- LinkGuard reduces the same T3 context recovery to {ctx_value('c5_linkguard', 'exact_fields_recovered'):.3f} exact and {ctx_value('c5_linkguard', 'coarse_fields_recovered'):.3f} coarse fields; aggressive redaction is {ctx_value('c6_aggressive_redaction', 'exact_fields_recovered'):.3f}/{ctx_value('c6_aggressive_redaction', 'coarse_fields_recovered'):.3f}.",
+                "",
+                dataframe_to_markdown(rag_context_t3, floatfmt=".3f"),
             ]
         )
     failure_path = paths.results / "linkguard_failure_analysis.csv"

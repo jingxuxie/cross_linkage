@@ -144,6 +144,46 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:results/rag_context_recovery.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1378",
+    "source": "results/rag_context_recovery.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_context_recovery_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "77452",
+    "source": "results/rag_context_recovery_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_context_recovery_field_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "974469",
+    "source": "results/rag_context_recovery_field_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_context_recovery_by_tier.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2697",
+    "source": "results/rag_context_recovery_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_context_recovery.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3445",
+    "source": "results/rag_context_recovery.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/noisy_style_stress/noisy_style_results.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -328,10 +368,82 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_evidence_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "55021",
+    "source": "results/openai_gpt55_evidence_24p_evidence_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_evidence_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1114",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_evidence_summary.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4978",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_evidence_signal_counts.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2343",
+    "source": "results/openai_gpt55_evidence_24p_evidence_signal_counts.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4363",
+    "source": "results/openai_gpt55_evidence_24p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "5610",
+    "source": "results/openai_gpt55_evidence_24p_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_evidence_24p_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3218",
+    "source": "results/openai_gpt55_evidence_24p_audit_usage.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "9328",
+    "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_audit_plan.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "769",
+    "source": "results/openai_gpt55_rag_12t3_audit_plan.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "18702",
+    "observed": "20293",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -408,11 +520,27 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:paper/tables/gpt55_evidence_signals.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "577",
+    "source": "paper/tables/gpt55_evidence_signals.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:paper/tables/rag_exposure_t3.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
     "observed": "477",
     "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/rag_context_recovery_t3.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "593",
+    "source": "paper/tables/rag_context_recovery_t3.tex",
     "status": "PASS"
   },
   {
@@ -427,7 +555,7 @@
     "check_id": "artifact:paper/short_paper.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "298000",
+    "observed": "298485",
     "source": "paper/short_paper.pdf",
     "status": "PASS"
   },
@@ -435,7 +563,7 @@
     "check_id": "artifact:paper/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "31434",
+    "observed": "32566",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -443,7 +571,7 @@
     "check_id": "artifact:paper/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "151216",
+    "observed": "152091",
     "source": "paper/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -491,7 +619,7 @@
     "check_id": "artifact:submission/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "151216",
+    "observed": "152091",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -499,7 +627,7 @@
     "check_id": "artifact:submission/colm2026_source/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "31434",
+    "observed": "32566",
     "source": "submission/colm2026_source/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -555,7 +683,7 @@
     "check_id": "artifact:submission/colm2026_submission_source.zip",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "41420",
+    "observed": "41767",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -603,7 +731,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "1840",
+    "observed": "2415",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -611,7 +739,7 @@
     "check_id": "artifact:supplement/claim_trace.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "2265",
+    "observed": "2571",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1002,8 +1130,8 @@
   {
     "check_id": "submission_zip:sha256_matches_manifest",
     "detail": "submission source zip SHA-256 matches manifest",
-    "expected": "a8846df87f28f8e396ff1e308f744ac0101eeca71588e19b3f5baab62e531429",
-    "observed": "a8846df87f28f8e396ff1e308f744ac0101eeca71588e19b3f5baab62e531429",
+    "expected": "25c02cbe2a3bed35335af93292f70c53358061006d6ad785497406fae643aa40",
+    "observed": "25c02cbe2a3bed35335af93292f70c53358061006d6ad785497406fae643aa40",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -1018,8 +1146,8 @@
   {
     "check_id": "submission_pdf:matches_paper_pdf",
     "detail": "packaged submission PDF matches the compiled COLM PDF",
-    "expected": "f2071412d91aff5fa305e0b8b2a6f4fc6c135af4fe1f97da0251c48c7e3596f9",
-    "observed": "f2071412d91aff5fa305e0b8b2a6f4fc6c135af4fe1f97da0251c48c7e3596f9",
+    "expected": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32",
+    "observed": "b34ebef0d5d8315d105fcc2e5f50dd3453e820c5f3a1178d2aba9be26c568c32",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -1106,16 +1234,16 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "3276390d3b3e07436be48130c795df6bc9e9c29c83590a4145ebf2452bf969c7",
-    "observed": "3276390d3b3e07436be48130c795df6bc9e9c29c83590a4145ebf2452bf969c7",
+    "expected": "7cf559ee5660eef06ff2337db439d4ec7089febc12bc5393d108f894b1741d8a",
+    "observed": "7cf559ee5660eef06ff2337db439d4ec7089febc12bc5393d108f894b1741d8a",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
   {
     "check_id": "supplement:claim_trace.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "5056c122787cefff4153e9affbc36c763c9807801bda5fa2e96ae1ac75ee7f06",
-    "observed": "5056c122787cefff4153e9affbc36c763c9807801bda5fa2e96ae1ac75ee7f06",
+    "expected": "73acd59c28ebd51030bd5003b8f1f65f51fec8be9e38c2a077cb06093be2c4ef",
+    "observed": "73acd59c28ebd51030bd5003b8f1f65f51fec8be9e38c2a077cb06093be2c4ef",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1904,6 +2032,46 @@
     "status": "PASS"
   },
   {
+    "check_id": "rag_context:paper_fragment:direct_exact_fields",
+    "detail": "both paper drafts contain RAG context recovery value 9.781",
+    "expected": "9.781",
+    "observed": "9.781",
+    "source": "results/rag_context_recovery_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_context:paper_fragment:doclocal_exact_fields",
+    "detail": "both paper drafts contain RAG context recovery value 7.844",
+    "expected": "7.844",
+    "observed": "7.844",
+    "source": "results/rag_context_recovery_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_context:paper_fragment:doclocal_coarse_fields",
+    "detail": "both paper drafts contain RAG context recovery value 9.469",
+    "expected": "9.469",
+    "observed": "9.469",
+    "source": "results/rag_context_recovery_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_context:paper_fragment:lg_coarse_fields",
+    "detail": "both paper drafts contain RAG context recovery value 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "results/rag_context_recovery_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:row_count_and_parse",
+    "detail": "GPT-5.5 evidence extraction produced 24 parsed cases across the intended buckets",
+    "expected": "24 rows, 8/8/8 buckets, parsed signals/categories",
+    "observed": "24 rows, {'aggressive_failure': 8, 'direct_success': 8, 'linkguard_residual': 8}",
+    "source": "results/openai_gpt55_evidence_24p_evidence_rows.csv",
+    "status": "PASS"
+  },
+  {
     "check_id": "gpt55:c1_direct_redaction:top1",
     "detail": "paper contains 48-person GPT-5.5 top-1 value 1.000",
     "expected": "n=48,1.000",
@@ -1957,6 +2125,38 @@
     "expected": "n=24,0.333",
     "observed": "n=24,0.333",
     "source": "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:paper_fragment:24-case GPT-5.5 evidence-extract",
+    "detail": "both paper drafts contain GPT-5.5 evidence audit fragment 24-case GPT-5.5 evidence-extraction audit",
+    "expected": "24-case GPT-5.5 evidence-extraction audit",
+    "observed": "24-case GPT-5.5 evidence-extraction audit",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:paper_fragment:direct-redaction successful matc",
+    "detail": "both paper drafts contain GPT-5.5 evidence audit fragment direct-redaction successful matches cite location in 1.000 and role in 0.750",
+    "expected": "direct-redaction successful matches cite location in 1.000 and role in 0.750",
+    "observed": "direct-redaction successful matches cite location in 1.000 and role in 0.750",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:paper_fragment:residual matches cite role, loca",
+    "detail": "both paper drafts contain GPT-5.5 evidence audit fragment residual matches cite role, location, and institution at 0.000",
+    "expected": "residual matches cite role, location, and institution at 0.000",
+    "observed": "residual matches cite role, location, and institution at 0.000",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:paper_fragment:uncertain in 0.875",
+    "detail": "both paper drafts contain GPT-5.5 evidence audit fragment uncertain in 0.875",
+    "expected": "uncertain in 0.875",
+    "observed": "uncertain in 0.875",
+    "source": "results/openai_gpt55_evidence_24p_evidence_summary.csv",
     "status": "PASS"
   },
   {
@@ -2288,6 +2488,22 @@
     "status": "PASS"
   },
   {
+    "check_id": "colm:rag_context_direct_exact",
+    "detail": "COLM submission contains core claim fragment 9.781",
+    "expected": "9.781",
+    "observed": "9.781",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_context_lg_coarse",
+    "detail": "COLM submission contains core claim fragment 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "colm:gpt55_direct",
     "detail": "COLM submission contains core claim fragment 1.000",
     "expected": "1.000",
@@ -2360,6 +2576,30 @@
     "status": "PASS"
   },
   {
+    "check_id": "colm:gpt55_evidence_direct_location",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_evidence_direct_role",
+    "detail": "COLM submission contains core claim fragment 0.750",
+    "expected": "0.750",
+    "observed": "0.750",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_evidence_lg_uncertain",
+    "detail": "COLM submission contains core claim fragment 0.875",
+    "expected": "0.875",
+    "observed": "0.875",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "openai:plan_fully_cached",
     "detail": "OpenAI audit plan has no missing calls",
     "expected": "120",
@@ -2381,6 +2621,22 @@
     "expected": "240",
     "observed": "240",
     "source": "results/openai_gpt55_doclocal_24p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_evidence:plan_fully_cached",
+    "detail": "GPT-5.5 evidence audit plan has no missing calls",
+    "expected": "24",
+    "observed": "24",
+    "source": "results/openai_gpt55_evidence_24p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_rag_generation:plan_shape",
+    "detail": "optional GPT-5.5 RAG generation audit plan is present but not claimed as completed",
+    "expected": "60 planned calls, 5 conditions, 12 personas, 0 cached before live approval",
+    "observed": "60 calls, 5 conditions, 12 personas, 0 cached",
+    "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
     "status": "PASS"
   },
   {
@@ -2464,6 +2720,30 @@
     "status": "PASS"
   },
   {
+    "check_id": "table:paper/tables/gpt55_evidence_signals.tex:Direct success",
+    "detail": "generated table contains Direct success",
+    "expected": "Direct success",
+    "observed": "Direct success",
+    "source": "paper/tables/gpt55_evidence_signals.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_evidence_signals.tex:0.750",
+    "detail": "generated table contains 0.750",
+    "expected": "0.750",
+    "observed": "0.750",
+    "source": "paper/tables/gpt55_evidence_signals.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_evidence_signals.tex:0.875",
+    "detail": "generated table contains 0.875",
+    "expected": "0.875",
+    "observed": "0.875",
+    "source": "paper/tables/gpt55_evidence_signals.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "table:paper/tables/linkguard_sensitivity.tex:0.062",
     "detail": "generated table contains 0.062",
     "expected": "0.062",
@@ -2517,6 +2797,30 @@
     "expected": "1.000",
     "observed": "1.000",
     "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_context_recovery_t3.tex:9.781",
+    "detail": "generated table contains 9.781",
+    "expected": "9.781",
+    "observed": "9.781",
+    "source": "paper/tables/rag_context_recovery_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_context_recovery_t3.tex:9.469",
+    "detail": "generated table contains 9.469",
+    "expected": "9.469",
+    "observed": "9.469",
+    "source": "paper/tables/rag_context_recovery_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_context_recovery_t3.tex:0.438",
+    "detail": "generated table contains 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "paper/tables/rag_context_recovery_t3.tex",
     "status": "PASS"
   },
   {
