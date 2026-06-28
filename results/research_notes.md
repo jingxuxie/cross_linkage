@@ -1,6 +1,6 @@
 # Sprint Research Notes
 
-This is an API-free first pass over the synthetic sprint benchmark.
+These notes summarize the deterministic no-API local benchmark. Cached GPT-5.5 stress-audit results and API provenance are tracked separately in `results/paper_ready_summary.md`, `REPRODUCE_RESULTS.md`, and the run-specific OpenAI audit artifacts.
 
 ## Main Observations
 
@@ -12,7 +12,7 @@ This is an API-free first pass over the synthetic sprint benchmark.
 
 ## Next Experiments
 
-1. Do final title/abstract polish without changing the validated claim surface.
-2. Expand the cached OpenAI audit only if budget allows, keeping neutral document labels and the same candidate-set protocol.
+1. Keep the validated claim surface stable unless a new result passes the claim verifier.
+2. Run the remaining GPT-5.5 RAG-generation calls only after explicit approval, then promote them only if parse success and claim checks pass.
 3. If time allows after submission, expand the synthetic style stress test to more domains while keeping the no-real-data ethics boundary.
-4. Verify the official anonymity and artifact policies before final upload.
+4. Re-run the no-API reproduction dry-run, submission package build, supplement generation, and claim verifier before final upload.

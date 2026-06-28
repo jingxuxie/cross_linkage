@@ -27,7 +27,7 @@ Current verified state:
 - 120 synthetic personas and 480 synthetic documents.
 - 96 held-out personas for the main local evaluation.
 - No real people, public profiles, social-media posts, patient records, legal records, or customer records.
-- Main claim verifier: `checks=356 failures=0`.
+- Main claim verifier: `checks=369 failures=0`.
 - Current generic PDF length: 4 pages.
 - Current official COLM-template PDF length: 8 pages.
 - Noisy-style stress corpus: 480 synthetic rerendered documents, mean template similarity 0.306.

@@ -2720,6 +2720,30 @@
     "status": "PASS"
   },
   {
+    "check_id": "reproduce_results:claim_verifier_count",
+    "detail": "reproduction guide reports the current claim verifier count",
+    "expected": "Expected current result: `checks=369 failures=0`.",
+    "observed": "ok",
+    "source": "REPRODUCE_RESULTS.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_readiness:claim_verifier_count",
+    "detail": "submission readiness audit reports the current claim verifier count",
+    "expected": "Main claim verifier: `checks=369 failures=0`.",
+    "observed": "ok",
+    "source": "SUBMISSION_READINESS.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "research_notes:scope_current",
+    "detail": "research notes distinguish local no-API benchmark notes from cached GPT-5.5 audit artifacts",
+    "expected": "local notes plus cached GPT-5.5 provenance pointer",
+    "observed": "ok",
+    "source": "results/research_notes.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "table:paper/tables/paper_main_results.tex:0.042",
     "detail": "generated table contains 0.042",
     "expected": "0.042",

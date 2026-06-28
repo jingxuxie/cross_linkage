@@ -1535,6 +1535,44 @@ def main() -> None:
         if "GPT-5.5 audits are cached, time-stamped synthetic subset stress audits" in result_brief
         else "missing",
     )
+    reproduce_text = (root / "REPRODUCE_RESULTS.md").read_text(encoding="utf-8")
+    readiness_text = (root / "SUBMISSION_READINESS.md").read_text(encoding="utf-8")
+    research_notes = (results_dir / "research_notes.md").read_text(encoding="utf-8")
+    add_check(
+        checks,
+        "reproduce_results:claim_verifier_count",
+        "Expected current result: `checks=369 failures=0`." in reproduce_text,
+        "reproduction guide reports the current claim verifier count",
+        "REPRODUCE_RESULTS.md",
+        expected="Expected current result: `checks=369 failures=0`.",
+        observed="ok"
+        if "Expected current result: `checks=369 failures=0`." in reproduce_text
+        else "missing",
+    )
+    add_check(
+        checks,
+        "submission_readiness:claim_verifier_count",
+        "Main claim verifier: `checks=369 failures=0`." in readiness_text,
+        "submission readiness audit reports the current claim verifier count",
+        "SUBMISSION_READINESS.md",
+        expected="Main claim verifier: `checks=369 failures=0`.",
+        observed="ok"
+        if "Main claim verifier: `checks=369 failures=0`." in readiness_text
+        else "missing",
+    )
+    add_check(
+        checks,
+        "research_notes:scope_current",
+        "deterministic no-API local benchmark" in research_notes
+        and "Cached GPT-5.5 stress-audit results" in research_notes
+        and "API-free first pass" not in research_notes,
+        "research notes distinguish local no-API benchmark notes from cached GPT-5.5 audit artifacts",
+        "results/research_notes.md",
+        expected="local notes plus cached GPT-5.5 provenance pointer",
+        observed="ok"
+        if "deterministic no-API local benchmark" in research_notes
+        else "missing",
+    )
 
     # Check that paper tables reflect the generated sources for core tables.
     table_checks = {
