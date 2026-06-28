@@ -229,6 +229,13 @@ def main() -> None:
         "results/openai_gpt55_evidence_24p_audit_usage.csv",
         "results/openai_gpt55_rag_12t3_audit_plan.csv",
         "results/openai_gpt55_rag_12t3_audit_plan.md",
+        "results/openai_gpt55_rag_compact_pilot_2t3_audit_notes.md",
+        "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.csv",
+        "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.md",
+        "results/openai_gpt55_rag_compact_pilot_2t3_audit_usage.csv",
+        "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
+        "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
+        "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
         "results/paper_ready_summary.md",
         "SUBMISSION_UPLOAD_CHECKLIST.md",
         "paper/tables/paper_main_results.tex",
@@ -1465,19 +1472,44 @@ def main() -> None:
     gpt55_rag_plan = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_audit_plan.csv")
     rag_conditions = set(gpt55_rag_plan["condition"])
     rag_personas = set(gpt55_rag_plan["persona_id"])
+    rag_cached = int(gpt55_rag_plan["cached"].sum())
     add_check(
         checks,
         "gpt55_rag_generation:plan_shape",
         len(gpt55_rag_plan) == 60
         and len(rag_conditions) == 5
         and len(rag_personas) == 12
-        and int(gpt55_rag_plan["cached"].sum()) == 0,
-        "optional GPT-5.5 RAG generation audit plan is present but not claimed as completed",
+        and rag_cached == 10
+        and "json_object" in set(gpt55_rag_plan.get("text_format", pd.Series(dtype=str)).astype(str))
+        and set(gpt55_rag_plan.get("max_output_tokens", pd.Series(dtype=int)).astype(int)) == {250},
+        "optional GPT-5.5 RAG generation audit plan has compact pilot cache but is not claimed as completed",
         "results/openai_gpt55_rag_12t3_audit_plan.csv",
-        expected="60 planned calls, 5 conditions, 12 personas, 0 cached before live approval",
+        expected="60 planned calls, 5 conditions, 12 personas, compact JSON, 10 cached and 50 pending",
         observed=(
             f"{len(gpt55_rag_plan)} calls, {len(rag_conditions)} conditions, "
-            f"{len(rag_personas)} personas, {int(gpt55_rag_plan['cached'].sum())} cached"
+            f"{len(rag_personas)} personas, {rag_cached} cached, "
+            f"{len(gpt55_rag_plan) - rag_cached} pending"
+        ),
+    )
+    rag_pilot_rows = pd.read_csv(results_dir / "openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv")
+    rag_pilot_summary = pd.read_csv(
+        results_dir / "openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv"
+    )
+    add_check(
+        checks,
+        "gpt55_rag_compact_pilot:parse_success",
+        len(rag_pilot_rows) == 10
+        and len(set(rag_pilot_rows["condition"])) == 5
+        and len(set(rag_pilot_rows["persona_id"])) == 2
+        and bool(rag_pilot_rows["parse_success"].astype(bool).all())
+        and float(rag_pilot_summary["parse_success_rate"].min()) == 1.0,
+        "compact GPT-5.5 RAG pilot parsed all cached JSON responses but is not a full paper claim",
+        "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
+        expected="10 rows, 5 conditions, 2 personas, parse_success_rate 1.000",
+        observed=(
+            f"{len(rag_pilot_rows)} rows, {len(set(rag_pilot_rows['condition']))} conditions, "
+            f"{len(set(rag_pilot_rows['persona_id']))} personas, "
+            f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
 

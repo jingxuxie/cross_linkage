@@ -135,8 +135,9 @@ conda run -n cross_linkage python src/openai_evidence_audit.py \
 Expected current result: `planned_calls=24`, `cached_calls=24`, and
 `missing_calls=0`.
 
-The optional GPT-5.5 RAG-generation audit is plan-only unless a live API run is
-explicitly approved:
+The optional GPT-5.5 RAG-generation audit has a compact 2-person pilot cached,
+but the full 12-person run is not part of the paper claims unless the remaining
+calls are explicitly approved:
 
 ```bash
 conda run -n cross_linkage python src/openai_rag_audit.py \
@@ -147,12 +148,12 @@ conda run -n cross_linkage python src/openai_rag_audit.py \
   --tier T3 \
   --max-calls 60 \
   --reasoning-effort none \
-  --max-output-tokens 900 \
+  --max-output-tokens 250 \
   --plan-only
 ```
 
-Expected pre-approval result: `planned_calls=60`, `cached_calls=0`, and
-`missing_calls=60`.
+Expected pre-approval result after the compact pilot: `planned_calls=60`,
+`cached_calls=10`, and `missing_calls=50`.
 
 ## Verification Gate
 

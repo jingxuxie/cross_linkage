@@ -189,7 +189,14 @@ class CachedOpenAI:
         self.cached_calls = 0
         self.usage_rows: list[dict[str, Any]] = []
 
-    def call(self, task: str, instructions: str, prompt: str, max_output_tokens: int) -> dict[str, Any]:
+    def call(
+        self,
+        task: str,
+        instructions: str,
+        prompt: str,
+        max_output_tokens: int,
+        text_config: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         payload = {
             "task": task,
             "model": self.model,
@@ -199,6 +206,8 @@ class CachedOpenAI:
         }
         if self.reasoning_effort:
             payload["reasoning_effort"] = self.reasoning_effort
+        if text_config:
+            payload["text_config"] = text_config
         key = cache_key(payload)
         cache_path = self.cache_dir / f"{key}.json"
         if cache_path.exists():
@@ -237,6 +246,8 @@ class CachedOpenAI:
         }
         if self.reasoning_effort:
             request_kwargs["reasoning"] = {"effort": self.reasoning_effort}
+        if text_config:
+            request_kwargs["text"] = text_config
         response = self.client.responses.create(**request_kwargs)
         self.new_calls += 1
         text = response_text(response)

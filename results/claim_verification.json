@@ -427,7 +427,7 @@
     "check_id": "artifact:results/openai_gpt55_rag_12t3_audit_plan.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "9328",
+    "observed": "10305",
     "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
     "status": "PASS"
   },
@@ -435,8 +435,64 @@
     "check_id": "artifact:results/openai_gpt55_rag_12t3_audit_plan.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "769",
+    "observed": "819",
     "source": "results/openai_gpt55_rag_12t3_audit_plan.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2358",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1845",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "754",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1246",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_audit_usage.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "14249",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "755",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1467",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
     "status": "PASS"
   },
   {
@@ -731,7 +787,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4166",
+    "observed": "4253",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1234,8 +1290,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "f2c96d4ea470a089801d073ccf741fe5df9bc8fbd5c1f7c0fdedb0be1360f72f",
-    "observed": "f2c96d4ea470a089801d073ccf741fe5df9bc8fbd5c1f7c0fdedb0be1360f72f",
+    "expected": "1b6d2947fc88d7a7bc05ea16c742cb4c2ab7c14c856bc1fd665d7b18d15a85e8",
+    "observed": "1b6d2947fc88d7a7bc05ea16c742cb4c2ab7c14c856bc1fd665d7b18d15a85e8",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -2633,10 +2689,18 @@
   },
   {
     "check_id": "gpt55_rag_generation:plan_shape",
-    "detail": "optional GPT-5.5 RAG generation audit plan is present but not claimed as completed",
-    "expected": "60 planned calls, 5 conditions, 12 personas, 0 cached before live approval",
-    "observed": "60 calls, 5 conditions, 12 personas, 0 cached",
+    "detail": "optional GPT-5.5 RAG generation audit plan has compact pilot cache but is not claimed as completed",
+    "expected": "60 planned calls, 5 conditions, 12 personas, compact JSON, 10 cached and 50 pending",
+    "observed": "60 calls, 5 conditions, 12 personas, 10 cached, 50 pending",
     "source": "results/openai_gpt55_rag_12t3_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_rag_compact_pilot:parse_success",
+    "detail": "compact GPT-5.5 RAG pilot parsed all cached JSON responses but is not a full paper claim",
+    "expected": "10 rows, 5 conditions, 2 personas, parse_success_rate 1.000",
+    "observed": "10 rows, 5 conditions, 2 personas, min_parse=1.000",
+    "source": "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
     "status": "PASS"
   },
   {

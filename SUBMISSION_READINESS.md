@@ -61,7 +61,7 @@ Venue facts verified from the workshop site on 2026-06-27:
 - LinkGuard is a heuristic corpus-aware generalization method, not a formal privacy guarantee.
 - Utility is measured with issue labels, task retrieval, and lightweight fact checks, not full downstream deployment utility.
 - The GPT-5.5 audit is a time-stamped stress audit and should be described as corroborating evidence, not the main quantitative result.
-- The GPT-5.5 RAG-generation audit is currently a plan-only artifact; do not report generation metrics unless a live run is explicitly approved and verified.
+- The GPT-5.5 RAG-generation audit has only a compact 2-person pilot; do not report generation metrics unless the full live run is explicitly approved and verified.
 - The field-weighted attacker shows residual structured-context risk at `k=5`; the paper should not claim complete anonymization.
 
 ## Pre-Submission Checklist

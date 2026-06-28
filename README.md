@@ -158,9 +158,11 @@ conda run -n cross_linkage python src/openai_evidence_audit.py \
   --plan-only
 ```
 
-The GPT-5.5 RAG-generation audit is intentionally plan-only unless a new live
-API run is explicitly approved. The existing 3-person pilot is a debug artifact
-that exposed output truncation and should not be reported as a paper result.
+The GPT-5.5 RAG-generation audit is intentionally excluded from paper claims
+unless a full live run is explicitly approved. The earlier 3-person pilot is a
+debug artifact that exposed output truncation; the compact 2-person pilot fixes
+the prompt format and parses 10/10 responses, but the 12-person audit still has
+50 pending calls.
 
 Regenerate paper-facing tables, figures, and the result brief:
 

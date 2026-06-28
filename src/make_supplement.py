@@ -282,13 +282,13 @@ def write_repro_checklist(out_dir: Path) -> None:
         "",
         "Expected GPT-5.5 evidence status: `planned_calls=24`, `cached_calls=24`, `missing_calls=0`.",
         "",
-        "The optional GPT-5.5 RAG-generation audit is planned but not part of the default paper claims until a live run is explicitly approved:",
+        "The optional GPT-5.5 RAG-generation audit has a compact 2-person pilot cached, but the full 12-person run is not part of the default paper claims until the remaining calls are explicitly approved:",
         "",
         "```bash",
-        "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 900 --plan-only",
+        "conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 250 --plan-only",
         "```",
         "",
-        "Expected pre-approval status: `planned_calls=60`, `cached_calls=0`, `missing_calls=60`.",
+        "Expected pre-approval status after the compact pilot: `planned_calls=60`, `cached_calls=10`, `missing_calls=50`.",
         "",
     ]
     (out_dir / "reproducibility_checklist.md").write_text("\n".join(lines), encoding="utf-8")

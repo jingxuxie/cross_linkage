@@ -75,6 +75,8 @@ COARSE_FIELDS = [
     "age_band",
 ]
 
+JSON_TEXT_CONFIG = {"format": {"type": "json_object"}, "verbosity": "low"}
+
 
 def boolish(value: Any) -> bool | None:
     if isinstance(value, bool):
@@ -171,7 +173,7 @@ def build_cases(
 
 def compact_doc_text(doc: dict[str, Any]) -> str:
     text = " ".join(str(doc["text"]).split())
-    return text[:1600]
+    return text[:900]
 
 
 def rag_prompt(case: dict[str, Any]) -> tuple[str, str]:
@@ -179,7 +181,7 @@ def rag_prompt(case: dict[str, Any]) -> tuple[str, str]:
         "You are conducting a defensive privacy audit on synthetic transformed documents. "
         "All records are synthetic. Use only the retrieved transformed documents as evidence. "
         "The profile query is only the retrieval query; do not count facts that appear only in the query. "
-        "Return JSON only."
+        "Return compact valid JSON only."
     )
     doc_blocks = []
     for doc in case["retrieved_docs"]:
@@ -197,20 +199,20 @@ def rag_prompt(case: dict[str, Any]) -> tuple[str, str]:
         "Based only on the retrieved transformed documents, decide whether they likely contain records about "
         "the synthetic person described by the profile-like query. Then list what sensitive or quasi-identifying "
         "contexts the retrieved documents themselves expose.\n\n"
-        "Return exactly one JSON object with keys:\n"
+        "Return exactly one compact JSON object with keys:\n"
         "- likely_same_person: boolean.\n"
         "- confidence: number from 0 to 1.\n"
         "- uncertain: boolean.\n"
-        "- inferred_contexts: array of short strings found in retrieved documents.\n"
-        "- sensitive_contexts: array of objects with keys field, value, evidence, specificity. "
+        "- inferred_contexts: array of at most 3 strings, each at most 4 words, found in retrieved documents.\n"
+        "- sensitive_contexts: array of at most 3 objects with keys field, value, evidence, specificity. "
         "field must be one of city, occupation, employer_type, family_structure, medical_context, "
         "financial_context, legal_context, schedule_pattern, hobby_or_affiliation, rare_event, region, "
-        "job_family, age_band, coarse_context. value is the exposed context. evidence is a short quote "
-        "or paraphrase from retrieved documents, at most 12 words. specificity is high, medium, or low.\n"
-        "- exposed_domains: array chosen from healthcare, legal, financial, hr.\n"
-        "- summary: at most 30 words.\n"
-        "Keep the JSON compact. Include at most six sensitive_contexts, prioritizing the most specific "
-        "contexts that are actually present in the retrieved documents. Do not include markdown.\n"
+        "job_family, age_band, coarse_context. value is the exposed context, at most 6 words. evidence is a "
+        "quote or paraphrase from retrieved documents, at most 6 words. specificity is high, medium, or low.\n"
+        "- exposed_domains: array of at most 2 items chosen from healthcare, legal, financial, hr.\n"
+        "- summary: at most 10 words.\n"
+        "Prioritize the most specific contexts actually present in the retrieved documents. "
+        "Use [] when evidence is absent. Do not include markdown or explanation. Stop after the closing brace.\n"
     )
     return instructions, prompt
 
@@ -268,6 +270,7 @@ def build_plan(
     reasoning_effort: str,
     cases: list[dict[str, Any]],
     max_output_tokens: int,
+    text_config: dict[str, Any],
 ) -> pd.DataFrame:
     rows = []
     cache_dir = paths.root / "cache" / "api_responses"
@@ -282,6 +285,8 @@ def build_plan(
         }
         if reasoning_effort:
             payload["reasoning_effort"] = reasoning_effort
+        if text_config:
+            payload["text_config"] = text_config
         key = cache_key(payload)
         rows.append(
             {
@@ -296,6 +301,8 @@ def build_plan(
                 "input_chars": len(instructions) + len(prompt),
                 "max_output_tokens": max_output_tokens,
                 "reasoning_effort": reasoning_effort,
+                "text_format": text_config.get("format", {}).get("type", "") if text_config else "",
+                "text_verbosity": text_config.get("verbosity", "") if text_config else "",
             }
         )
     return pd.DataFrame(rows)
@@ -309,6 +316,7 @@ def run_rag_audit(
     persona_by_id: dict[str, dict[str, Any]],
     top_k: int,
     max_output_tokens: int,
+    text_config: dict[str, Any],
 ) -> pd.DataFrame:
     rows = []
     for case in cases:
@@ -318,6 +326,7 @@ def run_rag_audit(
             instructions,
             prompt,
             max_output_tokens=max_output_tokens,
+            text_config=text_config,
         )
         parse_success = isinstance(result.get("parsed"), dict)
         parsed = result.get("parsed") if parse_success else {}
@@ -388,6 +397,7 @@ def summarize(rows: pd.DataFrame, paths: Any, run_name: str) -> pd.DataFrame:
     ]
     for col in parsed_metric_cols:
         if col in work.columns:
+            work[col] = work[col].astype(object)
             work.loc[~work["parse_success"], col] = np.nan
     for col in ["likely_same_person", "uncertain"]:
         work[col] = work[col].map(boolish)
@@ -454,6 +464,7 @@ def write_plan(
     persona_ids: list[str],
     top_k: int,
     max_output_tokens: int,
+    text_config: dict[str, Any],
 ) -> Path:
     plan_path = openai_result_path(paths, run_name, "audit_plan", "csv")
     plan.to_csv(plan_path, index=False)
@@ -470,6 +481,8 @@ def write_plan(
         f"Reasoning effort: `{reasoning_effort or 'default'}`",
         f"Top retrieved documents: `{top_k}`",
         f"Max output tokens: `{max_output_tokens}`",
+        f"Text format: `{text_config.get('format', {}).get('type', 'text') if text_config else 'text'}`",
+        f"Text verbosity: `{text_config.get('verbosity', 'default') if text_config else 'default'}`",
         f"Git commit: `{git_commit(paths.root)}`",
         f"Personas planned: {', '.join(persona_ids)}",
         f"Total planned calls: {len(plan)}",
@@ -495,6 +508,7 @@ def write_notes(
     reasoning_effort: str,
     top_k: int,
     max_output_tokens: int,
+    text_config: dict[str, Any],
 ) -> Path:
     usage = pd.DataFrame(caller.usage_rows)
     usage_path = openai_result_path(paths, run_name, "audit_usage", "csv")
@@ -510,6 +524,8 @@ def write_notes(
         f"Reasoning effort: `{reasoning_effort or 'default'}`",
         f"Top retrieved documents: `{top_k}`",
         f"Max output tokens: `{max_output_tokens}`",
+        f"Text format: `{text_config.get('format', {}).get('type', 'text') if text_config else 'text'}`",
+        f"Text verbosity: `{text_config.get('verbosity', 'default') if text_config else 'default'}`",
         f"Started at UTC: `{started_at_utc}`",
         f"Git commit: `{git_commit(paths.root)}`",
         f"Persona count: {len(persona_ids)}",
@@ -521,6 +537,7 @@ def write_notes(
         "All records sent to the API are synthetic transformed benchmark records.",
         "All OpenAI response calls in this script pass `store=False` through `CachedOpenAI`.",
         "Cached response files are under `cache/api_responses/`.",
+        "If this notes file was regenerated from cache, `New API calls this run` may be zero even though the cached responses originated from an earlier capped live run.",
     ]
     summary_path = openai_result_path(paths, run_name, "rag_generation_summary", "md")
     if summary_path.exists():
@@ -556,7 +573,8 @@ def main() -> None:
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--max-calls", type=int, default=60)
     parser.add_argument("--reasoning-effort", default="")
-    parser.add_argument("--max-output-tokens", type=int, default=900)
+    parser.add_argument("--max-output-tokens", type=int, default=250)
+    parser.add_argument("--no-json-mode", action="store_true")
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -571,12 +589,14 @@ def main() -> None:
     persona_ids = select_personas(personas, args.max_personas, args.tier)
     conditions = [condition.strip() for condition in args.conditions.split(",") if condition.strip()]
     cases = build_cases(paths, personas, persona_ids, conditions, args.top_k)
+    text_config = {} if args.no_json_mode else JSON_TEXT_CONFIG
     plan = build_plan(
         paths,
         args.model,
         args.reasoning_effort.strip(),
         cases,
         args.max_output_tokens,
+        text_config,
     )
     plan_path = write_plan(
         paths,
@@ -587,6 +607,7 @@ def main() -> None:
         persona_ids,
         args.top_k,
         args.max_output_tokens,
+        text_config,
     )
     if args.plan_only:
         print(f"model={args.model}")
@@ -617,6 +638,7 @@ def main() -> None:
         persona_by_id,
         args.top_k,
         args.max_output_tokens,
+        text_config,
     )
     summarize(rows, paths, run_name)
     notes_path = write_notes(
@@ -629,6 +651,7 @@ def main() -> None:
         args.reasoning_effort.strip(),
         args.top_k,
         args.max_output_tokens,
+        text_config,
     )
     print(f"model={args.model}")
     print(f"run_name={run_name}")
