@@ -238,6 +238,7 @@ def write_repro_checklist(out_dir: Path) -> None:
         "```bash",
         "conda run -n cross_linkage python src/validate_benchmark.py --config configs/sprint.yaml",
         "conda run -n cross_linkage python src/corpus_awareness_ablation.py --config configs/sprint.yaml --target-k 5",
+        "conda run -n cross_linkage python src/rag_query_sensitivity.py --config configs/sprint.yaml",
         "conda run -n cross_linkage python src/noisy_style_stress.py --config configs/sprint.yaml",
         "conda run -n cross_linkage python src/make_paper_assets.py --config configs/sprint.yaml",
         "(cd paper && latexmk -g -pdf -interaction=nonstopmode -halt-on-error short_paper.tex)",
@@ -300,6 +301,7 @@ def write_claim_trace(
     main: pd.DataFrame,
     noisy: pd.DataFrame,
     rag_tier: pd.DataFrame,
+    rag_query: pd.DataFrame,
     rag_context_tier: pd.DataFrame,
     sensitivity: pd.DataFrame,
     corpus_awareness: pd.DataFrame,
@@ -326,6 +328,14 @@ def write_claim_trace(
     ].iloc[0]
     rag_direct = rag_tier[
         (rag_tier["condition"] == "c1_direct_redaction") & (rag_tier["risk_tier"] == "T3")
+    ].iloc[0]
+    rag_query_direct_verbose = rag_query[
+        (rag_query["condition"] == "c1_direct_redaction")
+        & (rag_query["query_type"] == "verbose")
+    ].iloc[0]
+    rag_query_lg_verbose = rag_query[
+        (rag_query["condition"] == "c5_linkguard")
+        & (rag_query["query_type"] == "verbose")
     ].iloc[0]
     rag_context_direct = rag_context_tier[
         (rag_context_tier["condition"] == "c1_direct_redaction")
@@ -376,6 +386,11 @@ def write_claim_trace(
                 "claim": "Profile-query RAG retrieval exposes high-linkage direct-redacted records.",
                 "evidence": f"T3 direct Hit@5 {fmt(rag_direct['hit_at_5'])}, LinkGuard Hit@5 {fmt(rag_lg['hit_at_5'])}",
                 "artifact": "results/rag_exposure_by_tier.csv",
+            },
+            {
+                "claim": "Generated profile-like queries preserve the RAG exposure ordering.",
+                "evidence": f"verbose direct Hit@5 {fmt(rag_query_direct_verbose['hit_at_5'])}, LinkGuard Hit@5 {fmt(rag_query_lg_verbose['hit_at_5'])}",
+                "artifact": "results/rag_query_sensitivity.csv",
             },
             {
                 "claim": "Retrieved profile-query contexts expose quasi-identifiers under direct baselines.",
@@ -437,6 +452,7 @@ def main() -> None:
     noisy = pd.read_csv(paths.results / "noisy_style_stress" / "noisy_style_results.csv")
     noisy_diag = pd.read_csv(paths.results / "noisy_style_stress" / "noisy_style_diagnostic_summary.csv").iloc[0]
     rag_tier = pd.read_csv(paths.results / "rag_exposure_by_tier.csv")
+    rag_query = pd.read_csv(paths.results / "rag_query_sensitivity.csv")
     rag_context_tier = pd.read_csv(paths.results / "rag_context_recovery_by_tier.csv")
     sensitivity = pd.read_csv(paths.results / "linkguard_sensitivity.csv")
     corpus_awareness = pd.read_csv(paths.results / "corpus_awareness_ablation.csv")
@@ -450,6 +466,7 @@ def main() -> None:
         main_results,
         noisy,
         rag_tier,
+        rag_query,
         rag_context_tier,
         sensitivity,
         corpus_awareness,

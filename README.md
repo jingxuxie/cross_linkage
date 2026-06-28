@@ -86,6 +86,12 @@ Run the no-API profile-query RAG exposure diagnostic:
 conda run -n cross_linkage python src/rag_exposure.py --config configs/sprint.yaml
 ```
 
+Run the no-API generated-query RAG exposure sensitivity:
+
+```bash
+conda run -n cross_linkage python src/rag_query_sensitivity.py --config configs/sprint.yaml
+```
+
 Run the no-API top-5 RAG context-recovery scan:
 
 ```bash
@@ -223,6 +229,7 @@ Main outputs:
 - `results/utility_stress.csv`
 - `results/rag_exposure.csv`
 - `results/rag_exposure_by_tier.csv`
+- `results/rag_query_sensitivity.csv`
 - `results/rag_context_recovery_by_tier.csv`
 - `results/noisy_style_stress/noisy_style_stress.md`
 - `results/noisy_style_stress/noisy_style_results.csv`

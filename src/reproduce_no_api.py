@@ -110,6 +110,11 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
             root,
         ),
         Step(
+            "rag_query_sensitivity",
+            python_cmd(env, "src/rag_query_sensitivity.py", "--config", config),
+            root,
+        ),
+        Step(
             "rag_context_recovery",
             python_cmd(env, "src/rag_context_recovery.py", "--config", config),
             root,

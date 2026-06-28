@@ -203,6 +203,17 @@
 | C5 LG        | 0.312 | 0.000    | 0.180     | 0.259 |
 | C6 Agg       | 0.031 | 0.000    | 0.031     | 0.041 |
 
+## Generated-Query RAG Sensitivity
+
+- Deterministic generated queries preserve the RAG ordering: verbose-query Hit@5 is 0.375 for direct redaction, 0.375 for the document-local proxy, and 0.260 for LinkGuard.
+- The short role-region query is a weaker attack but still separates direct redaction (0.354) from LinkGuard (0.021).
+
+| Query   | C1 Redact Hit@5 | C1b Presidio Hit@5 | C4 Local Hit@5 | C5 LG Hit@5 | C6 Agg Hit@5 |
+| ------- | --------------- | ------------------ | -------------- | ----------- | ------------ |
+| Short   | 0.354           | 0.323              | 0.438          | 0.021       | 0.042        |
+| Medium  | 0.365           | 0.354              | 0.333          | 0.083       | 0.042        |
+| Verbose | 0.375           | 0.375              | 0.375          | 0.260       | 0.031        |
+
 ## RAG Context Recovery
 
 - In T3 top-5 retrieval results, direct redaction exposes 9.781 exact quasi-identifier fields on average, Presidio exposes 8.625, and the document-local proxy exposes 7.844 exact / 9.469 coarse fields.

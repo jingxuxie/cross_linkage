@@ -28,6 +28,7 @@ This executes:
 - LinkGuard residual failure analysis;
 - body-only utility stress test;
 - profile-query RAG exposure diagnostic;
+- generated-query RAG exposure sensitivity;
 - noisy synthetic style stress test;
 - cached-only OpenAI audit plan check;
 - paper table and figure generation;
@@ -166,7 +167,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=389 failures=0`.
+Expected current result: `checks=408 failures=0`.
 
 The verifier writes:
 

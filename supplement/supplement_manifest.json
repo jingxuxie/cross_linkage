@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-28T12:21:05+00:00",
+  "created_utc": "2026-06-28T12:28:00+00:00",
   "files": [
     {
       "bytes": 507,
@@ -17,14 +17,14 @@
       "sha256": "f00cd5a08de0d21f834fb9bbf08892bd52715f0caafab481263c31cce1a7696a"
     },
     {
-      "bytes": 4362,
+      "bytes": 4454,
       "path": "supplement/reproducibility_checklist.md",
-      "sha256": "ba6637e441160d21dd0697a13c98ce7e5d841253a6c749f3aedf5babc6490e56"
+      "sha256": "cf3ecd28f62852372078ce849deaa28cd7172b22f1a86d55347704df7c59efb9"
     },
     {
-      "bytes": 2797,
+      "bytes": 3023,
       "path": "supplement/claim_trace.md",
-      "sha256": "f6fe80f8c91fcb2398798947417885fb48b2d365d7252438594f6810b423f386"
+      "sha256": "ff052c96ab647de52a63cd3e25ec131feaf6597050f88f3a6db32e972f1ee930"
     }
   ]
 }

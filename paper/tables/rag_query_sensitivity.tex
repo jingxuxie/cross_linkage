@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Generated-query RAG exposure by query type.}
+\label{tab:rag_query_sensitivity}
+\begin{tabular}{lrrrrr}
+\toprule
+Query & C1 Redact Hit@5 & C1b Presidio Hit@5 & C4 Local Hit@5 & C5 LG Hit@5 & C6 Agg Hit@5 \\
+\midrule
+Short & 0.354 & 0.323 & 0.438 & 0.021 & 0.042 \\
+Medium & 0.365 & 0.354 & 0.333 & 0.083 & 0.042 \\
+Verbose & 0.375 & 0.375 & 0.375 & 0.260 & 0.031 \\
+\bottomrule
+\end{tabular}
+\end{table}

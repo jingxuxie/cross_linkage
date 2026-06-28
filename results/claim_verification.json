@@ -176,6 +176,46 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:data/generated_profile_queries.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "111648",
+    "source": "data/generated_profile_queries.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_query_sensitivity.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2388",
+    "source": "results/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_query_sensitivity_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "240827",
+    "source": "results/rag_query_sensitivity_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_query_sensitivity_by_tier.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4867",
+    "source": "results/rag_query_sensitivity_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_query_sensitivity.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4519",
+    "source": "results/rag_query_sensitivity.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/rag_context_recovery.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -531,7 +571,7 @@
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "23132",
+    "observed": "23946",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -637,6 +677,22 @@
     "expected": "",
     "observed": "477",
     "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/rag_query_sensitivity.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "325",
+    "source": "paper/tables/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/rag_query_sensitivity.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "475",
+    "source": "paper/tables/rag_query_sensitivity.tex",
     "status": "PASS"
   },
   {
@@ -835,7 +891,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4362",
+    "observed": "4454",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -843,7 +899,7 @@
     "check_id": "artifact:supplement/claim_trace.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "2797",
+    "observed": "3023",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1338,16 +1394,16 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "ba6637e441160d21dd0697a13c98ce7e5d841253a6c749f3aedf5babc6490e56",
-    "observed": "ba6637e441160d21dd0697a13c98ce7e5d841253a6c749f3aedf5babc6490e56",
+    "expected": "cf3ecd28f62852372078ce849deaa28cd7172b22f1a86d55347704df7c59efb9",
+    "observed": "cf3ecd28f62852372078ce849deaa28cd7172b22f1a86d55347704df7c59efb9",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
   {
     "check_id": "supplement:claim_trace.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "f6fe80f8c91fcb2398798947417885fb48b2d365d7252438594f6810b423f386",
-    "observed": "f6fe80f8c91fcb2398798947417885fb48b2d365d7252438594f6810b423f386",
+    "expected": "ff052c96ab647de52a63cd3e25ec131feaf6597050f88f3a6db32e972f1ee930",
+    "observed": "ff052c96ab647de52a63cd3e25ec131feaf6597050f88f3a6db32e972f1ee930",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1452,6 +1508,14 @@
     "detail": "reproducibility checklist contains src/corpus_awareness_ablation.py",
     "expected": "src/corpus_awareness_ablation.py",
     "observed": "src/corpus_awareness_ablation.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/rag_query_sensitivity.py",
+    "detail": "reproducibility checklist contains src/rag_query_sensitivity.py",
+    "expected": "src/rag_query_sensitivity.py",
+    "observed": "src/rag_query_sensitivity.py",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1588,6 +1652,22 @@
     "detail": "claim trace contains results/corpus_awareness_ablation.csv",
     "expected": "results/corpus_awareness_ablation.csv",
     "observed": "results/corpus_awareness_ablation.csv",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Generated profile-like q",
+    "detail": "claim trace contains Generated profile-like queries preserve the RAG exposure ordering",
+    "expected": "Generated profile-like queries preserve the RAG exposure ordering",
+    "observed": "Generated profile-like queries preserve the RAG exposure ordering",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:results/rag_query_sensit",
+    "detail": "claim trace contains results/rag_query_sensitivity.csv",
+    "expected": "results/rag_query_sensitivity.csv",
+    "observed": "results/rag_query_sensitivity.csv",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -2213,6 +2293,54 @@
     "expected": "0.000",
     "observed": "Multi@10 to 0.000",
     "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:generated_query_shape",
+    "detail": "generated profile-query file has three deterministic query types per held-out persona",
+    "expected": "96 personas x 3 query types",
+    "observed": "288 rows, query_types=['medium', 'short', 'verbose']",
+    "source": "data/generated_profile_queries.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:summary_shape",
+    "detail": "generated-query RAG sensitivity covers five conditions and three query types",
+    "expected": "15 summary rows and 1440 per-query rows",
+    "observed": "15 summary rows, 1440 rows",
+    "source": "results/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:short_direct_hit5",
+    "detail": "paper-ready result brief contains generated-query RAG value 0.354",
+    "expected": "0.354",
+    "observed": "0.354",
+    "source": "results/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:short_lg_hit5",
+    "detail": "paper-ready result brief contains generated-query RAG value 0.021",
+    "expected": "0.021",
+    "observed": "0.021",
+    "source": "results/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:verbose_direct_hit5",
+    "detail": "paper-ready result brief contains generated-query RAG value 0.375",
+    "expected": "0.375",
+    "observed": "0.375",
+    "source": "results/rag_query_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag_query:verbose_lg_hit5",
+    "detail": "paper-ready result brief contains generated-query RAG value 0.260",
+    "expected": "0.260",
+    "observed": "0.260",
+    "source": "results/rag_query_sensitivity.csv",
     "status": "PASS"
   },
   {
@@ -2850,7 +2978,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=389 failures=0`.",
+    "expected": "Expected current result: `checks=408 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -2858,7 +2986,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=389 failures=0`.",
+    "expected": "Main claim verifier: `checks=408 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
@@ -3061,6 +3189,30 @@
     "expected": "1.000",
     "observed": "1.000",
     "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_query_sensitivity.tex:0.354",
+    "detail": "generated table contains 0.354",
+    "expected": "0.354",
+    "observed": "0.354",
+    "source": "paper/tables/rag_query_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_query_sensitivity.tex:0.021",
+    "detail": "generated table contains 0.021",
+    "expected": "0.021",
+    "observed": "0.021",
+    "source": "paper/tables/rag_query_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_query_sensitivity.tex:0.260",
+    "detail": "generated table contains 0.260",
+    "expected": "0.260",
+    "observed": "0.260",
+    "source": "paper/tables/rag_query_sensitivity.tex",
     "status": "PASS"
   },
   {

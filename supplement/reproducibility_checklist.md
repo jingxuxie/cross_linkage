@@ -21,6 +21,7 @@ conda run -n cross_linkage python src/reproduce_no_api.py --dry-run
 ```bash
 conda run -n cross_linkage python src/validate_benchmark.py --config configs/sprint.yaml
 conda run -n cross_linkage python src/corpus_awareness_ablation.py --config configs/sprint.yaml --target-k 5
+conda run -n cross_linkage python src/rag_query_sensitivity.py --config configs/sprint.yaml
 conda run -n cross_linkage python src/noisy_style_stress.py --config configs/sprint.yaml
 conda run -n cross_linkage python src/make_paper_assets.py --config configs/sprint.yaml
 (cd paper && latexmk -g -pdf -interaction=nonstopmode -halt-on-error short_paper.tex)

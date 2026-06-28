@@ -443,6 +443,23 @@ def paper_rag_t3_table(df: pd.DataFrame) -> pd.DataFrame:
     return focus.sort_values("_order").drop(columns="_order")
 
 
+def paper_rag_query_table(df: pd.DataFrame) -> pd.DataFrame:
+    focus = df[df["condition"].isin(RAG_FOCUS_CONDITIONS)].copy()
+    focus["Cond."] = focus["condition"].map(PAPER_LABELS).fillna(focus["condition"])
+    focus["Query"] = focus["query_label"]
+    pivot = focus.pivot(index="Query", columns="Cond.", values="hit_at_5")
+    condition_order = [PAPER_LABELS[condition] for condition in RAG_FOCUS_CONDITIONS]
+    query_order = ["Short", "Medium", "Verbose"]
+    pivot = pivot.reindex([query for query in query_order if query in pivot.index])
+    pivot = pivot.reindex([label for label in condition_order if label in pivot.columns], axis=1)
+    pivot = pivot.reset_index()
+    pivot.columns = [
+        col if col == "Query" else f"{col} Hit@5"
+        for col in pivot.columns
+    ]
+    return pivot
+
+
 def paper_rag_context_t3_table(df: pd.DataFrame) -> pd.DataFrame:
     focus = df[
         (df["condition"].isin(RAG_FOCUS_CONDITIONS))
@@ -1010,6 +1027,36 @@ def write_summary(paths: any) -> None:
                 f"- For high-linkage T3 personas, direct redaction, Presidio, and the document-local proxy all have Hit@5 {rag_value('c1_direct_redaction', 'hit_at_5', 'T3'):.3f} and Multi@10 {rag_value('c1_direct_redaction', 'multi_doc_at_10', 'T3'):.3f}; LinkGuard reduces T3 Hit@5 to {rag_value('c5_linkguard', 'hit_at_5', 'T3'):.3f} and Multi@10 to {rag_value('c5_linkguard', 'multi_doc_at_10', 'T3'):.3f}.",
                 "",
                 dataframe_to_markdown(rag_t3_table, floatfmt=".3f"),
+            ]
+        )
+    rag_query_path = paths.results / "rag_query_sensitivity.csv"
+    if rag_query_path.exists():
+        rag_query = pd.read_csv(rag_query_path)
+        rag_query_table = paper_rag_query_table(rag_query)
+        rag_query_table.to_csv(tables_dir / "rag_query_sensitivity.csv", index=False)
+        to_latex_table(
+            rag_query_table,
+            tables_dir / "rag_query_sensitivity.tex",
+            "Generated-query RAG exposure by query type.",
+            "tab:rag_query_sensitivity",
+        )
+
+        def query_value(query_type: str, condition: str, metric: str = "hit_at_5") -> float:
+            match = rag_query[
+                (rag_query["query_type"] == query_type)
+                & (rag_query["condition"] == condition)
+            ]
+            return float(match[metric].iloc[0])
+
+        lines.extend(
+            [
+                "",
+                "## Generated-Query RAG Sensitivity",
+                "",
+                f"- Deterministic generated queries preserve the RAG ordering: verbose-query Hit@5 is {query_value('verbose', 'c1_direct_redaction'):.3f} for direct redaction, {query_value('verbose', 'c4_doc_local_anon'):.3f} for the document-local proxy, and {query_value('verbose', 'c5_linkguard'):.3f} for LinkGuard.",
+                f"- The short role-region query is a weaker attack but still separates direct redaction ({query_value('short', 'c1_direct_redaction'):.3f}) from LinkGuard ({query_value('short', 'c5_linkguard'):.3f}).",
+                "",
+                dataframe_to_markdown(rag_query_table, floatfmt=".3f"),
             ]
         )
     rag_context_path = paths.results / "rag_context_recovery_by_tier.csv"

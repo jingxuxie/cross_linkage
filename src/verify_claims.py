@@ -196,6 +196,11 @@ def main() -> None:
         "results/rag_exposure.csv",
         "results/rag_exposure_rows.csv",
         "results/rag_exposure_by_tier.csv",
+        "data/generated_profile_queries.jsonl",
+        "results/rag_query_sensitivity.csv",
+        "results/rag_query_sensitivity_rows.csv",
+        "results/rag_query_sensitivity_by_tier.csv",
+        "results/rag_query_sensitivity.md",
         "results/rag_context_recovery.csv",
         "results/rag_context_recovery_rows.csv",
         "results/rag_context_recovery_field_rows.csv",
@@ -254,6 +259,8 @@ def main() -> None:
         "paper/tables/gpt55_doclocal_bootstrap_ci.csv",
         "paper/tables/gpt55_evidence_signals.tex",
         "paper/tables/rag_exposure_t3.tex",
+        "paper/tables/rag_query_sensitivity.csv",
+        "paper/tables/rag_query_sensitivity.tex",
         "paper/tables/rag_context_recovery_t3.tex",
         "paper/tables/noisy_style_stress.tex",
         "paper/short_paper.pdf",
@@ -719,6 +726,7 @@ def main() -> None:
     for command_fragment in [
         "src/reproduce_no_api.py",
         "src/corpus_awareness_ablation.py",
+        "src/rag_query_sensitivity.py",
         "src/noisy_style_stress.py",
         "src/make_supplement.py",
         "src/verify_claims.py",
@@ -760,6 +768,8 @@ def main() -> None:
         "LinkGuard improves the privacy-utility frontier",
         "Corpus co-occurrence statistics matter for LinkGuard planning",
         "results/corpus_awareness_ablation.csv",
+        "Generated profile-like queries preserve the RAG exposure ordering",
+        "results/rag_query_sensitivity.csv",
         "Noisy-style synthetic rerendering preserves the ordering",
         "results/noisy_style_stress/noisy_style_results.csv",
     ]:
@@ -1288,6 +1298,60 @@ def main() -> None:
             observed=fragment if contains(paper_text, fragment) else "missing",
         )
 
+    generated_queries = read_jsonl(root / cfg["data_dir"] / "generated_profile_queries.jsonl")
+    query_types = {row_data["query_type"] for row_data in generated_queries}
+    add_check(
+        checks,
+        "rag_query:generated_query_shape",
+        len(generated_queries) == 288
+        and query_types == {"short", "medium", "verbose"}
+        and len({row_data["persona_id"] for row_data in generated_queries}) == 96,
+        "generated profile-query file has three deterministic query types per held-out persona",
+        "data/generated_profile_queries.jsonl",
+        expected="96 personas x 3 query types",
+        observed=f"{len(generated_queries)} rows, query_types={sorted(query_types)}",
+    )
+    rag_query = pd.read_csv(results_dir / "rag_query_sensitivity.csv")
+    rag_query_rows = pd.read_csv(results_dir / "rag_query_sensitivity_rows.csv")
+    add_check(
+        checks,
+        "rag_query:summary_shape",
+        len(rag_query) == 15
+        and len(rag_query_rows) == 1440
+        and set(rag_query["query_type"]) == {"short", "medium", "verbose"},
+        "generated-query RAG sensitivity covers five conditions and three query types",
+        "results/rag_query_sensitivity.csv",
+        expected="15 summary rows and 1440 per-query rows",
+        observed=f"{len(rag_query)} summary rows, {len(rag_query_rows)} rows",
+    )
+
+    def rag_query_value(condition: str, query_type: str, metric: str = "hit_at_5") -> float:
+        match = rag_query[
+            (rag_query["condition"] == condition)
+            & (rag_query["query_type"] == query_type)
+        ]
+        if match.empty:
+            raise KeyError(f"{condition}:{query_type}:{metric}")
+        return float(match[metric].iloc[0])
+
+    result_brief_for_rag = (results_dir / "paper_ready_summary.md").read_text(encoding="utf-8")
+    for check_id, value in {
+        "rag_query:short_direct_hit5": rag_query_value("c1_direct_redaction", "short"),
+        "rag_query:short_lg_hit5": rag_query_value("c5_linkguard", "short"),
+        "rag_query:verbose_direct_hit5": rag_query_value("c1_direct_redaction", "verbose"),
+        "rag_query:verbose_lg_hit5": rag_query_value("c5_linkguard", "verbose"),
+    }.items():
+        fragment = fmt(value)
+        add_check(
+            checks,
+            check_id,
+            contains(result_brief_for_rag, fragment),
+            f"paper-ready result brief contains generated-query RAG value {fragment}",
+            "results/rag_query_sensitivity.csv",
+            expected=fragment,
+            observed=fragment if contains(result_brief_for_rag, fragment) else "missing",
+        )
+
     rag_context = pd.read_csv(results_dir / "rag_context_recovery_by_tier.csv")
 
     def rag_context_t3_value(condition: str, metric: str) -> float:
@@ -1611,23 +1675,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=389 failures=0`." in reproduce_text,
+        "Expected current result: `checks=408 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=389 failures=0`.",
+        expected="Expected current result: `checks=408 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=389 failures=0`." in reproduce_text
+        if "Expected current result: `checks=408 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=389 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=408 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=389 failures=0`.",
+        expected="Main claim verifier: `checks=408 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=389 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=408 failures=0`." in readiness_text
         else "missing",
     )
     add_check(
@@ -1689,6 +1753,11 @@ def main() -> None:
         "paper/tables/rag_exposure_t3.tex": [
             fmt(rag_t3_value("c5_linkguard", "hit_at_5")),
             fmt(rag_t3_value("c1_direct_redaction", "multi_doc_at_10")),
+        ],
+        "paper/tables/rag_query_sensitivity.tex": [
+            fmt(rag_query_value("c1_direct_redaction", "short")),
+            fmt(rag_query_value("c5_linkguard", "short")),
+            fmt(rag_query_value("c5_linkguard", "verbose")),
         ],
         "paper/tables/rag_context_recovery_t3.tex": [
             fmt(rag_context_t3_value("c1_direct_redaction", "exact_fields_recovered")),
