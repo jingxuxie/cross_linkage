@@ -2040,6 +2040,22 @@
     "status": "PASS"
   },
   {
+    "check_id": "supplement:claim_trace:GPT-5.5 RAG generation p",
+    "detail": "claim trace contains GPT-5.5 RAG generation preserves the exposure ordering",
+    "expected": "GPT-5.5 RAG generation preserves the exposure ordering",
+    "observed": "GPT-5.5 RAG generation preserves the exposure ordering",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:results/openai_gpt55_rag",
+    "detail": "claim trace contains results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+    "expected": "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+    "observed": "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "supplement:claim_trace:Noisy-style synthetic re",
     "detail": "claim trace contains Noisy-style synthetic rerendering preserves the ordering",
     "expected": "Noisy-style synthetic rerendering preserves the ordering",
@@ -3560,6 +3576,14 @@
     "status": "PASS"
   },
   {
+    "check_id": "paper:abstract_rag_generation_stress_audit",
+    "detail": "both paper drafts mention completed GPT-5.5 auxiliary and RAG-generation stress audits in the abstract",
+    "expected": "Cached GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering",
+    "observed": "Cached GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering",
+    "source": "paper/short_paper.tex;paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "result_brief:gpt55_caveat_current",
     "detail": "paper-ready result brief has current GPT-5.5 audit caveat language",
     "expected": "current GPT-5.5 caveat and no stale small-audit caveat",
@@ -3570,7 +3594,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=482 failures=0`.",
+    "expected": "Expected current result: `checks=486 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -3578,8 +3602,16 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=482 failures=0`.",
+    "expected": "Main claim verifier: `checks=486 failures=0`.",
     "observed": "ok",
+    "source": "SUBMISSION_READINESS.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_readiness:rag_generation_claim_ready",
+    "detail": "submission readiness lists the completed GPT-5.5 RAG-generation claim",
+    "expected": "GPT-5.5 RAG generation over retrieved synthetic records preserves the exposure ordering.",
+    "observed": "GPT-5.5 RAG generation over retrieved synthetic records preserves the exposure ordering.",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
   },

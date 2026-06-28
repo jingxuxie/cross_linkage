@@ -799,6 +799,8 @@ def main() -> None:
         "results/corpus_awareness_ablation.csv",
         "Generated profile-like queries preserve the RAG exposure ordering",
         "results/rag_query_sensitivity.csv",
+        "GPT-5.5 RAG generation preserves the exposure ordering",
+        "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
         "Noisy-style synthetic rerendering preserves the ordering",
         "results/noisy_style_stress/noisy_style_results.csv",
     ]:
@@ -1919,6 +1921,18 @@ def main() -> None:
         expected=f"completed RAG stress audit documented with {expected_rag_cached}/60 cached calls",
         observed="ok" if "GPT-5.5 RAG Generation Stress Audit" in result_brief else "missing",
     )
+    abstract_rag_fragment = "Cached GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering"
+    add_check(
+        checks,
+        "paper:abstract_rag_generation_stress_audit",
+        contains(paper_text, abstract_rag_fragment) and contains(colm_text, abstract_rag_fragment),
+        "both paper drafts mention completed GPT-5.5 auxiliary and RAG-generation stress audits in the abstract",
+        "paper/short_paper.tex;paper/colm2026_submission.tex",
+        expected=abstract_rag_fragment,
+        observed=abstract_rag_fragment
+        if contains(paper_text, abstract_rag_fragment) and contains(colm_text, abstract_rag_fragment)
+        else "missing",
+    )
     add_check(
         checks,
         "result_brief:gpt55_caveat_current",
@@ -1937,24 +1951,36 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=482 failures=0`." in reproduce_text,
+        "Expected current result: `checks=486 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=482 failures=0`.",
+        expected="Expected current result: `checks=486 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=482 failures=0`." in reproduce_text
+        if "Expected current result: `checks=486 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=482 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=486 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=482 failures=0`.",
+        expected="Main claim verifier: `checks=486 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=482 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=486 failures=0`." in readiness_text
         else "missing",
+    )
+    readiness_rag_claim = (
+        "GPT-5.5 RAG generation over retrieved synthetic records preserves the exposure ordering."
+    )
+    add_check(
+        checks,
+        "submission_readiness:rag_generation_claim_ready",
+        readiness_rag_claim in readiness_text,
+        "submission readiness lists the completed GPT-5.5 RAG-generation claim",
+        "SUBMISSION_READINESS.md",
+        expected=readiness_rag_claim,
+        observed=readiness_rag_claim if readiness_rag_claim in readiness_text else "missing",
     )
     add_check(
         checks,

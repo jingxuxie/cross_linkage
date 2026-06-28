@@ -285,7 +285,7 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 482.
+- Claim verifier checks: 486.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
