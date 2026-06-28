@@ -80,6 +80,38 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:results/corpus_awareness_ablation.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3261",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/corpus_awareness_ablation_by_tier.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2983",
+    "source": "results/corpus_awareness_ablation_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/corpus_awareness_ablation_log.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "330614",
+    "source": "results/corpus_awareness_ablation_log.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/corpus_awareness_ablation.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1553",
+    "source": "results/corpus_awareness_ablation.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/multiseed/claim_summary.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -499,7 +531,7 @@
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "21768",
+    "observed": "23132",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -525,6 +557,22 @@
     "expected": "",
     "observed": "814",
     "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/corpus_awareness_ablation.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "695",
+    "source": "paper/tables/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/corpus_awareness_ablation.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "690",
+    "source": "paper/tables/corpus_awareness_ablation.tex",
     "status": "PASS"
   },
   {
@@ -787,7 +835,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4253",
+    "observed": "4362",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -795,7 +843,7 @@
     "check_id": "artifact:supplement/claim_trace.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "2571",
+    "observed": "2797",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1290,16 +1338,16 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "1b6d2947fc88d7a7bc05ea16c742cb4c2ab7c14c856bc1fd665d7b18d15a85e8",
-    "observed": "1b6d2947fc88d7a7bc05ea16c742cb4c2ab7c14c856bc1fd665d7b18d15a85e8",
+    "expected": "ba6637e441160d21dd0697a13c98ce7e5d841253a6c749f3aedf5babc6490e56",
+    "observed": "ba6637e441160d21dd0697a13c98ce7e5d841253a6c749f3aedf5babc6490e56",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
   {
     "check_id": "supplement:claim_trace.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "73acd59c28ebd51030bd5003b8f1f65f51fec8be9e38c2a077cb06093be2c4ef",
-    "observed": "73acd59c28ebd51030bd5003b8f1f65f51fec8be9e38c2a077cb06093be2c4ef",
+    "expected": "f6fe80f8c91fcb2398798947417885fb48b2d365d7252438594f6810b423f386",
+    "observed": "f6fe80f8c91fcb2398798947417885fb48b2d365d7252438594f6810b423f386",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1396,6 +1444,14 @@
     "detail": "reproducibility checklist contains src/reproduce_no_api.py",
     "expected": "src/reproduce_no_api.py",
     "observed": "src/reproduce_no_api.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/corpus_awareness_ablation.py",
+    "detail": "reproducibility checklist contains src/corpus_awareness_ablation.py",
+    "expected": "src/corpus_awareness_ablation.py",
+    "observed": "src/corpus_awareness_ablation.py",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1516,6 +1572,22 @@
     "detail": "claim trace contains LinkGuard improves the privacy-utility frontier",
     "expected": "LinkGuard improves the privacy-utility frontier",
     "observed": "LinkGuard improves the privacy-utility frontier",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Corpus co-occurrence sta",
+    "detail": "claim trace contains Corpus co-occurrence statistics matter for LinkGuard planning",
+    "expected": "Corpus co-occurrence statistics matter for LinkGuard planning",
+    "observed": "Corpus co-occurrence statistics matter for LinkGuard planning",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:results/corpus_awareness",
+    "detail": "claim trace contains results/corpus_awareness_ablation.csv",
+    "expected": "results/corpus_awareness_ablation.csv",
+    "observed": "results/corpus_awareness_ablation.csv",
     "source": "supplement/claim_trace.md",
     "status": "PASS"
   },
@@ -1725,6 +1797,62 @@
     "expected": "0.104",
     "observed": "0.104",
     "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:variant_shape",
+    "detail": "corpus-awareness ablation contains the four planned target-k variants",
+    "expected": "4 variants at target k=5",
+    "observed": "4 variants, target_k=[5]",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:true_reaches_target",
+    "detail": "true corpus-aware LinkGuard reaches target k for every persona",
+    "expected": "min_true_estimated_k >= 5 and target_k_coverage = 1",
+    "observed": "min=5.000, coverage=1.000",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:shuffled_breaks_certificate",
+    "detail": "shuffled co-occurrence planning breaks the true target-k certificate for at least one persona",
+    "expected": "target_k_coverage < 1 and min_true_estimated_k < 5",
+    "observed": "min=1.000, coverage=0.917",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:true_aux",
+    "detail": "paper-ready result brief contains corpus-awareness value 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:shuffled_aux",
+    "detail": "paper-ready result brief contains corpus-awareness value 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:global_aux",
+    "detail": "paper-ready result brief contains corpus-awareness value 0.198",
+    "expected": "0.198",
+    "observed": "0.198",
+    "source": "results/corpus_awareness_ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus_awareness:suppression_aux",
+    "detail": "paper-ready result brief contains corpus-awareness value 0.115",
+    "expected": "0.115",
+    "observed": "0.115",
+    "source": "results/corpus_awareness_ablation.csv",
     "status": "PASS"
   },
   {
@@ -2722,7 +2850,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=369 failures=0`.",
+    "expected": "Expected current result: `checks=389 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -2730,7 +2858,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=369 failures=0`.",
+    "expected": "Main claim verifier: `checks=389 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
@@ -2869,6 +2997,38 @@
     "expected": "0.104",
     "observed": "0.104",
     "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/corpus_awareness_ablation.tex:0.042",
+    "detail": "generated table contains 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "paper/tables/corpus_awareness_ablation.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/corpus_awareness_ablation.tex:0.042",
+    "detail": "generated table contains 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "paper/tables/corpus_awareness_ablation.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/corpus_awareness_ablation.tex:0.917",
+    "detail": "generated table contains 0.917",
+    "expected": "0.917",
+    "observed": "0.917",
+    "source": "paper/tables/corpus_awareness_ablation.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/corpus_awareness_ablation.tex:0.526",
+    "detail": "generated table contains 0.526",
+    "expected": "0.526",
+    "observed": "0.526",
+    "source": "paper/tables/corpus_awareness_ablation.tex",
     "status": "PASS"
   },
   {

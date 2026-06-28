@@ -39,6 +39,12 @@ Run the LinkGuard target-k sensitivity experiment:
 conda run -n cross_linkage python src/linkguard_sensitivity.py --config configs/sprint.yaml --target-ks 1,2,3,5,8,12,20
 ```
 
+Run the no-API corpus-awareness ablation for LinkGuard:
+
+```bash
+conda run -n cross_linkage python src/corpus_awareness_ablation.py --config configs/sprint.yaml --target-k 5
+```
+
 Run the no-API multi-seed robustness sweep:
 
 ```bash
@@ -210,6 +216,7 @@ Main outputs:
 - `results/ablation.csv`
 - `results/linkguard_sensitivity.csv`
 - `results/linkguard_sensitivity_field_rows.csv`
+- `results/corpus_awareness_ablation.csv`
 - `results/candidate_sensitivity.csv`
 - `results/attack_sensitivity.csv`
 - `results/linkguard_failure_analysis.md`

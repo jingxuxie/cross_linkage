@@ -250,6 +250,59 @@ def paper_sensitivity_table(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def compact_corpus_awareness_table(df: pd.DataFrame) -> pd.DataFrame:
+    cols = [
+        "label",
+        "min_true_estimated_k",
+        "median_true_estimated_k",
+        "target_k_coverage",
+        "mean_l1_fields",
+        "mean_l2_fields",
+        "edit_ratio",
+        "aux_top1",
+        "field_aux_top1",
+        "attr_exact_recovery",
+        "attr_coarse_recovery",
+        "issue_acc",
+        "retrieval_recall_at_5",
+    ]
+    out = df[[col for col in cols if col in df.columns]].copy()
+    out = out.rename(
+        columns={
+            "label": "Variant",
+            "min_true_estimated_k": "Min true k",
+            "median_true_estimated_k": "Med true k",
+            "target_k_coverage": "k-cover",
+            "mean_l1_fields": "Mean L1",
+            "mean_l2_fields": "Mean L2",
+            "edit_ratio": "Edit",
+            "aux_top1": "Aux@1",
+            "field_aux_top1": "Field@1",
+            "attr_exact_recovery": "Exact",
+            "attr_coarse_recovery": "Coarse",
+            "issue_acc": "Issue",
+            "retrieval_recall_at_5": "Ret@5",
+        }
+    )
+    return out
+
+
+def paper_corpus_awareness_table(df: pd.DataFrame) -> pd.DataFrame:
+    out = compact_corpus_awareness_table(df)
+    keep = [
+        "Variant",
+        "Min true k",
+        "k-cover",
+        "Edit",
+        "Aux@1",
+        "Field@1",
+        "Exact",
+        "Issue",
+        "Ret@5",
+    ]
+    return out[[col for col in keep if col in out.columns]].copy()
+
+
 def compact_ablation_table(ablation: pd.DataFrame, direct_aux_top1: float) -> pd.DataFrame:
     labels = {
         "remove_location": "Location",
@@ -820,6 +873,37 @@ def write_summary(paths: any) -> None:
                     f"- Under the field-weighted stress attacker, top-1 falls from {sens.iloc[0]['field_aux_top1']:.3f} at k=1 to {k5['field_aux_top1']:.3f} at k=5 and {k20['field_aux_top1']:.3f} at k=20."
                 )
         lines.extend(["", dataframe_to_markdown(sens, floatfmt=".3f")])
+    corpus_awareness_path = paths.results / "corpus_awareness_ablation.csv"
+    if corpus_awareness_path.exists():
+        corpus_awareness = pd.read_csv(corpus_awareness_path)
+        corpus_compact = compact_corpus_awareness_table(corpus_awareness)
+        corpus_paper = paper_corpus_awareness_table(corpus_awareness)
+        corpus_compact.to_csv(tables_dir / "corpus_awareness_ablation.csv", index=False)
+        to_latex_table(
+            corpus_paper,
+            tables_dir / "corpus_awareness_ablation.tex",
+            "Corpus-awareness ablation for LinkGuard variants.",
+            "tab:corpus_awareness_ablation",
+        )
+        by_condition = {
+            row["condition"]: row for _, row in corpus_awareness.iterrows()
+        }
+        true_lg = by_condition["ca_true_corpus_linkguard"]
+        shuffled = by_condition["ca_shuffled_corpus_stats"]
+        global_l1 = by_condition["ca_global_l1_generalization"]
+        suppression = by_condition["ca_direct_targetk_suppression"]
+        lines.extend(
+            [
+                "",
+                "## Corpus-Awareness Ablation",
+                "",
+                f"- True corpus-aware LinkGuard reaches minimum true estimated k {true_lg['min_true_estimated_k']:.3f} with Aux@1 {true_lg['aux_top1']:.3f} and issue accuracy {true_lg['issue_acc']:.3f}.",
+                f"- Shuffling quasi-identifier co-occurrences during planning yields Aux@1 {shuffled['aux_top1']:.3f}, but target-k coverage falls to {shuffled['target_k_coverage']:.3f} and minimum true estimated k to {shuffled['min_true_estimated_k']:.3f}, isolating the value of corpus co-occurrence statistics.",
+                f"- A global level-1 rule gives Aux@1 {global_l1['aux_top1']:.3f} and field-aware top-1 {global_l1['field_aux_top1']:.3f}; direct target-k suppression gives Aux@1 {suppression['aux_top1']:.3f} but with edit ratio {suppression['edit_ratio']:.3f}.",
+                "",
+                dataframe_to_markdown(corpus_compact, floatfmt=".3f"),
+            ]
+        )
     multiseed_path = paths.results / "multiseed" / "claim_summary.csv"
     if multiseed_path.exists():
         multiseed = pd.read_csv(multiseed_path)

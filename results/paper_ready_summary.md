@@ -139,6 +139,19 @@
 | 12.000   | 12.000          | 17.000             | 0.539      | 0.017   | 0.042    | 0.260    | 0.125          | 0.604          | 0.000               | 0.083                | 1.000     | 1.000                 | 0.695             |
 | 20.000   | 20.000          | 27.000             | 0.544      | 0.017   | 0.042    | 0.260    | 0.104          | 0.469          | 0.000               | 0.046                | 1.000     | 1.000                 | 0.718             |
 
+## Corpus-Awareness Ablation
+
+- True corpus-aware LinkGuard reaches minimum true estimated k 5.000 with Aux@1 0.042 and issue accuracy 1.000.
+- Shuffling quasi-identifier co-occurrences during planning yields Aux@1 0.042, but target-k coverage falls to 0.917 and minimum true estimated k to 1.000, isolating the value of corpus co-occurrence statistics.
+- A global level-1 rule gives Aux@1 0.198 and field-aware top-1 0.979; direct target-k suppression gives Aux@1 0.115 but with edit ratio 0.526.
+
+| Variant                  | Min true k | Med true k | k-cover | Mean L1 | Mean L2 | Edit  | Aux@1 | Field@1 | Exact | Coarse | Issue | Ret@5 |
+| ------------------------ | ---------- | ---------- | ------- | ------- | ------- | ----- | ----- | ------- | ----- | ------ | ----- | ----- |
+| True corpus LinkGuard    | 5.000      | 8.000      | 1.000   | 1.750   | 9.250   | 0.535 | 0.042 | 0.240   | 0.000 | 0.112  | 1.000 | 1.000 |
+| Shuffled corpus stats    | 1.000      | 13.000     | 0.917   | 1.608   | 9.392   | 0.536 | 0.042 | 0.198   | 0.000 | 0.111  | 1.000 | 1.000 |
+| Global L1 generalization | 1.000      | 1.000      | 0.000   | 11.000  | 0.000   | 0.381 | 0.198 | 0.979   | 0.000 | 0.787  | 1.000 | 1.000 |
+| Target-k suppression     | 5.000      | 8.000      | 1.000   | 0.000   | 9.417   | 0.526 | 0.115 | 0.271   | 0.045 | 0.100  | 1.000 | 1.000 |
+
 ## Multi-Seed Robustness
 
 - Three no-API corpus seeds preserve the same qualitative ordering: direct/document-local redaction remain highly matchable, while LinkGuard approaches aggressive-redaction privacy with much higher utility.
@@ -261,7 +274,7 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 369.
+- Claim verifier checks: 389.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 

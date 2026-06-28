@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Corpus-awareness ablation for LinkGuard variants.}
+\label{tab:corpus_awareness_ablation}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Variant & Min true k & k-cover & Edit & Aux@1 & Field@1 & Exact & Issue & Ret@5 \\
+\midrule
+True corpus LinkGuard & 5.000 & 1.000 & 0.535 & 0.042 & 0.240 & 0.000 & 1.000 & 1.000 \\
+Shuffled corpus stats & 1.000 & 0.917 & 0.536 & 0.042 & 0.198 & 0.000 & 1.000 & 1.000 \\
+Global L1 generalization & 1.000 & 0.000 & 0.381 & 0.198 & 0.979 & 0.000 & 1.000 & 1.000 \\
+Target-k suppression & 5.000 & 1.000 & 0.526 & 0.115 & 0.271 & 0.045 & 1.000 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}

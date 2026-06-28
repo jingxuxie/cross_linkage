@@ -51,6 +51,18 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
             root,
         ),
         Step(
+            "corpus_awareness_ablation",
+            python_cmd(
+                env,
+                "src/corpus_awareness_ablation.py",
+                "--config",
+                config,
+                "--target-k",
+                "5",
+            ),
+            root,
+        ),
+        Step(
             "multiseed_sweep",
             python_cmd(
                 env,

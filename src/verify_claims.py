@@ -184,6 +184,10 @@ def main() -> None:
         "results/ablation.csv",
         "results/linkguard_sensitivity.csv",
         "results/linkguard_sensitivity_field_rows.csv",
+        "results/corpus_awareness_ablation.csv",
+        "results/corpus_awareness_ablation_by_tier.csv",
+        "results/corpus_awareness_ablation_log.jsonl",
+        "results/corpus_awareness_ablation.md",
         "results/multiseed/claim_summary.csv",
         "results/candidate_sensitivity.csv",
         "results/attack_sensitivity.csv",
@@ -240,6 +244,8 @@ def main() -> None:
         "SUBMISSION_UPLOAD_CHECKLIST.md",
         "paper/tables/paper_main_results.tex",
         "paper/tables/linkguard_sensitivity.tex",
+        "paper/tables/corpus_awareness_ablation.csv",
+        "paper/tables/corpus_awareness_ablation.tex",
         "paper/tables/tier_aux_results.tex",
         "paper/tables/openai_aux_audit.tex",
         "paper/tables/gpt55_aux_audit.tex",
@@ -712,6 +718,7 @@ def main() -> None:
     repro_checklist = (supplement_dir / "reproducibility_checklist.md").read_text(encoding="utf-8")
     for command_fragment in [
         "src/reproduce_no_api.py",
+        "src/corpus_awareness_ablation.py",
         "src/noisy_style_stress.py",
         "src/make_supplement.py",
         "src/verify_claims.py",
@@ -751,6 +758,8 @@ def main() -> None:
         "Presidio-style PII redaction remains linkable",
         "Stable pseudonyms create linkage handles",
         "LinkGuard improves the privacy-utility frontier",
+        "Corpus co-occurrence statistics matter for LinkGuard planning",
+        "results/corpus_awareness_ablation.csv",
         "Noisy-style synthetic rerendering preserves the ordering",
         "results/noisy_style_stress/noisy_style_results.csv",
     ]:
@@ -923,6 +932,67 @@ def main() -> None:
             "results/linkguard_sensitivity.csv",
             expected=fragment,
             observed=fragment if contains(paper_text, fragment) else "missing",
+        )
+
+    corpus_awareness = pd.read_csv(results_dir / "corpus_awareness_ablation.csv")
+    expected_ca_conditions = {
+        "ca_true_corpus_linkguard",
+        "ca_shuffled_corpus_stats",
+        "ca_global_l1_generalization",
+        "ca_direct_targetk_suppression",
+    }
+    add_check(
+        checks,
+        "corpus_awareness:variant_shape",
+        len(corpus_awareness) == 4
+        and set(corpus_awareness["condition"]) == expected_ca_conditions
+        and set(corpus_awareness["target_k"].astype(int)) == {5},
+        "corpus-awareness ablation contains the four planned target-k variants",
+        "results/corpus_awareness_ablation.csv",
+        expected="4 variants at target k=5",
+        observed=f"{len(corpus_awareness)} variants, target_k={sorted(set(corpus_awareness['target_k'].astype(int)))}",
+    )
+    ca_true = row(corpus_awareness, "ca_true_corpus_linkguard")
+    ca_shuffled = row(corpus_awareness, "ca_shuffled_corpus_stats")
+    ca_global = row(corpus_awareness, "ca_global_l1_generalization")
+    ca_suppression = row(corpus_awareness, "ca_direct_targetk_suppression")
+    add_check(
+        checks,
+        "corpus_awareness:true_reaches_target",
+        float(ca_true["min_true_estimated_k"]) >= 5.0
+        and float(ca_true["target_k_coverage"]) == 1.0,
+        "true corpus-aware LinkGuard reaches target k for every persona",
+        "results/corpus_awareness_ablation.csv",
+        expected="min_true_estimated_k >= 5 and target_k_coverage = 1",
+        observed=f"min={fmt(ca_true['min_true_estimated_k'])}, coverage={fmt(ca_true['target_k_coverage'])}",
+    )
+    add_check(
+        checks,
+        "corpus_awareness:shuffled_breaks_certificate",
+        float(ca_shuffled["target_k_coverage"]) < 1.0
+        and float(ca_shuffled["min_true_estimated_k"]) < 5.0,
+        "shuffled co-occurrence planning breaks the true target-k certificate for at least one persona",
+        "results/corpus_awareness_ablation.csv",
+        expected="target_k_coverage < 1 and min_true_estimated_k < 5",
+        observed=f"min={fmt(ca_shuffled['min_true_estimated_k'])}, coverage={fmt(ca_shuffled['target_k_coverage'])}",
+    )
+    for check_id, value in {
+        "corpus_awareness:true_aux": ca_true["aux_top1"],
+        "corpus_awareness:shuffled_aux": ca_shuffled["aux_top1"],
+        "corpus_awareness:global_aux": ca_global["aux_top1"],
+        "corpus_awareness:suppression_aux": ca_suppression["aux_top1"],
+    }.items():
+        fragment = fmt(value)
+        add_check(
+            checks,
+            check_id,
+            contains((results_dir / "paper_ready_summary.md").read_text(encoding="utf-8"), fragment),
+            f"paper-ready result brief contains corpus-awareness value {fragment}",
+            "results/corpus_awareness_ablation.csv",
+            expected=fragment,
+            observed=fragment
+            if contains((results_dir / "paper_ready_summary.md").read_text(encoding="utf-8"), fragment)
+            else "missing",
         )
 
     multiseed = pd.read_csv(results_dir / "multiseed" / "claim_summary.csv")
@@ -1541,23 +1611,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=369 failures=0`." in reproduce_text,
+        "Expected current result: `checks=389 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=369 failures=0`.",
+        expected="Expected current result: `checks=389 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=369 failures=0`." in reproduce_text
+        if "Expected current result: `checks=389 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=369 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=389 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=369 failures=0`.",
+        expected="Main claim verifier: `checks=389 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=369 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=389 failures=0`." in readiness_text
         else "missing",
     )
     add_check(
@@ -1605,6 +1675,12 @@ def main() -> None:
             fmt(k2["aux_top1"]),
             fmt(k5["attr_exact_recovery"]),
             fmt(k20["field_aux_top1"]),
+        ],
+        "paper/tables/corpus_awareness_ablation.tex": [
+            fmt(ca_true["aux_top1"]),
+            fmt(ca_shuffled["aux_top1"]),
+            fmt(ca_shuffled["target_k_coverage"]),
+            fmt(ca_suppression["edit_ratio"]),
         ],
         "paper/tables/tier_aux_results.tex": [
             fmt(tier_metric("c1_direct_redaction", "T3")),

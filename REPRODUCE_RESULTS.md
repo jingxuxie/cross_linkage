@@ -21,6 +21,7 @@ This executes:
 - local benchmark generation and evaluation;
 - benchmark artifact validation;
 - LinkGuard target-k sensitivity;
+- corpus-awareness ablation for LinkGuard;
 - three-seed robustness sweep;
 - candidate-pool sensitivity;
 - local attacker-family sensitivity, including a field-aware stress attacker;
@@ -165,7 +166,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=369 failures=0`.
+Expected current result: `checks=389 failures=0`.
 
 The verifier writes:
 
