@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{GPT-5.5 instruction-following auxiliary matching audit on 48 T2/T3 synthetic personas. Unc. is the model-reported uncertainty rate.}
+\label{tab:gpt55_aux_audit}
+\begin{tabular}{lrrrrrr}
+\toprule
+Cond. & n & Aux@1 & Aux@3 & T2@1 & T3@1 & Unc. \\
+\midrule
+C1 Redact & 48 & 1.000 & 1.000 & 1.000 & 1.000 & 0.021 \\
+C1b Presidio & 48 & 0.979 & 1.000 & 0.958 & 1.000 & 0.125 \\
+C4 Local & 48 & 1.000 & 1.000 & 1.000 & 1.000 & 0.083 \\
+C5 LG & 48 & 0.438 & 0.708 & 0.417 & 0.458 & 0.917 \\
+C6 Agg & 48 & 0.333 & 0.667 & 0.417 & 0.250 & 0.792 \\
+\bottomrule
+\end{tabular}
+\end{table}

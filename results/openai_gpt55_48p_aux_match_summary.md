@@ -1,0 +1,12 @@
+| condition               | risk_tier | n  | top1  | top3  | mrr   | mean_rank | median_top_1_score | median_top_score_margin | uncertain_rate |
+| ----------------------- | --------- | -- | ----- | ----- | ----- | --------- | ------------------ | ----------------------- | -------------- |
+| c1_direct_redaction     | T2        | 24 | 1.000 | 1.000 | 1.000 | 1.000     | 0.920              | nan                     | 0.042          |
+| c1_direct_redaction     | T3        | 24 | 1.000 | 1.000 | 1.000 | 1.000     | 0.990              | nan                     | 0.000          |
+| c1b_presidio_redaction  | T2        | 24 | 0.958 | 1.000 | 0.979 | 1.042     | 0.845              | nan                     | 0.250          |
+| c1b_presidio_redaction  | T3        | 24 | 1.000 | 1.000 | 1.000 | 1.000     | 0.990              | nan                     | 0.000          |
+| c4_doc_local_anon       | T2        | 24 | 1.000 | 1.000 | 1.000 | 1.000     | 0.860              | nan                     | 0.167          |
+| c4_doc_local_anon       | T3        | 24 | 1.000 | 1.000 | 1.000 | 1.000     | 0.990              | nan                     | 0.000          |
+| c5_linkguard            | T2        | 24 | 0.417 | 0.625 | 0.581 | 2.750     | 0.390              | nan                     | 0.833          |
+| c5_linkguard            | T3        | 24 | 0.458 | 0.792 | 0.630 | 2.458     | 0.430              | nan                     | 1.000          |
+| c6_aggressive_redaction | T2        | 24 | 0.417 | 0.708 | 0.613 | 2.417     | 0.625              | nan                     | 0.750          |
+| c6_aggressive_redaction | T3        | 24 | 0.250 | 0.625 | 0.485 | 2.958     | 0.650              | nan                     | 0.833          |

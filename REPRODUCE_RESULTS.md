@@ -83,7 +83,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=284 failures=0`.
+Expected current result: `checks=318 failures=0`.
 
 The verifier writes:
 
@@ -95,7 +95,7 @@ The compiled manuscript should be:
 - `paper/short_paper.pdf`
 - 4 pages
 - `paper/colm2026_submission.pdf`
-- 4 pages in the official COLM 2026 submission template
+- 8 pages in the official COLM 2026 submission template
 - `submission/colm2026_submission.pdf`
 - `submission/colm2026_submission_source.zip`
 - `submission/submission_manifest.json`

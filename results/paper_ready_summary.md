@@ -55,6 +55,35 @@
 | Rare event     | 0.708 | 0.000 | 0.844 | 0.793 |
 | Schedule       | 0.708 | 0.000 | 0.844 | 0.793 |
 
+## GPT-5.5 API Stress Audit
+
+- GPT-5.5 auxiliary matching on 48 T2/T3 personas finds direct redaction top-1 1.000, Presidio 0.979, document-local proxy 1.000, LinkGuard 0.438, and aggressive redaction 0.333.
+- LinkGuard has lower confidence and higher uncertainty in this audit: top-3 0.708, T2 top-1 0.417, and T3 top-1 0.458.
+- Treat this as a time-stamped stress audit; deterministic local sweeps remain the main reproducible evidence.
+
+| condition               | n  | top1  | top3  | T2_top1 | T3_top1 |
+| ----------------------- | -- | ----- | ----- | ------- | ------- |
+| C1 direct redaction     | 48 | 1.000 | 1.000 | 1.000   | 1.000   |
+| C1b Presidio redaction  | 48 | 0.979 | 1.000 | 0.958   | 1.000   |
+| C4 doc-local proxy      | 48 | 1.000 | 1.000 | 1.000   | 1.000   |
+| C5 LinkGuard            | 48 | 0.438 | 0.708 | 0.417   | 0.458   |
+| C6 aggressive redaction | 48 | 0.333 | 0.667 | 0.417   | 0.250   |
+
+## GPT-5.5 Document-Local Baseline
+
+- GPT-5.5 document-local anonymization on 24 T2/T3 personas removes exact direct identifiers but remains matchable: Aux@1 1.000, Aux@3 1.000.
+- On the same persona subset, the local document-local proxy is 1.000, LinkGuard is 0.333, and aggressive redaction is 0.292.
+- This supports the corpus-level argument: a strong document-local anonymizer can still preserve repeated quasi-identifier combinations.
+
+| condition               | n  | top1  | top3  | T2_top1 | T3_top1 |
+| ----------------------- | -- | ----- | ----- | ------- | ------- |
+| C1 direct redaction     | 24 | 1.000 | 1.000 | 1.000   | 1.000   |
+| C1b Presidio redaction  | 24 | 0.958 | 1.000 | 0.917   | 1.000   |
+| C4 doc-local proxy      | 24 | 1.000 | 1.000 | 1.000   | 1.000   |
+| C4 GPT-5.5 doc-local    | 24 | 1.000 | 1.000 | 1.000   | 1.000   |
+| C5 LinkGuard            | 24 | 0.333 | 0.625 | 0.250   | 0.417   |
+| C6 aggressive redaction | 24 | 0.292 | 0.583 | 0.417   | 0.167   |
+
 ## Small OpenAI Audit
 
 - Corrected 12-person audit: direct redaction top-1 0.750; Presidio top-1 0.500; OpenAI document-local top-1 0.667; LinkGuard top-1 0.250.
@@ -193,15 +222,15 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 284.
+- Claim verifier checks: 301.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 214.
-- Total cached token usage: 184816 input, 65722 output, 250538 total.
-- The cache total includes an earlier discarded auxiliary-matching audit that leaked synthetic persona IDs through document labels; the corrected OpenAI table above uses neutral document labels.
+- Cached API responses: 576.
+- Total cached token usage: 535574 input, 103694 output, 639268 total.
+- The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.
 
 ## Claims Supported Now
 

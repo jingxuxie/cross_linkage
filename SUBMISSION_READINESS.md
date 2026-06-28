@@ -27,14 +27,14 @@ Current verified state:
 - 120 synthetic personas and 480 synthetic documents.
 - 96 held-out personas for the main local evaluation.
 - No real people, public profiles, social-media posts, patient records, legal records, or customer records.
-- Main claim verifier: `checks=284 failures=0`.
+- Main claim verifier: `checks=318 failures=0`.
 - Current generic PDF length: 4 pages.
-- Current official COLM-template PDF length: 4 pages.
+- Current official COLM-template PDF length: 8 pages.
 - Noisy-style stress corpus: 480 synthetic rerendered documents, mean template similarity 0.306.
 - Reviewer-facing supplement: generated and hash-manifested.
 - Venue-specific upload checklist: generated and verifier-covered.
 - Submission source package clean-room compile: passed.
-- OpenAI audit is cached; the default reproduction path is API-free.
+- GPT-5.5 audit is cached; the default reproduction path remains API-free.
 
 Venue facts verified from the workshop site on 2026-06-27:
 
@@ -60,7 +60,7 @@ Venue facts verified from the workshop site on 2026-06-27:
 - The benchmark is synthetic, so external validity remains limited even with the noisy-style stress test.
 - LinkGuard is a heuristic corpus-aware generalization method, not a formal privacy guarantee.
 - Utility is measured with issue labels, task retrieval, and lightweight fact checks, not full downstream deployment utility.
-- The OpenAI audit is intentionally small and should be described as corroborating evidence, not the main quantitative result.
+- The GPT-5.5 audit is a time-stamped stress audit and should be described as corroborating evidence, not the main quantitative result.
 - The field-weighted attacker shows residual structured-context risk at `k=5`; the paper should not claim complete anonymization.
 
 ## Pre-Submission Checklist
@@ -78,8 +78,8 @@ conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.y
 
 Then check:
 
-- `results/claim_verification.md` reports `checks=284 failures=0`.
-- `paper/colm2026_submission.pdf` is the intended 4-page target-venue PDF.
+- `results/claim_verification.md` reports zero failures.
+- `paper/colm2026_submission.pdf` is the intended 8-page target-venue PDF.
 - `submission/colm2026_submission.pdf` and `submission/colm2026_submission_source.zip` are present.
 - `submission/submission_manifest.json` records `checks_passed: true`.
 - `supplement/supplement_manifest.json` records the generated supplement file hashes.

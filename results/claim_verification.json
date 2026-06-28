@@ -224,6 +224,14 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:data/transformed/c4_openai_doc_local_gpt55_24p.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "174659",
+    "source": "data/transformed/c4_openai_doc_local_gpt55_24p.jsonl",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/openai_aux_match_summary.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -235,15 +243,95 @@
     "check_id": "artifact:results/openai_audit_plan.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "15894",
+    "observed": "16031",
     "source": "results/openai_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_48p_aux_match_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "109349",
+    "source": "results/openai_gpt55_48p_aux_match_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_48p_aux_match_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "918",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_48p_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "33983",
+    "source": "results/openai_gpt55_48p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_48p_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2769",
+    "source": "results/openai_gpt55_48p_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_48p_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "27326",
+    "source": "results/openai_gpt55_48p_audit_usage.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_doclocal_24p_aux_match_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "67361",
+    "source": "results/openai_gpt55_doclocal_24p_aux_match_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1068",
+    "source": "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_doclocal_24p_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "34367",
+    "source": "results/openai_gpt55_doclocal_24p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_doclocal_24p_audit_notes.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3025",
+    "source": "results/openai_gpt55_doclocal_24p_audit_notes.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_doclocal_24p_audit_usage.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "16694",
+    "source": "results/openai_gpt55_doclocal_24p_audit_usage.csv",
     "status": "PASS"
   },
   {
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "16830",
+    "observed": "18702",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -251,7 +339,7 @@
     "check_id": "artifact:SUBMISSION_UPLOAD_CHECKLIST.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "3233",
+    "observed": "3246",
     "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
     "status": "PASS"
   },
@@ -288,6 +376,38 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:paper/tables/gpt55_aux_audit.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "649",
+    "source": "paper/tables/gpt55_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/gpt55_aux_bootstrap_ci.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "304",
+    "source": "paper/tables/gpt55_aux_bootstrap_ci.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/gpt55_doclocal_audit.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "687",
+    "source": "paper/tables/gpt55_doclocal_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/gpt55_doclocal_bootstrap_ci.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "335",
+    "source": "paper/tables/gpt55_doclocal_bootstrap_ci.csv",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:paper/tables/rag_exposure_t3.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -307,7 +427,7 @@
     "check_id": "artifact:paper/short_paper.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "297427",
+    "observed": "298000",
     "source": "paper/short_paper.pdf",
     "status": "PASS"
   },
@@ -315,7 +435,7 @@
     "check_id": "artifact:paper/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "13287",
+    "observed": "31434",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -323,7 +443,7 @@
     "check_id": "artifact:paper/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "105826",
+    "observed": "151216",
     "source": "paper/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -371,7 +491,7 @@
     "check_id": "artifact:submission/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "105826",
+    "observed": "151216",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -379,7 +499,7 @@
     "check_id": "artifact:submission/colm2026_source/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "13287",
+    "observed": "31434",
     "source": "submission/colm2026_source/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -435,7 +555,7 @@
     "check_id": "artifact:submission/colm2026_submission_source.zip",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "35636",
+    "observed": "41420",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -544,18 +664,18 @@
     "status": "PASS"
   },
   {
-    "check_id": "upload_checklist:short paper",
-    "detail": "upload checklist contains required fragment short paper",
-    "expected": "short paper",
-    "observed": "short paper",
+    "check_id": "upload_checklist:full paper",
+    "detail": "upload checklist contains required fragment full paper",
+    "expected": "full paper",
+    "observed": "full paper",
     "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
     "status": "PASS"
   },
   {
-    "check_id": "upload_checklist:up to 4 pages",
-    "detail": "upload checklist contains required fragment up to 4 pages",
-    "expected": "up to 4 pages",
-    "observed": "up to 4 pages",
+    "check_id": "upload_checklist:up to 8 pages",
+    "detail": "upload checklist contains required fragment up to 8 pages",
+    "expected": "up to 8 pages",
+    "observed": "up to 8 pages",
     "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
     "status": "PASS"
   },
@@ -652,6 +772,22 @@
     "detail": "upload checklist contains required fragment paper/short_paper.pdf` has 4 pages",
     "expected": "paper/short_paper.pdf` has 4 pages",
     "observed": "paper/short_paper.pdf` has 4 pages",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:paper/colm2026_submission.pdf` has 8",
+    "detail": "upload checklist contains required fragment paper/colm2026_submission.pdf` has 8 pages",
+    "expected": "paper/colm2026_submission.pdf` has 8 pages",
+    "observed": "paper/colm2026_submission.pdf` has 8 pages",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:submission/colm2026_submission.pdf` ",
+    "detail": "upload checklist contains required fragment submission/colm2026_submission.pdf` has 8 pages",
+    "expected": "submission/colm2026_submission.pdf` has 8 pages",
+    "observed": "submission/colm2026_submission.pdf` has 8 pages",
     "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
     "status": "PASS"
   },
@@ -754,8 +890,8 @@
   {
     "check_id": "pdf:paper/colm2026_submission.pdf:page_count",
     "detail": "compiled PDF has expected page count",
-    "expected": "4",
-    "observed": "4",
+    "expected": "8",
+    "observed": "8",
     "source": "paper/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -825,9 +961,9 @@
   },
   {
     "check_id": "submission_manifest:clean_compile_pdf_pages",
-    "detail": "clean-room compiled submission PDF has four pages",
-    "expected": "4",
-    "observed": "4",
+    "detail": "clean-room compiled submission PDF has expected page count",
+    "expected": "8",
+    "observed": "8",
     "source": "submission/submission_manifest.json",
     "status": "PASS"
   },
@@ -866,24 +1002,24 @@
   {
     "check_id": "submission_zip:sha256_matches_manifest",
     "detail": "submission source zip SHA-256 matches manifest",
-    "expected": "3d8a18e48d35f52d9a3cd1c5825df65d08da5c3d4cc396ae72a144200d93ac52",
-    "observed": "3d8a18e48d35f52d9a3cd1c5825df65d08da5c3d4cc396ae72a144200d93ac52",
+    "expected": "a8846df87f28f8e396ff1e308f744ac0101eeca71588e19b3f5baab62e531429",
+    "observed": "a8846df87f28f8e396ff1e308f744ac0101eeca71588e19b3f5baab62e531429",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
   {
     "check_id": "submission_pdf:page_count",
     "detail": "packaged submission PDF has expected page count",
-    "expected": "4",
-    "observed": "4",
+    "expected": "8",
+    "observed": "8",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
   {
     "check_id": "submission_pdf:matches_paper_pdf",
     "detail": "packaged submission PDF matches the compiled COLM PDF",
-    "expected": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342",
-    "observed": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342",
+    "expected": "f2071412d91aff5fa305e0b8b2a6f4fc6c135af4fe1f97da0251c48c7e3596f9",
+    "observed": "f2071412d91aff5fa305e0b8b2a6f4fc6c135af4fe1f97da0251c48c7e3596f9",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -914,7 +1050,7 @@
   {
     "check_id": "submission_manifest_md:summary",
     "detail": "human-readable manifest summarizes clean package status",
-    "expected": "clean compile true, checks passed true, 4 pages",
+    "expected": "clean compile true, checks passed true, 8 pages",
     "observed": "present",
     "source": "submission/submission_manifest.md",
     "status": "PASS"
@@ -1237,6 +1373,14 @@
     "expected": "7 checks, 0 failures",
     "observed": "7 checks, 0 failures",
     "source": "results/benchmark_validation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_doclocal:no_exact_direct_id_leaks",
+    "detail": "GPT-5.5 document-local generated corpus removes exact synthetic direct identifiers",
+    "expected": "96 docs, 24 personas, 0 exact direct-ID leaks",
+    "observed": "96 docs, 24 personas, 0 leaks",
+    "source": "data/transformed/c4_openai_doc_local_gpt55_24p.jsonl",
     "status": "PASS"
   },
   {
@@ -1760,35 +1904,59 @@
     "status": "PASS"
   },
   {
-    "check_id": "openai:c1_direct_redaction:top1",
-    "detail": "paper contains 12-person OpenAI top-1 value 0.750",
-    "expected": "n=12,0.750",
-    "observed": "n=12,0.750",
-    "source": "results/openai_aux_match_summary.csv",
+    "check_id": "gpt55:c1_direct_redaction:top1",
+    "detail": "paper contains 48-person GPT-5.5 top-1 value 1.000",
+    "expected": "n=48,1.000",
+    "observed": "n=48,1.000",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
     "status": "PASS"
   },
   {
-    "check_id": "openai:c4_doc_local_anon:top1",
-    "detail": "paper contains 12-person OpenAI top-1 value 0.750",
-    "expected": "n=12,0.750",
-    "observed": "n=12,0.750",
-    "source": "results/openai_aux_match_summary.csv",
+    "check_id": "gpt55:c1b_presidio_redaction:top1",
+    "detail": "paper contains 48-person GPT-5.5 top-1 value 0.979",
+    "expected": "n=48,0.979",
+    "observed": "n=48,0.979",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
     "status": "PASS"
   },
   {
-    "check_id": "openai:c4_openai_doc_local:top1",
-    "detail": "paper contains 12-person OpenAI top-1 value 0.667",
-    "expected": "n=12,0.667",
-    "observed": "n=12,0.667",
-    "source": "results/openai_aux_match_summary.csv",
+    "check_id": "gpt55:c4_doc_local_anon:top1",
+    "detail": "paper contains 48-person GPT-5.5 top-1 value 1.000",
+    "expected": "n=48,1.000",
+    "observed": "n=48,1.000",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
     "status": "PASS"
   },
   {
-    "check_id": "openai:c5_linkguard:top1",
-    "detail": "paper contains 12-person OpenAI top-1 value 0.250",
-    "expected": "n=12,0.250",
-    "observed": "n=12,0.250",
-    "source": "results/openai_aux_match_summary.csv",
+    "check_id": "gpt55:c5_linkguard:top1",
+    "detail": "paper contains 48-person GPT-5.5 top-1 value 0.438",
+    "expected": "n=48,0.438",
+    "observed": "n=48,0.438",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55:c6_aggressive_redaction:top1",
+    "detail": "paper contains 48-person GPT-5.5 top-1 value 0.333",
+    "expected": "n=48,0.333",
+    "observed": "n=48,0.333",
+    "source": "results/openai_gpt55_48p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_doclocal:c4_openai_doc_local_gpt55_24p:top1",
+    "detail": "paper contains 24-person GPT-5.5 doc-local top-1 value 1.000",
+    "expected": "n=24,1.000",
+    "observed": "n=24,1.000",
+    "source": "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_doclocal:c5_linkguard:top1",
+    "detail": "paper contains 24-person GPT-5.5 doc-local top-1 value 0.333",
+    "expected": "n=24,0.333",
+    "observed": "n=24,0.333",
+    "source": "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
     "status": "PASS"
   },
   {
@@ -2120,34 +2288,74 @@
     "status": "PASS"
   },
   {
-    "check_id": "colm:openai_direct",
-    "detail": "COLM submission contains core claim fragment 0.750",
-    "expected": "0.750",
-    "observed": "0.750",
+    "check_id": "colm:gpt55_direct",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
   {
-    "check_id": "colm:openai_doc_local",
-    "detail": "COLM submission contains core claim fragment 0.667",
-    "expected": "0.667",
-    "observed": "0.667",
+    "check_id": "colm:gpt55_presidio",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
   {
-    "check_id": "colm:openai_lg",
-    "detail": "COLM submission contains core claim fragment 0.250",
-    "expected": "0.250",
-    "observed": "0.250",
+    "check_id": "colm:gpt55_local",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
   {
-    "check_id": "colm:openai_aggressive",
-    "detail": "COLM submission contains core claim fragment 0.167",
-    "expected": "0.167",
-    "observed": "0.167",
+    "check_id": "colm:gpt55_lg",
+    "detail": "COLM submission contains core claim fragment 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_lg_top3",
+    "detail": "COLM submission contains core claim fragment 0.708",
+    "expected": "0.708",
+    "observed": "0.708",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_lg_uncertainty",
+    "detail": "COLM submission contains core claim fragment 0.917",
+    "expected": "0.917",
+    "observed": "0.917",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_aggressive",
+    "detail": "COLM submission contains core claim fragment 0.333",
+    "expected": "0.333",
+    "observed": "0.333",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_doclocal_top1",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:gpt55_doclocal_lg_subset",
+    "detail": "COLM submission contains core claim fragment 0.333",
+    "expected": "0.333",
+    "observed": "0.333",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -2157,6 +2365,22 @@
     "expected": "120",
     "observed": "120",
     "source": "results/openai_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55:plan_fully_cached",
+    "detail": "GPT-5.5 audit plan has no missing calls",
+    "expected": "240",
+    "observed": "240",
+    "source": "results/openai_gpt55_48p_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_doclocal:plan_fully_cached",
+    "detail": "GPT-5.5 document-local audit plan has no missing calls",
+    "expected": "240",
+    "observed": "240",
+    "source": "results/openai_gpt55_doclocal_24p_audit_plan.csv",
     "status": "PASS"
   },
   {
@@ -2189,6 +2413,54 @@
     "expected": "12",
     "observed": "12",
     "source": "paper/tables/openai_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_aux_audit.tex:0.438",
+    "detail": "generated table contains 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "paper/tables/gpt55_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_aux_audit.tex:0.917",
+    "detail": "generated table contains 0.917",
+    "expected": "0.917",
+    "observed": "0.917",
+    "source": "paper/tables/gpt55_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_aux_audit.tex:48",
+    "detail": "generated table contains 48",
+    "expected": "48",
+    "observed": "48",
+    "source": "paper/tables/gpt55_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_doclocal_audit.tex:1.000",
+    "detail": "generated table contains 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/tables/gpt55_doclocal_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_doclocal_audit.tex:0.333",
+    "detail": "generated table contains 0.333",
+    "expected": "0.333",
+    "observed": "0.333",
+    "source": "paper/tables/gpt55_doclocal_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/gpt55_doclocal_audit.tex:24",
+    "detail": "generated table contains 24",
+    "expected": "24",
+    "observed": "24",
+    "source": "paper/tables/gpt55_doclocal_audit.tex",
     "status": "PASS"
   },
   {

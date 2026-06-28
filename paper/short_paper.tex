@@ -162,12 +162,14 @@ Under the field-weighted stress attacker, top-1 falls from 0.979 at $k=1$ to 0.2
     \label{fig:sensitivity}
 \end{figure}
 
-\paragraph{Small OpenAI audit.}
-We also ran a small cached audit with a cheap OpenAI model on 12 T2/T3 personas.
-The audit is not the main quantitative result, but it checks whether a stronger instruction-following matcher sees the same pattern.
-Direct redaction remains highly matchable at 0.750 top-1, the local document-level proxy at 0.750, OpenAI document-local anonymization at 0.667, and \method{} drops to 0.250.
+\paragraph{GPT-5.5 API stress audit.}
+We also ran a time-stamped GPT-5.5 auxiliary-matching audit on 48 T2/T3 personas, using synthetic data only, capped calls, cached responses, and \texttt{store=false}.
+Because API model behavior can change, we treat this as corroborating stress evidence rather than the main reproducible result.
+Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.000, 0.979, and 1.000 top-1.
+\method{} lowers top-1 to 0.438, with high model-reported uncertainty, while aggressive redaction is 0.333.
+A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
 
-\input{tables/openai_aux_audit}
+\input{tables/gpt55_aux_audit}
 
 \section{Related Work}
 Classic work on $k$-anonymity argues that released records can remain re-identifiable through combinations of quasi-identifiers, motivating generalization and suppression \cite{sweeney2002}.
@@ -182,7 +184,7 @@ Our contribution is complementary: we focus on cross-document linkage after docu
 This work uses synthetic data only.
 That is necessary for controlled, reproducible, non-harmful evaluation, but it limits external validity.
 The corpus uses controlled template families, and real corpora may contain different stylistic, temporal, and institutional distributions.
-Our local attacks are simple and our OpenAI audit is small.
+Our local attacks are simple, and the GPT-5.5 audit is a time-stamped API stress test rather than a stable benchmark.
 \method{} is a heuristic and does not provide a formal anonymity guarantee.
 Finally, utility is measured through issue labels and lightweight fact checks; stronger downstream utility evaluations are needed before operational deployment.
 

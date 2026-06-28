@@ -27,6 +27,7 @@ PDF_NAME = "colm2026_submission.pdf"
 ZIP_NAME = "colm2026_submission_source.zip"
 MANIFEST_JSON = "submission_manifest.json"
 MANIFEST_MD = "submission_manifest.md"
+EXPECTED_SUBMISSION_PAGES = 8
 LATEXMK_CMD = [
     "latexmk",
     "-g",
@@ -177,7 +178,7 @@ def clean_compile_check(source_dir: Path, keep_temp: bool = False) -> dict[str, 
         status = (
             result.returncode == 0
             and compiled_pdf.exists()
-            and pdf_pages(compiled_pdf) == 4
+            and pdf_pages(compiled_pdf) == EXPECTED_SUBMISSION_PAGES
             and not problems
             and "Anonymous authors" in text
             and "Paper under double-blind review" in text
@@ -230,7 +231,10 @@ def build_manifest(
         }
         for member in SOURCE_FILES
     ]
-    checks_passed = bool(clean_compile.get("status")) and pdf_pages(pdf_path) == 4
+    checks_passed = (
+        bool(clean_compile.get("status"))
+        and pdf_pages(pdf_path) == EXPECTED_SUBMISSION_PAGES
+    )
     return {
         "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "package_dir": "submission",

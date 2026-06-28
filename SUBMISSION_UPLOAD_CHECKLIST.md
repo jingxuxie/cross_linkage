@@ -8,8 +8,8 @@ Verified against the official workshop page on 2026-06-27.
 - Official workshop page: `https://re-data-colm2026.github.io/`.
 - Submission system: OpenReview, linked from the workshop page.
 - Template: COLM 2026 template, linked from the workshop page.
-- Paper type: short paper.
-- Page limit: up to 4 pages for short papers.
+- Paper type: full paper.
+- Page limit: up to 8 pages for full papers.
 - Deadline: June 28, 2026 at 23:59 AoE.
 - Accepted papers are non-archival.
 - Concurrent submissions are allowed.
@@ -50,8 +50,8 @@ Required status:
 
 - Claim verifier reports zero failures.
 - `paper/short_paper.pdf` has 4 pages.
-- `paper/colm2026_submission.pdf` has 4 pages.
-- `submission/colm2026_submission.pdf` has 4 pages.
+- `paper/colm2026_submission.pdf` has 8 pages.
+- `submission/colm2026_submission.pdf` has 8 pages.
 - `submission/submission_manifest.json` records `checks_passed: true`.
 - `supplement/supplement_manifest.json` lists all supplement file hashes.
 - LaTeX logs have no unresolved references, rerun warnings, undefined citations, or overfull boxes.
@@ -64,7 +64,7 @@ Required status:
 - `pdftotext -layout submission/colm2026_submission.pdf -` contains the anonymous submission header.
 - The paper contains no author names, acknowledgments, repository URLs, local filesystem paths, API keys, or institution-specific self-identifying text.
 - The project uses synthetic personas only; do not upload real data.
-- The OpenAI audit is cached and should be described as small corroborating evidence, not the main quantitative result.
+- The GPT-5.5 audit is cached and should be described as time-stamped corroborating stress evidence, not the main quantitative result.
 
 ## Final Manual Upload Steps
 
@@ -73,4 +73,4 @@ Required status:
 3. If the form permits source or supplementary material, upload `submission/colm2026_submission_source.zip` and the `supplement/` files according to the form fields.
 4. Use the title from `paper/colm2026_submission.tex`.
 5. Use the abstract from `paper/colm2026_submission.tex`.
-6. Before submitting, preview the PDF in OpenReview and confirm the rendered first page is anonymous and 4 pages total.
+6. Before submitting, preview the PDF in OpenReview and confirm the rendered first page is anonymous and 8 pages total.

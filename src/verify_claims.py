@@ -17,6 +17,8 @@ from crossdoc_pipeline import dataframe_to_markdown, load_config, read_jsonl, sp
 
 
 LOCAL_PATH_MARKERS = ("/home/" + "eston", "colm_" + "workshop")
+EXPECTED_SHORT_PAGES = 4
+EXPECTED_COLM_PAGES = 8
 
 
 @dataclass
@@ -72,11 +74,14 @@ def row(df: pd.DataFrame, condition: str) -> pd.Series:
 def weighted_openai(summary: pd.DataFrame, condition: str) -> dict[str, float]:
     group = summary[summary["condition"] == condition]
     n = int(group["n"].sum())
-    return {
+    out = {
         "n": n,
         "top1": float((group["top1"] * group["n"]).sum() / n),
         "top3": float((group["top3"] * group["n"]).sum() / n),
     }
+    if "uncertain_rate" in group.columns:
+        out["uncertain_rate"] = float((group["uncertain_rate"] * group["n"]).sum() / n)
+    return out
 
 
 def command_text(cmd: list[str], cwd: Path) -> str:
@@ -197,14 +202,29 @@ def main() -> None:
         "results/noisy_style_stress/transformed/c4_doc_local_anon.jsonl",
         "results/noisy_style_stress/transformed/c5_linkguard.jsonl",
         "results/noisy_style_stress/transformed/c6_aggressive_redaction.jsonl",
+        "data/transformed/c4_openai_doc_local_gpt55_24p.jsonl",
         "results/openai_aux_match_summary.csv",
         "results/openai_audit_plan.csv",
+        "results/openai_gpt55_48p_aux_match_rows.csv",
+        "results/openai_gpt55_48p_aux_match_summary.csv",
+        "results/openai_gpt55_48p_audit_plan.csv",
+        "results/openai_gpt55_48p_audit_notes.md",
+        "results/openai_gpt55_48p_audit_usage.csv",
+        "results/openai_gpt55_doclocal_24p_aux_match_rows.csv",
+        "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+        "results/openai_gpt55_doclocal_24p_audit_plan.csv",
+        "results/openai_gpt55_doclocal_24p_audit_notes.md",
+        "results/openai_gpt55_doclocal_24p_audit_usage.csv",
         "results/paper_ready_summary.md",
         "SUBMISSION_UPLOAD_CHECKLIST.md",
         "paper/tables/paper_main_results.tex",
         "paper/tables/linkguard_sensitivity.tex",
         "paper/tables/tier_aux_results.tex",
         "paper/tables/openai_aux_audit.tex",
+        "paper/tables/gpt55_aux_audit.tex",
+        "paper/tables/gpt55_aux_bootstrap_ci.csv",
+        "paper/tables/gpt55_doclocal_audit.tex",
+        "paper/tables/gpt55_doclocal_bootstrap_ci.csv",
         "paper/tables/rag_exposure_t3.tex",
         "paper/tables/noisy_style_stress.tex",
         "paper/short_paper.pdf",
@@ -252,8 +272,8 @@ def main() -> None:
         "https://re-data-colm2026.github.io/",
         "Submission system: OpenReview",
         "COLM 2026 template",
-        "short paper",
-        "up to 4 pages",
+        "full paper",
+        "up to 8 pages",
         "June 28, 2026 at 23:59 AoE",
         "Accepted papers are non-archival",
         "Concurrent submissions are allowed",
@@ -266,6 +286,8 @@ def main() -> None:
         "src/verify_claims.py",
         "Claim verifier reports zero failures",
         "paper/short_paper.pdf` has 4 pages",
+        "paper/colm2026_submission.pdf` has 8 pages",
+        "submission/colm2026_submission.pdf` has 8 pages",
         "submission/submission_manifest.json` records `checks_passed: true`",
         "supplement/supplement_manifest.json` lists all supplement file hashes",
         "blank author metadata",
@@ -322,8 +344,8 @@ def main() -> None:
     )
 
     for rel_pdf, expected_pages in [
-        ("paper/short_paper.pdf", 4),
-        ("paper/colm2026_submission.pdf", 4),
+        ("paper/short_paper.pdf", EXPECTED_SHORT_PAGES),
+        ("paper/colm2026_submission.pdf", EXPECTED_COLM_PAGES),
     ]:
         pages = pdf_pages(root / rel_pdf)
         add_check(
@@ -424,10 +446,10 @@ def main() -> None:
     add_check(
         checks,
         "submission_manifest:clean_compile_pdf_pages",
-        clean_compile.get("pdf_pages") == 4,
-        "clean-room compiled submission PDF has four pages",
+        clean_compile.get("pdf_pages") == EXPECTED_COLM_PAGES,
+        "clean-room compiled submission PDF has expected page count",
         "submission/submission_manifest.json",
-        expected="4",
+        expected=str(EXPECTED_COLM_PAGES),
         observed=str(clean_compile.get("pdf_pages")),
     )
     add_check(
@@ -489,10 +511,10 @@ def main() -> None:
     add_check(
         checks,
         "submission_pdf:page_count",
-        pdf_pages(submission_pdf) == 4,
+        pdf_pages(submission_pdf) == EXPECTED_COLM_PAGES,
         "packaged submission PDF has expected page count",
         "submission/colm2026_submission.pdf",
-        expected="4",
+        expected=str(EXPECTED_COLM_PAGES),
         observed=str(pdf_pages(submission_pdf)),
     )
     add_check(
@@ -558,10 +580,10 @@ def main() -> None:
         "submission_manifest_md:summary",
         "Clean-room compile: True" in manifest_md_text
         and "Checks passed: True" in manifest_md_text
-        and "PDF pages: 4" in manifest_md_text,
+        and f"PDF pages: {EXPECTED_COLM_PAGES}" in manifest_md_text,
         "human-readable manifest summarizes clean package status",
         "submission/submission_manifest.md",
-        expected="clean compile true, checks passed true, 4 pages",
+        expected=f"clean compile true, checks passed true, {EXPECTED_COLM_PAGES} pages",
         observed="present" if "Checks passed: True" in manifest_md_text else "missing",
     )
     add_check(
@@ -761,6 +783,41 @@ def main() -> None:
     personas = read_jsonl(root / cfg["data_dir"] / "personas.jsonl")
     docs = read_jsonl(root / cfg["data_dir"] / "original_docs.jsonl")
     split = split_personas(personas)
+    gpt55_doclocal_docs = read_jsonl(
+        root / cfg["data_dir"] / "transformed" / "c4_openai_doc_local_gpt55_24p.jsonl"
+    )
+    gpt55_doclocal_text_by_pid = {
+        doc["persona_id"]: "\n".join(
+            row["text"]
+            for row in gpt55_doclocal_docs
+            if row["persona_id"] == doc["persona_id"]
+        ).lower()
+        for doc in gpt55_doclocal_docs
+    }
+    persona_by_id = {persona["persona_id"]: persona for persona in personas}
+    direct_id_fields = ["synthetic_name", "email", "phone", "address", "account_id"]
+    exact_direct_leaks = []
+    for pid, combined_text in gpt55_doclocal_text_by_pid.items():
+        persona = persona_by_id[pid]
+        for field in direct_id_fields:
+            value = str(persona[field]).strip().lower()
+            if value and value in combined_text:
+                exact_direct_leaks.append(f"{pid}:{field}")
+    add_check(
+        checks,
+        "gpt55_doclocal:no_exact_direct_id_leaks",
+        len(gpt55_doclocal_docs) == 96
+        and len(gpt55_doclocal_text_by_pid) == 24
+        and not exact_direct_leaks,
+        "GPT-5.5 document-local generated corpus removes exact synthetic direct identifiers",
+        "data/transformed/c4_openai_doc_local_gpt55_24p.jsonl",
+        expected="96 docs, 24 personas, 0 exact direct-ID leaks",
+        observed=(
+            f"{len(gpt55_doclocal_docs)} docs, "
+            f"{len(gpt55_doclocal_text_by_pid)} personas, "
+            f"{len(exact_direct_leaks)} leaks"
+        ),
+    )
     add_check(
         checks,
         "corpus:persona_count",
@@ -1139,21 +1196,39 @@ def main() -> None:
         )
 
     openai = pd.read_csv(results_dir / "openai_aux_match_summary.csv")
+    gpt55 = pd.read_csv(results_dir / "openai_gpt55_48p_aux_match_summary.csv")
+    gpt55_doclocal = pd.read_csv(results_dir / "openai_gpt55_doclocal_24p_aux_match_summary.csv")
     for condition in [
         "c1_direct_redaction",
+        "c1b_presidio_redaction",
         "c4_doc_local_anon",
-        "c4_openai_doc_local",
         "c5_linkguard",
+        "c6_aggressive_redaction",
     ]:
-        stats = weighted_openai(openai, condition)
+        stats = weighted_openai(gpt55, condition)
         fragment = fmt(stats["top1"])
         add_check(
             checks,
-            f"openai:{condition}:top1",
-            stats["n"] == 12 and contains(paper_text, fragment),
-            f"paper contains 12-person OpenAI top-1 value {fragment}",
-            "results/openai_aux_match_summary.csv",
-            expected=f"n=12,{fragment}",
+            f"gpt55:{condition}:top1",
+            stats["n"] == 48 and contains(paper_text, fragment),
+            f"paper contains 48-person GPT-5.5 top-1 value {fragment}",
+            "results/openai_gpt55_48p_aux_match_summary.csv",
+            expected=f"n=48,{fragment}",
+            observed=f"n={stats['n']},{fragment if contains(paper_text, fragment) else 'missing'}",
+        )
+    for condition in [
+        "c4_openai_doc_local_gpt55_24p",
+        "c5_linkguard",
+    ]:
+        stats = weighted_openai(gpt55_doclocal, condition)
+        fragment = fmt(stats["top1"])
+        add_check(
+            checks,
+            f"gpt55_doclocal:{condition}:top1",
+            stats["n"] == 24 and contains(paper_text, fragment),
+            f"paper contains 24-person GPT-5.5 doc-local top-1 value {fragment}",
+            "results/openai_gpt55_doclocal_24p_aux_match_summary.csv",
+            expected=f"n=24,{fragment}",
             observed=f"n={stats['n']},{fragment if contains(paper_text, fragment) else 'missing'}",
         )
 
@@ -1211,10 +1286,23 @@ def main() -> None:
         "field_k20": fmt(k20["field_aux_top1"]),
         "rag_lg_t3_hit5": fmt(rag_t3_value("c5_linkguard", "hit_at_5")),
         "rag_lg_t3_multi10": "Multi@10 to 0.000",
-        "openai_direct": fmt(weighted_openai(openai, "c1_direct_redaction")["top1"]),
-        "openai_doc_local": fmt(weighted_openai(openai, "c4_openai_doc_local")["top1"]),
-        "openai_lg": fmt(weighted_openai(openai, "c5_linkguard")["top1"]),
-        "openai_aggressive": fmt(weighted_openai(openai, "c6_aggressive_redaction")["top1"]),
+        "gpt55_direct": fmt(weighted_openai(gpt55, "c1_direct_redaction")["top1"]),
+        "gpt55_presidio": fmt(weighted_openai(gpt55, "c1b_presidio_redaction")["top1"]),
+        "gpt55_local": fmt(weighted_openai(gpt55, "c4_doc_local_anon")["top1"]),
+        "gpt55_lg": fmt(weighted_openai(gpt55, "c5_linkguard")["top1"]),
+        "gpt55_lg_top3": fmt(weighted_openai(gpt55, "c5_linkguard")["top3"]),
+        "gpt55_lg_uncertainty": fmt(
+            weighted_openai(gpt55, "c5_linkguard")["uncertain_rate"]
+        ),
+        "gpt55_aggressive": fmt(
+            weighted_openai(gpt55, "c6_aggressive_redaction")["top1"]
+        ),
+        "gpt55_doclocal_top1": fmt(
+            weighted_openai(gpt55_doclocal, "c4_openai_doc_local_gpt55_24p")["top1"]
+        ),
+        "gpt55_doclocal_lg_subset": fmt(
+            weighted_openai(gpt55_doclocal, "c5_linkguard")["top1"]
+        ),
     }
     for name, fragment in colm_core_claims.items():
         add_check(
@@ -1236,11 +1324,41 @@ def main() -> None:
         expected=str(len(plan)),
         observed=str(int(plan["cached"].sum())),
     )
+    gpt55_plan = pd.read_csv(results_dir / "openai_gpt55_48p_audit_plan.csv")
+    add_check(
+        checks,
+        "gpt55:plan_fully_cached",
+        len(gpt55_plan) == int(gpt55_plan["cached"].sum()),
+        "GPT-5.5 audit plan has no missing calls",
+        "results/openai_gpt55_48p_audit_plan.csv",
+        expected=str(len(gpt55_plan)),
+        observed=str(int(gpt55_plan["cached"].sum())),
+    )
+    gpt55_doclocal_plan = pd.read_csv(results_dir / "openai_gpt55_doclocal_24p_audit_plan.csv")
+    add_check(
+        checks,
+        "gpt55_doclocal:plan_fully_cached",
+        len(gpt55_doclocal_plan) == int(gpt55_doclocal_plan["cached"].sum()),
+        "GPT-5.5 document-local audit plan has no missing calls",
+        "results/openai_gpt55_doclocal_24p_audit_plan.csv",
+        expected=str(len(gpt55_doclocal_plan)),
+        observed=str(int(gpt55_doclocal_plan["cached"].sum())),
+    )
 
     # Check that paper tables reflect the generated sources for core tables.
     table_checks = {
         "paper/tables/paper_main_results.tex": [fmt(lg["aux_top1"]), fmt(aggressive["issue_acc"])],
         "paper/tables/openai_aux_audit.tex": [fmt(weighted_openai(openai, "c5_linkguard")["top1"]), "12"],
+        "paper/tables/gpt55_aux_audit.tex": [
+            fmt(weighted_openai(gpt55, "c5_linkguard")["top1"]),
+            fmt(weighted_openai(gpt55, "c5_linkguard")["uncertain_rate"]),
+            "48",
+        ],
+        "paper/tables/gpt55_doclocal_audit.tex": [
+            fmt(weighted_openai(gpt55_doclocal, "c4_openai_doc_local_gpt55_24p")["top1"]),
+            fmt(weighted_openai(gpt55_doclocal, "c5_linkguard")["top1"]),
+            "24",
+        ],
         "paper/tables/linkguard_sensitivity.tex": [
             fmt(k2["aux_top1"]),
             fmt(k5["attr_exact_recovery"]),

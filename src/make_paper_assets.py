@@ -19,6 +19,7 @@ CONDITION_LABELS = {
     "c3_per_doc_pseudonym": "C3 per-doc pseudonym",
     "c4_doc_local_anon": "C4 doc-local proxy",
     "c4_openai_doc_local": "C4 OpenAI doc-local",
+    "c4_openai_doc_local_gpt55_24p": "C4 GPT-5.5 doc-local",
     "c5_linkguard": "C5 LinkGuard",
     "c6_aggressive_redaction": "C6 aggressive redaction",
 }
@@ -31,6 +32,7 @@ PAPER_LABELS = {
     "c3_per_doc_pseudonym": "C3 PerDoc",
     "c4_doc_local_anon": "C4 Local",
     "c4_openai_doc_local": "C4 OpenAI",
+    "c4_openai_doc_local_gpt55_24p": "C4 GPT5.5",
     "c5_linkguard": "C5 LG",
     "c6_aggressive_redaction": "C6 Agg",
 }
@@ -152,6 +154,20 @@ def paper_openai_table(summary: pd.DataFrame) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
+
+
+def paper_gpt55_table(summary: pd.DataFrame) -> pd.DataFrame:
+    out = paper_openai_table(summary)
+    if "uncertain_rate" not in summary.columns:
+        return out
+    uncertainty_by_condition = {}
+    for condition, group in summary.groupby("condition", sort=False):
+        n = group["n"].sum()
+        uncertainty_by_condition[PAPER_LABELS.get(condition, condition)] = float(
+            (group["uncertain_rate"] * group["n"]).sum() / n
+        )
+    out["Unc."] = [uncertainty_by_condition.get(label, float("nan")) for label in out["Cond."]]
+    return out
 
 
 def compact_sensitivity_table(df: pd.DataFrame) -> pd.DataFrame:
@@ -464,6 +480,44 @@ def write_summary(paths: any) -> None:
             "tab:openai_aux_audit",
         )
 
+    gpt55_summary_path = paths.results / "openai_gpt55_48p_aux_match_summary.csv"
+    gpt55_compact = None
+    if gpt55_summary_path.exists():
+        gpt55_summary = pd.read_csv(gpt55_summary_path)
+        gpt55_compact = compact_openai_table(gpt55_summary)
+        gpt55_compact.to_csv(tables_dir / "gpt55_aux_audit.csv", index=False)
+        to_latex_table(
+            paper_gpt55_table(gpt55_summary),
+            tables_dir / "gpt55_aux_audit.tex",
+            "GPT-5.5 instruction-following auxiliary matching audit on 48 T2/T3 synthetic personas. Unc. is the model-reported uncertainty rate.",
+            "tab:gpt55_aux_audit",
+        )
+        gpt55_rows_path = paths.results / "openai_gpt55_48p_aux_match_rows.csv"
+        if gpt55_rows_path.exists():
+            gpt55_ci = bootstrap_aux_ci(pd.read_csv(gpt55_rows_path), seed=20260628)
+            gpt55_ci.to_csv(tables_dir / "gpt55_aux_bootstrap_ci.csv", index=False)
+
+    gpt55_doclocal_summary_path = paths.results / "openai_gpt55_doclocal_24p_aux_match_summary.csv"
+    gpt55_doclocal_compact = None
+    if gpt55_doclocal_summary_path.exists():
+        gpt55_doclocal_summary = pd.read_csv(gpt55_doclocal_summary_path)
+        gpt55_doclocal_compact = compact_openai_table(gpt55_doclocal_summary)
+        gpt55_doclocal_compact.to_csv(tables_dir / "gpt55_doclocal_audit.csv", index=False)
+        to_latex_table(
+            paper_gpt55_table(gpt55_doclocal_summary),
+            tables_dir / "gpt55_doclocal_audit.tex",
+            "GPT-5.5 document-local anonymization baseline and auxiliary matching audit on 24 T2/T3 synthetic personas.",
+            "tab:gpt55_doclocal_audit",
+        )
+        gpt55_doclocal_rows_path = paths.results / "openai_gpt55_doclocal_24p_aux_match_rows.csv"
+        if gpt55_doclocal_rows_path.exists():
+            gpt55_doclocal_ci = bootstrap_aux_ci(
+                pd.read_csv(gpt55_doclocal_rows_path), seed=20260628
+            )
+            gpt55_doclocal_ci.to_csv(
+                tables_dir / "gpt55_doclocal_bootstrap_ci.csv", index=False
+            )
+
     fig_src = paths.results / "privacy_utility.png"
     fig_dst = figures_dir / "privacy_utility.png"
     if fig_src.exists():
@@ -552,6 +606,55 @@ def write_summary(paths: any) -> None:
                 f"- Removing {top['Signal removed']} gives the largest direct-redaction Aux@1 drop ({direct['aux_top1']:.3f} to {top['Aux@1']:.3f}), followed by {second['Signal removed']} ({second['Aux@1']:.3f}).",
                 "",
                 dataframe_to_markdown(ablation, floatfmt=".3f"),
+            ]
+        )
+    if gpt55_compact is not None:
+        gpt_lg = gpt55_compact[gpt55_compact["condition"] == "C5 LinkGuard"].iloc[0]
+        gpt_c1 = gpt55_compact[gpt55_compact["condition"] == "C1 direct redaction"].iloc[0]
+        gpt_c1b = gpt55_compact[
+            gpt55_compact["condition"] == "C1b Presidio redaction"
+        ].iloc[0]
+        gpt_c4 = gpt55_compact[gpt55_compact["condition"] == "C4 doc-local proxy"].iloc[0]
+        gpt_c6 = gpt55_compact[
+            gpt55_compact["condition"] == "C6 aggressive redaction"
+        ].iloc[0]
+        gpt_n = int(gpt_c1["n"])
+        lines.extend(
+            [
+                "",
+                "## GPT-5.5 API Stress Audit",
+                "",
+                f"- GPT-5.5 auxiliary matching on {gpt_n} T2/T3 personas finds direct redaction top-1 {gpt_c1['top1']:.3f}, Presidio {gpt_c1b['top1']:.3f}, document-local proxy {gpt_c4['top1']:.3f}, LinkGuard {gpt_lg['top1']:.3f}, and aggressive redaction {gpt_c6['top1']:.3f}.",
+                f"- LinkGuard has lower confidence and higher uncertainty in this audit: top-3 {gpt_lg['top3']:.3f}, T2 top-1 {gpt_lg['T2_top1']:.3f}, and T3 top-1 {gpt_lg['T3_top1']:.3f}.",
+                "- Treat this as a time-stamped stress audit; deterministic local sweeps remain the main reproducible evidence.",
+                "",
+                dataframe_to_markdown(gpt55_compact, floatfmt=".3f"),
+            ]
+        )
+    if gpt55_doclocal_compact is not None:
+        gpt_dl = gpt55_doclocal_compact[
+            gpt55_doclocal_compact["condition"] == "C4 GPT-5.5 doc-local"
+        ].iloc[0]
+        gpt_proxy = gpt55_doclocal_compact[
+            gpt55_doclocal_compact["condition"] == "C4 doc-local proxy"
+        ].iloc[0]
+        gpt_lg_sub = gpt55_doclocal_compact[
+            gpt55_doclocal_compact["condition"] == "C5 LinkGuard"
+        ].iloc[0]
+        gpt_agg_sub = gpt55_doclocal_compact[
+            gpt55_doclocal_compact["condition"] == "C6 aggressive redaction"
+        ].iloc[0]
+        gpt_dl_n = int(gpt_dl["n"])
+        lines.extend(
+            [
+                "",
+                "## GPT-5.5 Document-Local Baseline",
+                "",
+                f"- GPT-5.5 document-local anonymization on {gpt_dl_n} T2/T3 personas removes exact direct identifiers but remains matchable: Aux@1 {gpt_dl['top1']:.3f}, Aux@3 {gpt_dl['top3']:.3f}.",
+                f"- On the same persona subset, the local document-local proxy is {gpt_proxy['top1']:.3f}, LinkGuard is {gpt_lg_sub['top1']:.3f}, and aggressive redaction is {gpt_agg_sub['top1']:.3f}.",
+                "- This supports the corpus-level argument: a strong document-local anonymizer can still preserve repeated quasi-identifier combinations.",
+                "",
+                dataframe_to_markdown(gpt55_doclocal_compact, floatfmt=".3f"),
             ]
         )
     if openai_compact is not None:
@@ -854,7 +957,7 @@ def write_summary(paths: any) -> None:
                 "",
                 f"- Cached API responses: {cache_usage['cached_calls']}.",
                 f"- Total cached token usage: {cache_usage['input_tokens']} input, {cache_usage['output_tokens']} output, {cache_usage['total_tokens']} total.",
-                "- The cache total includes an earlier discarded auxiliary-matching audit that leaked synthetic persona IDs through document labels; the corrected OpenAI table above uses neutral document labels.",
+                "- The cache total includes legacy and exploratory smoke calls; the paper-facing API table uses the run-specific GPT-5.5 48-person audit artifacts.",
             ]
         )
     lines.extend(

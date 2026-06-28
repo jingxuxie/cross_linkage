@@ -232,7 +232,7 @@ A stricter body-only utility stress test tells the same story: \method{} scores 
 
 Bootstrap 95\% confidence intervals over held-out personas keep the main contrast separated: direct redaction 0.708 [0.615, 0.802], Presidio-style redaction 0.594 [0.490, 0.698], and \method{} 0.042 [0.010, 0.083].
 A three-seed no-API sweep preserves the ordering: direct redaction, Presidio-style redaction, and the document-local proxy have mean Aux@1 of 0.719, 0.628, and 0.663, while \method{} averages 0.045.
-A noisy-style synthetic rerendering lowers mean template similarity to 0.306 and preserves the ordering: direct/Presidio/document-local Aux@1 is 0.656/0.562/0.594, while \method{} remains at 0.042 with issue accuracy and Recall@5 at 1.000.
+A noisy-style synthetic rerendering lowers mean template similarity to 0.306 and preserves the ordering: direct/Presidio/document-local Aux@1 is 0.656/0.562/0.594, while \method{} remains at 0.042 with issue/Ret@5 1.000, and aggressive redaction issue/Ret@5 0.473/0.635.
 
 \subsection{Risk Tiers and Signal Ablations}
 
@@ -306,9 +306,11 @@ For high-linkage T3 personas, exact synthetic profile queries retrieve at least 
 \method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000; aggressive redaction reduces Hit@5 further to 0.031 but at much higher utility cost.
 This diagnostic is not a full RAG attack, but it shows that transformed corpora can remain searchable by auxiliary profiles.
 
-Finally, we ran a small cached OpenAI audit on 12 T2/T3 personas as a preliminary check with an instruction-following matcher and an OpenAI document-local anonymization baseline.
-The corrected neutral-label audit finds direct redaction at 0.750 top-1, the local document-local proxy at 0.750, OpenAI document-local anonymization at 0.667, \method{} at 0.250, and aggressive redaction at 0.167.
-We report this only as corroborating evidence because the sample is small; the main claims rest on deterministic local sweeps, robustness checks, and claim-verified artifacts.
+Finally, we ran a time-stamped GPT-5.5 auxiliary-matching audit on 48 T2/T3 personas, using synthetic data only, capped calls, cached responses, and \texttt{store=false}.
+Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.000, 0.979, and 1.000 top-1.
+\method{} lowers top-1 to 0.438, with top-3 at 0.708 and model-reported uncertainty at 0.917; aggressive redaction is 0.333.
+A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
+Because API model behavior can change, we treat this as a stress audit rather than the main statistical evidence.
 
 \section{Related Work}
 
@@ -331,7 +333,7 @@ Our contribution is complementary: we focus on cross-document linkage after docu
 The benchmark is synthetic and template-controlled.
 This is necessary for safe ground truth and reproducibility, but it limits external validity.
 Real sensitive corpora may contain richer writing styles, temporal dependencies, institutional terminology, missing fields, contradictions, OCR errors, and adversary knowledge.
-Our local attacks are lightweight, and the OpenAI audit is intentionally small.
+Our local attacks are lightweight, and the GPT-5.5 audit is a time-stamped API stress test rather than a stable benchmark.
 \method{} is a heuristic generalization method, not a formal privacy guarantee.
 The field-weighted attacker shows that residual generalized context can still be informative.
 Utility is measured with issue labels, retrieval, and lightweight fact checks rather than full downstream deployment tasks.

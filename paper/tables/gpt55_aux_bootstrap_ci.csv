@@ -1,0 +1,6 @@
+condition,n_personas,aux_top1,ci_low,ci_high
+C1 direct redaction,48,1.0,1.0,1.0
+C1b Presidio redaction,48,0.9791666666666666,0.9375,1.0
+C4 doc-local proxy,48,1.0,1.0,1.0
+C5 LinkGuard,48,0.4375,0.3125,0.5833333333333334
+C6 aggressive redaction,48,0.3333333333333333,0.20833333333333334,0.4791666666666667

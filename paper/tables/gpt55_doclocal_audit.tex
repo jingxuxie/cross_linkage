@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{GPT-5.5 document-local anonymization baseline and auxiliary matching audit on 24 T2/T3 synthetic personas.}
+\label{tab:gpt55_doclocal_audit}
+\begin{tabular}{lrrrrrr}
+\toprule
+Cond. & n & Aux@1 & Aux@3 & T2@1 & T3@1 & Unc. \\
+\midrule
+C1 Redact & 24 & 1.000 & 1.000 & 1.000 & 1.000 & 0.042 \\
+C1b Presidio & 24 & 0.958 & 1.000 & 0.917 & 1.000 & 0.083 \\
+C4 Local & 24 & 1.000 & 1.000 & 1.000 & 1.000 & 0.083 \\
+C4 GPT5.5 & 24 & 1.000 & 1.000 & 1.000 & 1.000 & 0.042 \\
+C5 LG & 24 & 0.333 & 0.625 & 0.250 & 0.417 & 0.833 \\
+C6 Agg & 24 & 0.292 & 0.583 & 0.417 & 0.167 & 0.875 \\
+\bottomrule
+\end{tabular}
+\end{table}
