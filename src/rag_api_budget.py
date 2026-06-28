@@ -11,6 +11,19 @@ from crossdoc_pipeline import dataframe_to_markdown, load_config
 
 DEFAULT_RUN_NAME = "gpt55_rag_12t3"
 DEFAULT_PILOT_RUN = "gpt55_rag_compact_pilot_2t3"
+BATCH_COLUMNS = [
+    "batch_id",
+    "batch_run_name",
+    "persona_ids",
+    "new_calls",
+    "selected_calls",
+    "conditions",
+    "estimated_input_tokens",
+    "estimated_output_tokens",
+    "estimated_total_tokens",
+    "mean_input_chars",
+    "command",
+]
 
 
 def artifact(results_dir: Path, run_name: str, suffix: str) -> Path:
@@ -111,7 +124,7 @@ def build_batches(
                 ),
             }
         )
-    return pd.DataFrame(batch_rows)
+    return pd.DataFrame(batch_rows, columns=BATCH_COLUMNS)
 
 
 def main() -> None:
@@ -142,7 +155,7 @@ def main() -> None:
     out_md = artifact(results_dir, args.run_name, "budget.md")
     batches.to_csv(out_csv, index=False)
 
-    display = batches.drop(columns=["command"]).copy()
+    display = batches.drop(columns=["command"], errors="ignore").copy()
     lines = [
         "# GPT-5.5 RAG Generation Budget Plan",
         "",
@@ -153,7 +166,7 @@ def main() -> None:
         f"Cached calls in full plan: {int(plan['cached'].astype(bool).sum())}/{len(plan)}.",
         f"Remaining calls: {len(pending)}.",
         f"Recommended batches: {len(batches)} batches of at most {int(batches['new_calls'].max()) if not batches.empty else 0} new calls.",
-        f"Estimated remaining total tokens: {int(batches['estimated_total_tokens'].sum())}.",
+        f"Estimated remaining total tokens: {int(batches['estimated_total_tokens'].sum()) if not batches.empty else 0}.",
         "",
         dataframe_to_markdown(display, floatfmt=".1f") if not display.empty else "_No pending calls._",
         "",

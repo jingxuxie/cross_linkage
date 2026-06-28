@@ -227,19 +227,19 @@
 | C5 LG        | 0.312 | 0.000     | 0.040      | 0.000  | 0.438   |
 | C6 Agg       | 0.031 | 0.000     | 0.000      | 0.000  | 0.000   |
 
-## GPT-5.5 RAG Generation Pilot (Not Paper Claim)
+## GPT-5.5 RAG Generation Stress Audit
 
-- A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate 1.000) and used 10 cached calls.
-- In the pilot, direct redaction and the document-local proxy have likely-same-person rate 1.000 and 1.000; LinkGuard and aggressive redaction are 0.000 and 0.000.
-- This validates the compact RAG-generation protocol only; the 12-person audit still has 10 pending calls and is not a paper claim.
+- The completed 12-person T3 RAG-generation audit parsed all generated JSON responses (minimum parse-success rate 1.000) and is fully cached at 60/60 calls.
+- Direct redaction, Presidio, and the document-local proxy all have likely-same-person rate 1.000/1.000/1.000; LinkGuard drops to 0.417 with uncertainty 1.000, and aggressive redaction drops to 0.000.
+- Exact field matches from generated outputs are nonzero for direct/Presidio/local (0.233/0.258/0.217) and zero for LinkGuard/aggressive.
 
-| Cond.        | n | parsed | Parse | Hit@5 | Same  | Exact | Unc.  |
-| ------------ | - | ------ | ----- | ----- | ----- | ----- | ----- |
-| C1 Redact    | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.250 | 0.000 |
-| C1b Presidio | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.200 | 0.500 |
-| C4 Local     | 2 | 2      | 1.000 | 1.000 | 1.000 | 0.250 | 0.000 |
-| C5 LG        | 2 | 2      | 1.000 | 1.000 | 0.000 | 0.000 | 1.000 |
-| C6 Agg       | 2 | 2      | 1.000 | 0.000 | 0.000 | 0.000 | 1.000 |
+| Cond.        | n  | parsed | Parse | Hit@5 | Same  | Exact | Unc.  |
+| ------------ | -- | ------ | ----- | ----- | ----- | ----- | ----- |
+| C1 Redact    | 12 | 12     | 1.000 | 1.000 | 1.000 | 0.233 | 0.083 |
+| C1b Presidio | 12 | 12     | 1.000 | 1.000 | 1.000 | 0.258 | 0.083 |
+| C4 Local     | 12 | 12     | 1.000 | 1.000 | 1.000 | 0.217 | 0.167 |
+| C5 LG        | 12 | 12     | 1.000 | 0.500 | 0.417 | 0.000 | 1.000 |
+| C6 Agg       | 12 | 12     | 1.000 | 0.083 | 0.000 | 0.000 | 1.000 |
 
 ## LinkGuard Residual Failure Analysis
 
@@ -285,21 +285,21 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 465.
+- Claim verifier checks: 482.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 665.
-- Total cached token usage: 610448 input, 123336 output, 733784 total.
-- The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.
-- The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.
+- Cached API responses: 675.
+- Total cached token usage: 619257 input, 124765 output, 744022 total.
+- The cache total includes legacy and exploratory calls; paper-facing GPT-5.5 claims use run-specific auxiliary, document-local, evidence, and RAG-generation artifacts.
+- The full GPT-5.5 RAG-generation audit is a completed cached stress audit over synthetic T3 records.
 - API provenance manifest: `results/api_audit_provenance.csv`.
-- Paper-facing GPT-5.5 API runs in the manifest: 3, all cached with 534535 run-specific tokens.
-- Optional GPT-5.5 RAG-generation plan remains at 50/60 cached calls.
+- Paper-facing GPT-5.5 API runs in the manifest: 4, all cached with 596185 run-specific tokens.
+- GPT-5.5 RAG-generation audit is 60/60 cached calls.
 - RAG-generation cache-fill budget: `results/openai_gpt55_rag_12t3_budget.csv`.
-- Remaining RAG-generation calls are split into 1 batches of at most 10 calls (10295 estimated tokens total).
+- Remaining RAG-generation calls: 0.
 
 ## Claims Supported Now
 
@@ -317,5 +317,5 @@
 - The benchmark is synthetic and uses controlled template families; this is a feature for controlled ground truth, but limits external validity.
 - The threshold graph clustering attack is brittle outside the stable-pseudonym condition, so clustering claims should emphasize consistent pseudonymization and fixed-K/auxiliary-matching results.
 - GPT-5.5 audits are cached, time-stamped synthetic subset stress audits; deterministic local sweeps remain the main reproducible evidence.
-- The compact RAG-generation pilot validates the protocol but is not a paper result until the full 12-person run is approved and verified.
+- The GPT-5.5 RAG-generation audit is a time-stamped synthetic T3 stress test, not the main reproducible evidence.
 - LinkGuard is a heuristic generalization method, not a formal privacy guarantee.

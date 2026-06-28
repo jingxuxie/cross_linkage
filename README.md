@@ -170,14 +170,13 @@ conda run -n cross_linkage python src/openai_evidence_audit.py \
   --plan-only
 ```
 
-The GPT-5.5 RAG-generation audit is intentionally excluded from paper claims
-unless a full live run is explicitly approved. The earlier 3-person pilot is a
-debug artifact that exposed output truncation; the compact 2-person pilot fixes
-the prompt format and parses 10/10 responses. Four additional 10-call batches are
-cached, but the 12-person audit still has 10 pending calls.
+The GPT-5.5 RAG-generation audit is complete as a time-stamped synthetic stress
+audit. The earlier 3-person pilot is a debug artifact that exposed output
+truncation; the compact 2-person pilot fixes the prompt format and parses 10/10
+responses. Five additional 10-call batches fill the shared response cache, so the
+12-person T3 audit is now 60/60 cached.
 
-Regenerate the no-API budget plan for completing the optional RAG-generation
-audit in 10-call batches:
+Regenerate the no-API budget plan to confirm that no RAG-generation calls remain:
 
 ```bash
 conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml

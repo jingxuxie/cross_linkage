@@ -1089,6 +1089,7 @@ def write_summary(paths: any) -> None:
                 dataframe_to_markdown(rag_context_t3, floatfmt=".3f"),
             ]
         )
+    rag_generation_full_path = paths.results / "openai_gpt55_rag_12t3_rag_generation_summary.csv"
     rag_generation_pilot_path = (
         paths.results / "openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv"
     )
@@ -1098,13 +1099,19 @@ def write_summary(paths: any) -> None:
         rag_generation_plan = pd.read_csv(rag_generation_plan_path)
         cached_calls = int(rag_generation_plan["cached"].sum())
         pending_calls = int(len(rag_generation_plan) - cached_calls)
-        min_parse = float(rag_generation_pilot["parse_success_rate"].min())
+        use_full_rag_generation = pending_calls == 0 and rag_generation_full_path.exists()
+        rag_generation = (
+            pd.read_csv(rag_generation_full_path)
+            if use_full_rag_generation
+            else rag_generation_pilot
+        )
+        min_parse = float(rag_generation["parse_success_rate"].min())
 
-        def pilot_value(condition: str, metric: str) -> float:
-            match = rag_generation_pilot[rag_generation_pilot["condition"] == condition]
+        def generation_value(condition: str, metric: str) -> float:
+            match = rag_generation[rag_generation["condition"] == condition]
             return float(match[metric].iloc[0]) if not match.empty else float("nan")
 
-        pilot_table = rag_generation_pilot[
+        generation_table = rag_generation[
             [
                 "condition",
                 "n",
@@ -1116,10 +1123,10 @@ def write_summary(paths: any) -> None:
                 "uncertain_rate",
             ]
         ].copy()
-        pilot_table["condition"] = pilot_table["condition"].map(PAPER_LABELS).fillna(
-            pilot_table["condition"]
+        generation_table["condition"] = generation_table["condition"].map(PAPER_LABELS).fillna(
+            generation_table["condition"]
         )
-        pilot_table = pilot_table.rename(
+        generation_table = generation_table.rename(
             columns={
                 "condition": "Cond.",
                 "n": "n",
@@ -1131,19 +1138,40 @@ def write_summary(paths: any) -> None:
                 "uncertain_rate": "Unc.",
             }
         )
-
-        lines.extend(
-            [
-                "",
-                "## GPT-5.5 RAG Generation Pilot (Not Paper Claim)",
-                "",
-                f"- A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate {min_parse:.3f}) and used 10 cached calls.",
-                f"- In the pilot, direct redaction and the document-local proxy have likely-same-person rate {pilot_value('c1_direct_redaction', 'likely_same_person_rate'):.3f} and {pilot_value('c4_doc_local_anon', 'likely_same_person_rate'):.3f}; LinkGuard and aggressive redaction are {pilot_value('c5_linkguard', 'likely_same_person_rate'):.3f} and {pilot_value('c6_aggressive_redaction', 'likely_same_person_rate'):.3f}.",
-                f"- This validates the compact RAG-generation protocol only; the 12-person audit still has {pending_calls} pending calls and is not a paper claim.",
-                "",
-                dataframe_to_markdown(pilot_table, floatfmt=".3f"),
-            ]
+        generation_table.to_csv(tables_dir / "gpt55_rag_generation_audit.csv", index=False)
+        to_latex_table(
+            generation_table,
+            tables_dir / "gpt55_rag_generation_audit.tex",
+            "GPT-5.5 RAG-generation stress audit on synthetic T3 records.",
+            "tab:gpt55_rag_generation_audit",
         )
+
+        if use_full_rag_generation:
+            lines.extend(
+                [
+                    "",
+                    "## GPT-5.5 RAG Generation Stress Audit",
+                    "",
+                    f"- The completed 12-person T3 RAG-generation audit parsed all generated JSON responses (minimum parse-success rate {min_parse:.3f}) and is fully cached at {cached_calls}/{len(rag_generation_plan)} calls.",
+                    f"- Direct redaction, Presidio, and the document-local proxy all have likely-same-person rate {generation_value('c1_direct_redaction', 'likely_same_person_rate'):.3f}/{generation_value('c1b_presidio_redaction', 'likely_same_person_rate'):.3f}/{generation_value('c4_doc_local_anon', 'likely_same_person_rate'):.3f}; LinkGuard drops to {generation_value('c5_linkguard', 'likely_same_person_rate'):.3f} with uncertainty {generation_value('c5_linkguard', 'uncertain_rate'):.3f}, and aggressive redaction drops to {generation_value('c6_aggressive_redaction', 'likely_same_person_rate'):.3f}.",
+                    f"- Exact field matches from generated outputs are nonzero for direct/Presidio/local ({generation_value('c1_direct_redaction', 'exact_field_match_rate'):.3f}/{generation_value('c1b_presidio_redaction', 'exact_field_match_rate'):.3f}/{generation_value('c4_doc_local_anon', 'exact_field_match_rate'):.3f}) and zero for LinkGuard/aggressive.",
+                    "",
+                    dataframe_to_markdown(generation_table, floatfmt=".3f"),
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "",
+                    "## GPT-5.5 RAG Generation Pilot (Not Paper Claim)",
+                    "",
+                    f"- A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate {min_parse:.3f}) and used 10 cached calls.",
+                    f"- In the pilot, direct redaction and the document-local proxy have likely-same-person rate {generation_value('c1_direct_redaction', 'likely_same_person_rate'):.3f} and {generation_value('c4_doc_local_anon', 'likely_same_person_rate'):.3f}; LinkGuard and aggressive redaction are {generation_value('c5_linkguard', 'likely_same_person_rate'):.3f} and {generation_value('c6_aggressive_redaction', 'likely_same_person_rate'):.3f}.",
+                    f"- This validates the compact RAG-generation protocol only; the 12-person audit still has {pending_calls} pending calls and is not a paper claim.",
+                    "",
+                    dataframe_to_markdown(generation_table, floatfmt=".3f"),
+                ]
+            )
     failure_path = paths.results / "linkguard_failure_analysis.csv"
     if failure_path.exists():
         failures = pd.read_csv(failure_path)
@@ -1263,8 +1291,8 @@ def write_summary(paths: any) -> None:
                 "",
                 f"- Cached API responses: {cache_usage['cached_calls']}.",
                 f"- Total cached token usage: {cache_usage['input_tokens']} input, {cache_usage['output_tokens']} output, {cache_usage['total_tokens']} total.",
-                "- The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.",
-                "- The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.",
+                "- The cache total includes legacy and exploratory calls; paper-facing GPT-5.5 claims use run-specific auxiliary, document-local, evidence, and RAG-generation artifacts.",
+                "- The full GPT-5.5 RAG-generation audit is a completed cached stress audit over synthetic T3 records.",
             ]
         )
         if provenance_path.exists():
@@ -1272,7 +1300,7 @@ def write_summary(paths: any) -> None:
             paper_rows = provenance[
                 provenance["paper_claim_status"].astype(str).str.startswith("paper_facing")
             ]
-            rag_plan = provenance[provenance["run_id"] == "gpt55_rag_12t3_plan"].iloc[0]
+            rag_plan = provenance[provenance["run_id"] == "gpt55_rag_12t3"].iloc[0]
             lines.extend(
                 [
                     f"- API provenance manifest: `{provenance_path.relative_to(paths.root)}`.",
@@ -1281,7 +1309,7 @@ def write_summary(paths: any) -> None:
                         f"all cached with {int(paper_rows['usage_total_tokens'].sum())} run-specific tokens."
                     ),
                     (
-                        f"- Optional GPT-5.5 RAG-generation plan remains at "
+                        f"- GPT-5.5 RAG-generation audit is "
                         f"{int(rag_plan['cached_calls'])}/{int(rag_plan['planned_calls'])} cached calls."
                     ),
                 ]
@@ -1292,7 +1320,9 @@ def write_summary(paths: any) -> None:
             lines.extend(
                 [
                     f"- RAG-generation cache-fill budget: `{rag_budget_path.relative_to(paths.root)}`.",
-                    (
+                    "- Remaining RAG-generation calls: 0."
+                    if rag_budget.empty
+                    else (
                         f"- Remaining RAG-generation calls are split into {len(rag_budget)} "
                         f"batches of at most {int(rag_budget['new_calls'].max())} calls "
                         f"({int(rag_budget['estimated_total_tokens'].sum())} estimated tokens total)."
@@ -1318,7 +1348,7 @@ def write_summary(paths: any) -> None:
             "- The benchmark is synthetic and uses controlled template families; this is a feature for controlled ground truth, but limits external validity.",
             "- The threshold graph clustering attack is brittle outside the stable-pseudonym condition, so clustering claims should emphasize consistent pseudonymization and fixed-K/auxiliary-matching results.",
             "- GPT-5.5 audits are cached, time-stamped synthetic subset stress audits; deterministic local sweeps remain the main reproducible evidence.",
-            "- The compact RAG-generation pilot validates the protocol but is not a paper result until the full 12-person run is approved and verified.",
+            "- The GPT-5.5 RAG-generation audit is a time-stamped synthetic T3 stress test, not the main reproducible evidence.",
             "- LinkGuard is a heuristic generalization method, not a formal privacy guarantee.",
         ]
     )

@@ -137,9 +137,8 @@ conda run -n cross_linkage python src/openai_evidence_audit.py \
 Expected current result: `planned_calls=24`, `cached_calls=24`, and
 `missing_calls=0`.
 
-The optional GPT-5.5 RAG-generation audit has a compact 2-person pilot cached,
-but the full 12-person run is not part of the paper claims unless the remaining
-calls are explicitly approved:
+The GPT-5.5 RAG-generation audit is fully cached as a 12-person T3 synthetic
+stress audit:
 
 ```bash
 conda run -n cross_linkage python src/openai_rag_audit.py \
@@ -154,18 +153,17 @@ conda run -n cross_linkage python src/openai_rag_audit.py \
   --plan-only
 ```
 
-Expected pre-approval result after the compact pilot plus four cache-fill batches:
-`planned_calls=60`, `cached_calls=50`, and `missing_calls=10`.
+Expected current result after the compact pilot plus five cache-fill batches:
+`planned_calls=60`, `cached_calls=60`, and `missing_calls=0`.
 
-Regenerate the no-API budget plan for completing the optional RAG-generation
-audit in small approval units:
+Regenerate the no-API budget plan to confirm that no RAG-generation calls remain:
 
 ```bash
 conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml
 ```
 
-Expected current result: 1 batch, 10 calls per batch, approximately 10k
-estimated remaining tokens from the cached compact pilot.
+Expected current result: 0 batches, 0 pending calls, and 0 estimated remaining
+tokens.
 
 Regenerate the API provenance manifest without making API calls:
 
@@ -173,9 +171,9 @@ Regenerate the API provenance manifest without making API calls:
 conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml
 ```
 
-Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and
-evidence audits are fully cached; the optional 12-person RAG-generation plan is
-`50/60` cached and remains outside paper claims.
+Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local,
+evidence, and RAG-generation stress audits are fully cached; the 12-person
+RAG-generation audit is `60/60` cached.
 
 ## Verification Gate
 
@@ -187,7 +185,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=465 failures=0`.
+Expected current result: `checks=482 failures=0`.
 
 The verifier writes:
 

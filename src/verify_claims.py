@@ -238,6 +238,11 @@ def main() -> None:
         "results/openai_gpt55_evidence_24p_audit_usage.csv",
         "results/openai_gpt55_rag_12t3_audit_plan.csv",
         "results/openai_gpt55_rag_12t3_audit_plan.md",
+        "results/openai_gpt55_rag_12t3_audit_notes.md",
+        "results/openai_gpt55_rag_12t3_audit_usage.csv",
+        "results/openai_gpt55_rag_12t3_rag_generation_rows.csv",
+        "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+        "results/openai_gpt55_rag_12t3_rag_generation_summary.md",
         "results/openai_gpt55_rag_compact_pilot_2t3_audit_notes.md",
         "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_audit_plan.md",
@@ -266,6 +271,8 @@ def main() -> None:
         "paper/tables/rag_query_sensitivity.csv",
         "paper/tables/rag_query_sensitivity.tex",
         "paper/tables/rag_context_recovery_t3.tex",
+        "paper/tables/gpt55_rag_generation_audit.csv",
+        "paper/tables/gpt55_rag_generation_audit.tex",
         "paper/tables/noisy_style_stress.tex",
         "paper/short_paper.pdf",
         "paper/colm2026_submission.tex",
@@ -1649,7 +1656,7 @@ def main() -> None:
         and rag_cached == expected_rag_cached
         and "json_object" in set(gpt55_rag_plan.get("text_format", pd.Series(dtype=str)).astype(str))
         and set(gpt55_rag_plan.get("max_output_tokens", pd.Series(dtype=int)).astype(int)) == {250},
-        "optional GPT-5.5 RAG generation audit plan has compact pilot plus completed cache-fill batches but is not claimed as completed",
+        "GPT-5.5 RAG generation audit plan is fully cached across compact pilot plus cache-fill batches",
         "results/openai_gpt55_rag_12t3_audit_plan.csv",
         expected=(
             "60 planned calls, 5 conditions, 12 personas, compact JSON, "
@@ -1682,6 +1689,42 @@ def main() -> None:
             f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
+    rag_full_rows = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_rag_generation_rows.csv")
+    rag_full_summary = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_rag_generation_summary.csv")
+    add_check(
+        checks,
+        "gpt55_rag_generation:full_parse_success",
+        len(rag_full_rows) == 60
+        and len(set(rag_full_rows["condition"])) == 5
+        and len(set(rag_full_rows["persona_id"])) == 12
+        and bool(rag_full_rows["parse_success"].astype(bool).all())
+        and float(rag_full_summary["parse_success_rate"].min()) == 1.0
+        and float(
+            rag_full_summary[
+                rag_full_summary["condition"] == "c1_direct_redaction"
+            ]["likely_same_person_rate"].iloc[0]
+        )
+        == 1.0
+        and float(
+            rag_full_summary[
+                rag_full_summary["condition"] == "c5_linkguard"
+            ]["likely_same_person_rate"].iloc[0]
+        )
+        < 0.5
+        and float(
+            rag_full_summary[
+                rag_full_summary["condition"] == "c6_aggressive_redaction"
+            ]["likely_same_person_rate"].iloc[0]
+        )
+        == 0.0,
+        "completed GPT-5.5 RAG-generation stress audit parsed all responses and preserves the expected ordering",
+        "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
+        expected="60 rows, 12 personas, parse_success_rate 1.000, direct same-person 1.000, LinkGuard <0.500, aggressive 0.000",
+        observed=(
+            f"{len(rag_full_rows)} rows, {len(set(rag_full_rows['persona_id']))} personas, "
+            f"min_parse={float(rag_full_summary['parse_success_rate'].min()):.3f}"
+        ),
+    )
     for run_name in rag_batch_run_names:
         rag_batch_rows = pd.read_csv(results_dir / f"openai_{run_name}_rag_generation_rows.csv")
         rag_batch_summary = pd.read_csv(results_dir / f"openai_{run_name}_rag_generation_summary.csv")
@@ -1708,35 +1751,51 @@ def main() -> None:
     rag_budget = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_budget.csv")
     rag_budget_md = (results_dir / "openai_gpt55_rag_12t3_budget.md").read_text(encoding="utf-8")
     expected_remaining_batches = expected_rag_pending // 10
-    add_check(
-        checks,
-        "gpt55_rag_budget:batch_shape",
-        len(rag_budget) == expected_remaining_batches
-        and int(rag_budget["new_calls"].sum()) == expected_rag_pending
-        and int(rag_budget["new_calls"].max()) == 10
-        and int(rag_budget["conditions"].min()) == 5
-        and int(rag_budget["estimated_total_tokens"].sum()) > 0,
-        "RAG-generation API budget splits the remaining optional run into bounded approval batches",
-        "results/openai_gpt55_rag_12t3_budget.csv",
-        expected=f"{expected_remaining_batches} batches, {expected_rag_pending} pending calls, max 10 calls per batch",
-        observed=(
+    if expected_rag_pending == 0:
+        budget_shape_ok = rag_budget.empty
+        budget_observed = f"{len(rag_budget)} batches, 0 calls, tokens=0"
+    else:
+        budget_shape_ok = (
+            len(rag_budget) == expected_remaining_batches
+            and int(rag_budget["new_calls"].sum()) == expected_rag_pending
+            and int(rag_budget["new_calls"].max()) == 10
+            and int(rag_budget["conditions"].min()) == 5
+            and int(rag_budget["estimated_total_tokens"].sum()) > 0
+        )
+        budget_observed = (
             f"{len(rag_budget)} batches, {int(rag_budget['new_calls'].sum())} calls, "
             f"max={int(rag_budget['new_calls'].max())}, "
             f"tokens={int(rag_budget['estimated_total_tokens'].sum())}"
-        ),
+        )
+    add_check(
+        checks,
+        "gpt55_rag_budget:batch_shape",
+        budget_shape_ok,
+        "RAG-generation API budget reflects the remaining optional run state",
+        "results/openai_gpt55_rag_12t3_budget.csv",
+        expected=f"{expected_remaining_batches} batches, {expected_rag_pending} pending calls, max 10 calls per batch",
+        observed=budget_observed,
     )
+    if expected_rag_pending == 0:
+        batch_commands_ok = rag_budget.empty and "_No pending calls._" in rag_budget_md
+        batch_commands_observed = "no pending calls"
+    else:
+        batch_commands_ok = (
+            rag_budget["command"].astype(str).str.contains("--persona-ids").all()
+            and rag_budget["command"].astype(str).str.contains("--max-calls 10").all()
+            and rag_budget["batch_run_name"].astype(str).str.startswith("gpt55_rag_12t3_batch").all()
+            and set(rag_budget["batch_run_name"].astype(str)).isdisjoint(set(rag_batch_run_names))
+            and not has_local_path_marker("\n".join(rag_budget["command"].astype(str).tolist()))
+        )
+        batch_commands_observed = "ok"
     add_check(
         checks,
         "gpt55_rag_budget:batch_commands",
-        rag_budget["command"].astype(str).str.contains("--persona-ids").all()
-        and rag_budget["command"].astype(str).str.contains("--max-calls 10").all()
-        and rag_budget["batch_run_name"].astype(str).str.startswith("gpt55_rag_12t3_batch").all()
-        and set(rag_budget["batch_run_name"].astype(str)).isdisjoint(set(rag_batch_run_names))
-        and not has_local_path_marker("\n".join(rag_budget["command"].astype(str).tolist())),
-        "RAG-generation batch commands use explicit persona subsets and no tracked local key path",
+        batch_commands_ok,
+        "RAG-generation batch commands use explicit persona subsets while pending, or report no pending calls when complete",
         "results/openai_gpt55_rag_12t3_budget.csv",
-        expected="remaining persona subset commands, max-calls 10, no local key path marker",
-        observed="ok",
+        expected="remaining persona subset commands or no pending calls, no local key path marker",
+        observed=batch_commands_observed,
     )
     add_check(
         checks,
@@ -1756,7 +1815,7 @@ def main() -> None:
         "gpt55_aux_48p",
         "gpt55_doclocal_24p",
         "gpt55_evidence_24p",
-        "gpt55_rag_12t3_plan",
+        "gpt55_rag_12t3",
         "gpt55_rag_compact_pilot_2t3",
     }
     expected_provenance_runs.update(rag_batch_run_names)
@@ -1776,25 +1835,28 @@ def main() -> None:
     add_check(
         checks,
         "api_provenance:paper_facing_runs_cached",
-        len(paper_api_runs) == 3
+        len(paper_api_runs) == 4
         and int(paper_api_runs["missing_calls"].sum()) == 0
-        and set(paper_api_runs["run_id"]) == {"gpt55_aux_48p", "gpt55_doclocal_24p", "gpt55_evidence_24p"},
+        and set(paper_api_runs["run_id"])
+        == {"gpt55_aux_48p", "gpt55_doclocal_24p", "gpt55_evidence_24p", "gpt55_rag_12t3"},
         "paper-facing GPT-5.5 API stress audits are complete cached runs",
         "results/api_audit_provenance.csv",
-        expected="3 paper-facing GPT-5.5 rows, zero missing calls",
+        expected="4 paper-facing GPT-5.5 rows, zero missing calls",
         observed=f"{len(paper_api_runs)} rows, {int(paper_api_runs['missing_calls'].sum())} missing",
     )
-    rag_provenance = provenance[provenance["run_id"] == "gpt55_rag_12t3_plan"].iloc[0]
+    rag_provenance = provenance[provenance["run_id"] == "gpt55_rag_12t3"].iloc[0]
     add_check(
         checks,
-        "api_provenance:rag_generation_non_claim",
+        "api_provenance:rag_generation_stress_audit",
         int(rag_provenance["planned_calls"]) == 60
         and int(rag_provenance["cached_calls"]) == expected_rag_cached
         and int(rag_provenance["missing_calls"]) == expected_rag_pending
-        and "not_paper_claim" in str(rag_provenance["paper_claim_status"]),
-        "API provenance preserves the pending-call boundary for optional RAG generation",
+        and int(rag_provenance["usage_total_tokens"]) > 0
+        and str(rag_provenance["paper_claim_status"])
+        == "paper_facing_cached_rag_generation_stress_audit",
+        "API provenance records completed RAG generation as a cached synthetic stress audit",
         "results/api_audit_provenance.csv",
-        expected=f"60 planned, {expected_rag_cached} cached, {expected_rag_pending} missing, not paper claim",
+        expected=f"60 planned, {expected_rag_cached} cached, {expected_rag_pending} missing, paper-facing stress audit",
         observed=(
             f"{int(rag_provenance['planned_calls'])} planned, "
             f"{int(rag_provenance['cached_calls'])} cached, "
@@ -1837,10 +1899,10 @@ def main() -> None:
         checks,
         "api_provenance:markdown_boundary",
         "This command makes no API calls" in provenance_md
-        and "Full 12-person RAG-generation audit has pending calls and is not claimed" in provenance_md,
-        "API provenance markdown states the no-call generation path and RAG non-claim boundary",
+        and "Completed 12-person RAG-generation stress audit" in provenance_md,
+        "API provenance markdown states the no-call generation path and completed RAG stress-audit boundary",
         "results/api_audit_provenance.md",
-        expected="no API calls and pending RAG non-claim language",
+        expected="no API calls and completed RAG stress-audit language",
         observed="ok"
         if "This command makes no API calls" in provenance_md
         else "missing no-call language",
@@ -1849,16 +1911,13 @@ def main() -> None:
     add_check(
         checks,
         "result_brief:rag_generation_boundary",
-        "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief
-        and (
-            f"the 12-person audit still has {expected_rag_pending} pending calls "
-            "and is not a paper claim"
-        )
-        in result_brief,
-        "paper-ready result brief separates the compact RAG-generation pilot from paper claims",
+        "GPT-5.5 RAG Generation Stress Audit" in result_brief
+        and f"fully cached at {expected_rag_cached}/60 calls" in result_brief
+        and "Remaining RAG-generation calls: 0." in result_brief,
+        "paper-ready result brief records the completed RAG-generation stress audit",
         "results/paper_ready_summary.md",
-        expected=f"compact RAG pilot documented as non-claim with {expected_rag_pending} pending calls",
-        observed="ok" if "GPT-5.5 RAG Generation Pilot (Not Paper Claim)" in result_brief else "missing",
+        expected=f"completed RAG stress audit documented with {expected_rag_cached}/60 cached calls",
+        observed="ok" if "GPT-5.5 RAG Generation Stress Audit" in result_brief else "missing",
     )
     add_check(
         checks,
@@ -1878,23 +1937,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=465 failures=0`." in reproduce_text,
+        "Expected current result: `checks=482 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=465 failures=0`.",
+        expected="Expected current result: `checks=482 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=465 failures=0`." in reproduce_text
+        if "Expected current result: `checks=482 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=465 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=482 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=465 failures=0`.",
+        expected="Main claim verifier: `checks=482 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=465 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=482 failures=0`." in readiness_text
         else "missing",
     )
     add_check(

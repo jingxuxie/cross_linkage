@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-28T21:51:56+00:00",
+  "created_utc": "2026-06-28T22:05:06+00:00",
   "files": [
     {
       "bytes": 507,
@@ -17,9 +17,9 @@
       "sha256": "f00cd5a08de0d21f834fb9bbf08892bd52715f0caafab481263c31cce1a7696a"
     },
     {
-      "bytes": 5364,
+      "bytes": 5133,
       "path": "supplement/reproducibility_checklist.md",
-      "sha256": "2dabc4cf7b5110b524a60396aa45243ed2cc47420c6b7300189e25e7dc6f7cd1"
+      "sha256": "743c64d94bc6199345fb582769a3df17879698217d899f2f0ec043fc24ef950b"
     },
     {
       "bytes": 3023,

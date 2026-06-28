@@ -1,0 +1,6 @@
+condition,condition_label,n,n_parsed,parse_success_rate,retrieval_hit_at_5,target_docs_at_5,likely_same_person_rate,sensitive_contexts_mean,high_specificity_contexts_mean,sensitive_field_mentions_mean,exact_field_match_rate,coarse_field_mentions_mean,uncertain_rate,mean_confidence
+c1_direct_redaction,C1 direct redaction,12,12,1.0,1.0,3.0,1.0,3.0,2.5,3.0,0.2333333333333333,0.0,0.08333333333333333,0.8633333333333334
+c1b_presidio_redaction,C1b Presidio redaction,12,12,1.0,1.0,2.75,1.0,3.0,2.75,3.0,0.25833333333333336,0.0,0.08333333333333333,0.8500000000000002
+c4_doc_local_anon,C4 doc-local proxy,12,12,1.0,1.0,2.8333333333333335,1.0,3.0,2.5833333333333335,3.0,0.21666666666666667,0.0,0.16666666666666666,0.8341666666666666
+c5_linkguard,C5 LinkGuard,12,12,1.0,0.5,0.5,0.4166666666666667,3.0,0.0,2.0833333333333335,0.0,0.25,1.0,0.35666666666666663
+c6_aggressive_redaction,C6 aggressive redaction,12,12,1.0,0.08333333333333333,0.08333333333333333,0.0,2.9166666666666665,0.0,2.6666666666666665,0.0,0.25,1.0,0.11083333333333335
