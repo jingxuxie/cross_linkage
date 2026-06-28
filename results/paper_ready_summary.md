@@ -308,7 +308,7 @@
 3. Document-local anonymization can miss combinations that are risky at corpus scale.
 4. Exact quasi-identifier recovery provides a structured profile-reconstruction signal in addition to auxiliary matching.
 5. Profile-query RAG retrieval can expose high-linkage transformed records even when direct PII is removed.
-6. GPT-5.5 auxiliary, document-local, and evidence stress audits corroborate the corpus-level linkage story on synthetic subsets.
+6. GPT-5.5 auxiliary, document-local, evidence, and RAG-generation stress audits corroborate the corpus-level linkage story on synthetic subsets.
 7. A noisy-style synthetic rerendering preserves the main privacy-utility ordering.
 8. Corpus-aware generalization gives a better privacy-utility point than blanket aggressive redaction in this synthetic sprint.
 

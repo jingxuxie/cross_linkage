@@ -57,7 +57,8 @@ Venue facts verified from the workshop site on 2026-06-28:
 5. LinkGuard improves the synthetic privacy-utility frontier over blanket aggressive redaction.
 6. Field-aware stress testing exposes residual LinkGuard risk, but the risk is controllable by increasing target `k`.
 7. Profile-query retrieval can expose high-linkage transformed records even after direct PII is removed.
-8. A noisy-style synthetic rerendering preserves the main privacy-utility ordering.
+8. GPT-5.5 RAG generation over retrieved synthetic records preserves the exposure ordering.
+9. A noisy-style synthetic rerendering preserves the main privacy-utility ordering.
 
 ## Caveats To Keep Explicit
 

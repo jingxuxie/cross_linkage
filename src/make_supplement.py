@@ -319,6 +319,7 @@ def write_claim_trace(
     rag_tier: pd.DataFrame,
     rag_query: pd.DataFrame,
     rag_context_tier: pd.DataFrame,
+    rag_generation: pd.DataFrame,
     sensitivity: pd.DataFrame,
     corpus_awareness: pd.DataFrame,
 ) -> None:
@@ -361,6 +362,9 @@ def write_claim_trace(
         (rag_context_tier["condition"] == "c5_linkguard")
         & (rag_context_tier["risk_tier"] == "T3")
     ].iloc[0]
+    rag_gen_direct = row(rag_generation, "c1_direct_redaction")
+    rag_gen_lg = row(rag_generation, "c5_linkguard")
+    rag_gen_aggressive = row(rag_generation, "c6_aggressive_redaction")
     rows = pd.DataFrame(
         [
             {
@@ -412,6 +416,11 @@ def write_claim_trace(
                 "claim": "Retrieved profile-query contexts expose quasi-identifiers under direct baselines.",
                 "evidence": f"T3 direct exact fields {fmt(rag_context_direct['exact_fields_recovered'])}, LinkGuard exact/coarse {fmt(rag_context_lg['exact_fields_recovered'])}/{fmt(rag_context_lg['coarse_fields_recovered'])}",
                 "artifact": "results/rag_context_recovery_by_tier.csv",
+            },
+            {
+                "claim": "GPT-5.5 RAG generation preserves the exposure ordering.",
+                "evidence": f"direct Same {fmt(rag_gen_direct['likely_same_person_rate'])}, LinkGuard Same/Unc. {fmt(rag_gen_lg['likely_same_person_rate'])}/{fmt(rag_gen_lg['uncertain_rate'])}, aggressive Same {fmt(rag_gen_aggressive['likely_same_person_rate'])}",
+                "artifact": "results/openai_gpt55_rag_12t3_rag_generation_summary.csv",
             },
             {
                 "claim": "Noisy-style synthetic rerendering preserves the ordering.",
@@ -470,6 +479,7 @@ def main() -> None:
     rag_tier = pd.read_csv(paths.results / "rag_exposure_by_tier.csv")
     rag_query = pd.read_csv(paths.results / "rag_query_sensitivity.csv")
     rag_context_tier = pd.read_csv(paths.results / "rag_context_recovery_by_tier.csv")
+    rag_generation = pd.read_csv(paths.results / "openai_gpt55_rag_12t3_rag_generation_summary.csv")
     sensitivity = pd.read_csv(paths.results / "linkguard_sensitivity.csv")
     corpus_awareness = pd.read_csv(paths.results / "corpus_awareness_ablation.csv")
 
@@ -484,6 +494,7 @@ def main() -> None:
         rag_tier,
         rag_query,
         rag_context_tier,
+        rag_generation,
         sensitivity,
         corpus_awareness,
     )

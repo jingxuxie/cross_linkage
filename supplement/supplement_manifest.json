@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-28T22:05:06+00:00",
+  "created_utc": "2026-06-28T22:09:16+00:00",
   "files": [
     {
       "bytes": 507,
@@ -22,9 +22,9 @@
       "sha256": "743c64d94bc6199345fb582769a3df17879698217d899f2f0ec043fc24ef950b"
     },
     {
-      "bytes": 3023,
+      "bytes": 3333,
       "path": "supplement/claim_trace.md",
-      "sha256": "ff052c96ab647de52a63cd3e25ec131feaf6597050f88f3a6db32e972f1ee930"
+      "sha256": "875caac4d77198c22b08bac768e89acf88a0fe3e05027143d3ecaa94109f3ad8"
     }
   ]
 }

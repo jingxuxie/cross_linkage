@@ -36,7 +36,7 @@ We evaluate document-local transformations under linkage, auxiliary-profile matc
 Direct redaction leaves auxiliary-profile matching unchanged at 0.708 top-1, while a Presidio-style PII baseline remains highly matchable at 0.594.
 We propose \method, a simple corpus-aware generalization heuristic that estimates cross-document uniqueness and generalizes high-risk quasi-identifiers until a target anonymity set is reached.
 At target $k=5$, \method{} reduces auxiliary top-1 to 0.042 while preserving issue classification and retrieval Recall@5 at 1.000; aggressive redaction reaches similar privacy but drops issue accuracy to 0.350 and retrieval Recall@5 to 0.312.
-A cached GPT-5.5 stress audit on 48 T2/T3 personas preserves this ordering, reinforcing that LLM-ready data transformations should be evaluated for corpus-level linkage resistance, not only document-local PII removal.
+Cached GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering, reinforcing that LLM-ready data transformations should be evaluated for corpus-level linkage resistance, not only document-local PII removal.
 \end{abstract}
 
 \section{Introduction}
