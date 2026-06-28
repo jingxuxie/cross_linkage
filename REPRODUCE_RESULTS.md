@@ -157,6 +157,16 @@ conda run -n cross_linkage python src/openai_rag_audit.py \
 Expected pre-approval result after the compact pilot: `planned_calls=60`,
 `cached_calls=10`, and `missing_calls=50`.
 
+Regenerate the no-API budget plan for completing the optional RAG-generation
+audit in small approval units:
+
+```bash
+conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml
+```
+
+Expected current result: 5 batches, 10 calls per batch, approximately 52k
+estimated remaining tokens from the cached compact pilot.
+
 Regenerate the API provenance manifest without making API calls:
 
 ```bash
@@ -177,7 +187,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=424 failures=0`.
+Expected current result: `checks=429 failures=0`.
 
 The verifier writes:
 

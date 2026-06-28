@@ -256,6 +256,11 @@ def build_steps(args: argparse.Namespace) -> list[Step]:
             root,
         ),
         Step(
+            "rag_api_budget",
+            python_cmd(env, "src/rag_api_budget.py", "--config", config),
+            root,
+        ),
+        Step(
             "api_provenance_report",
             python_cmd(env, "src/api_provenance_report.py", "--config", config),
             root,

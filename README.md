@@ -176,6 +176,13 @@ debug artifact that exposed output truncation; the compact 2-person pilot fixes
 the prompt format and parses 10/10 responses, but the 12-person audit still has
 50 pending calls.
 
+Regenerate the no-API budget plan for completing the optional RAG-generation
+audit in 10-call batches:
+
+```bash
+conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml
+```
+
 Summarize cached API provenance, token usage, claim status, and the `store=False`
 protocol without making API calls:
 

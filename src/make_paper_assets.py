@@ -1286,6 +1286,19 @@ def write_summary(paths: any) -> None:
                     ),
                 ]
             )
+        rag_budget_path = paths.results / "openai_gpt55_rag_12t3_budget.csv"
+        if rag_budget_path.exists():
+            rag_budget = pd.read_csv(rag_budget_path)
+            lines.extend(
+                [
+                    f"- RAG-generation cache-fill budget: `{rag_budget_path.relative_to(paths.root)}`.",
+                    (
+                        f"- Remaining RAG-generation calls are split into {len(rag_budget)} "
+                        f"batches of at most {int(rag_budget['new_calls'].max())} calls "
+                        f"({int(rag_budget['estimated_total_tokens'].sum())} estimated tokens total)."
+                    ),
+                ]
+            )
     lines.extend(
         [
             "",

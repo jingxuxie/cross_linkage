@@ -8,7 +8,7 @@ Run from the repository root.
 conda run -n cross_linkage python src/reproduce_no_api.py
 ```
 
-This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, API provenance reporting, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
+This runs the synthetic benchmark, validation, robustness checks, RAG exposure and context-recovery scans, noisy-style stress test, cached-only OpenAI plan checks, an optional RAG-generation plan check, RAG API budget reporting, API provenance reporting, table generation, PDF compilation, submission packaging, supplement generation, and claim verification.
 
 ## Fast Preview
 
@@ -74,6 +74,14 @@ conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprin
 ```
 
 Expected pre-approval status after the compact pilot: `planned_calls=60`, `cached_calls=10`, `missing_calls=50`.
+
+The RAG API budget report splits the remaining optional RAG-generation calls into small approval units without making API calls:
+
+```bash
+conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml
+```
+
+Expected budget boundary: 5 batches, 10 calls per batch, using batch-specific run names that fill the shared response cache.
 
 The API provenance manifest summarizes run names, cache completeness, token usage, claim status, and the `store=False` protocol without making API calls:
 

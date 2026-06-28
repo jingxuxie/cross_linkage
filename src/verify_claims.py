@@ -245,6 +245,8 @@ def main() -> None:
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_rows.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.csv",
         "results/openai_gpt55_rag_compact_pilot_2t3_rag_generation_summary.md",
+        "results/openai_gpt55_rag_12t3_budget.csv",
+        "results/openai_gpt55_rag_12t3_budget.md",
         "results/api_audit_provenance.csv",
         "results/api_audit_provenance.md",
         "results/paper_ready_summary.md",
@@ -1657,6 +1659,48 @@ def main() -> None:
             f"min_parse={float(rag_pilot_summary['parse_success_rate'].min()):.3f}"
         ),
     )
+    rag_budget = pd.read_csv(results_dir / "openai_gpt55_rag_12t3_budget.csv")
+    rag_budget_md = (results_dir / "openai_gpt55_rag_12t3_budget.md").read_text(encoding="utf-8")
+    add_check(
+        checks,
+        "gpt55_rag_budget:batch_shape",
+        len(rag_budget) == 5
+        and int(rag_budget["new_calls"].sum()) == 50
+        and int(rag_budget["new_calls"].max()) == 10
+        and int(rag_budget["conditions"].min()) == 5
+        and int(rag_budget["estimated_total_tokens"].sum()) > 0,
+        "RAG-generation API budget splits the remaining optional run into bounded approval batches",
+        "results/openai_gpt55_rag_12t3_budget.csv",
+        expected="5 batches, 50 pending calls, max 10 calls per batch",
+        observed=(
+            f"{len(rag_budget)} batches, {int(rag_budget['new_calls'].sum())} calls, "
+            f"max={int(rag_budget['new_calls'].max())}, "
+            f"tokens={int(rag_budget['estimated_total_tokens'].sum())}"
+        ),
+    )
+    add_check(
+        checks,
+        "gpt55_rag_budget:batch_commands",
+        rag_budget["command"].astype(str).str.contains("--persona-ids").all()
+        and rag_budget["command"].astype(str).str.contains("--max-calls 10").all()
+        and rag_budget["batch_run_name"].astype(str).str.startswith("gpt55_rag_12t3_batch").all()
+        and not has_local_path_marker("\n".join(rag_budget["command"].astype(str).tolist())),
+        "RAG-generation batch commands use explicit persona subsets and no tracked local key path",
+        "results/openai_gpt55_rag_12t3_budget.csv",
+        expected="persona subset commands, max-calls 10, no local key path marker",
+        observed="ok",
+    )
+    add_check(
+        checks,
+        "gpt55_rag_budget:markdown_boundary",
+        "This report makes no API calls" in rag_budget_md
+        and "Use one command at a time only after explicit approval for paid API calls" in rag_budget_md
+        and not has_local_path_marker(rag_budget_md),
+        "RAG-generation budget markdown states no-call generation and paid-call approval boundary",
+        "results/openai_gpt55_rag_12t3_budget.md",
+        expected="no API calls, explicit approval language, no local path markers",
+        observed="ok" if "This report makes no API calls" in rag_budget_md else "missing",
+    )
     provenance = pd.read_csv(results_dir / "api_audit_provenance.csv")
     provenance_md = (results_dir / "api_audit_provenance.md").read_text(encoding="utf-8")
     expected_provenance_runs = {
@@ -1762,23 +1806,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=424 failures=0`." in reproduce_text,
+        "Expected current result: `checks=429 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=424 failures=0`.",
+        expected="Expected current result: `checks=429 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=424 failures=0`." in reproduce_text
+        if "Expected current result: `checks=429 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=424 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=429 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=424 failures=0`.",
+        expected="Main claim verifier: `checks=429 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=424 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=429 failures=0`." in readiness_text
         else "missing",
     )
     add_check(

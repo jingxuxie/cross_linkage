@@ -19,6 +19,7 @@ This file tracks the current paper package for the cross-document linkage projec
 - Noisy synthetic style stress test: `results/noisy_style_stress/noisy_style_stress.md`
 - Claim verifier: `results/claim_verification.md`
 - API provenance manifest: `results/api_audit_provenance.md`
+- Optional RAG-generation budget: `results/openai_gpt55_rag_12t3_budget.md`
 - Reproduction guide: `REPRODUCE_RESULTS.md`
 - Qualitative example: `results/qualitative_examples.md`
 - Official COLM style files: `paper/colm2026_conference.sty`, `paper/colm2026_conference.bst`
@@ -28,7 +29,7 @@ Current verified state:
 - 120 synthetic personas and 480 synthetic documents.
 - 96 held-out personas for the main local evaluation.
 - No real people, public profiles, social-media posts, patient records, legal records, or customer records.
-- Main claim verifier: `checks=424 failures=0`.
+- Main claim verifier: `checks=429 failures=0`.
 - Current generic PDF length: 4 pages.
 - Current official COLM-template PDF length: 8 pages.
 - Noisy-style stress corpus: 480 synthetic rerendered documents, mean template similarity 0.306.
@@ -37,6 +38,7 @@ Current verified state:
 - Submission source package clean-room compile: passed.
 - GPT-5.5 audit is cached; the default reproduction path remains API-free.
 - API provenance manifest records run names, cache completeness, token usage, claim boundaries, and `store=False`.
+- Optional RAG-generation completion is budgeted as five 10-call batches and remains outside paper claims until approved and cached.
 
 Venue facts verified from the workshop site on 2026-06-28:
 

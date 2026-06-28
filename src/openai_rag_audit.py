@@ -108,6 +108,27 @@ def select_personas(personas: list[dict[str, Any]], max_personas: int, tier: str
     ][:max_personas]
 
 
+def parse_persona_ids(value: str) -> list[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def selected_personas_from_arg(personas: list[dict[str, Any]], persona_ids: list[str], tier: str) -> list[str]:
+    test_ids = set(split_personas(personas)["test"])
+    persona_by_id = {persona["persona_id"]: persona for persona in personas}
+    missing = [pid for pid in persona_ids if pid not in persona_by_id]
+    if missing:
+        raise ValueError(f"Unknown persona_id(s): {', '.join(missing)}")
+    out = []
+    for pid in persona_ids:
+        persona = persona_by_id[pid]
+        if pid not in test_ids:
+            raise ValueError(f"Persona {pid} is not in the test split.")
+        if persona["risk_tier"] != tier:
+            raise ValueError(f"Persona {pid} has risk_tier={persona['risk_tier']}, expected {tier}.")
+        out.append(pid)
+    return out
+
+
 def load_condition_docs(paths: Any, condition: str) -> list[dict[str, Any]]:
     path = paths.transformed / f"{condition}.jsonl"
     if not path.exists():
@@ -568,6 +589,7 @@ def main() -> None:
     parser.add_argument("--model", default="gpt-5.5")
     parser.add_argument("--run-name", default="gpt55_rag_12t3")
     parser.add_argument("--max-personas", type=int, default=12)
+    parser.add_argument("--persona-ids", default="", help="Optional comma-separated explicit test persona IDs.")
     parser.add_argument("--tier", default="T3")
     parser.add_argument("--conditions", default=",".join(CONDITIONS))
     parser.add_argument("--top-k", type=int, default=5)
@@ -586,7 +608,12 @@ def main() -> None:
         raise ValueError("--run-name is required")
     personas = read_jsonl(paths.data / "personas.jsonl")
     persona_by_id = {persona["persona_id"]: persona for persona in personas}
-    persona_ids = select_personas(personas, args.max_personas, args.tier)
+    requested_persona_ids = parse_persona_ids(args.persona_ids)
+    persona_ids = (
+        selected_personas_from_arg(personas, requested_persona_ids, args.tier)
+        if requested_persona_ids
+        else select_personas(personas, args.max_personas, args.tier)
+    )
     conditions = [condition.strip() for condition in args.conditions.split(",") if condition.strip()]
     cases = build_cases(paths, personas, persona_ids, conditions, args.top_k)
     text_config = {} if args.no_json_mode else JSON_TEXT_CONFIG

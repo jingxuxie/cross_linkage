@@ -285,7 +285,7 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 424.
+- Claim verifier checks: 429.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
@@ -298,6 +298,8 @@
 - API provenance manifest: `results/api_audit_provenance.csv`.
 - Paper-facing GPT-5.5 API runs in the manifest: 3, all cached with 534535 run-specific tokens.
 - Optional GPT-5.5 RAG-generation plan remains at 10/60 cached calls.
+- RAG-generation cache-fill budget: `results/openai_gpt55_rag_12t3_budget.csv`.
+- Remaining RAG-generation calls are split into 5 batches of at most 10 calls (51586 estimated tokens total).
 
 ## Claims Supported Now
 

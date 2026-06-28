@@ -568,6 +568,22 @@
     "status": "PASS"
   },
   {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_budget.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1882",
+    "source": "results/openai_gpt55_rag_12t3_budget.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_gpt55_rag_12t3_budget.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3445",
+    "source": "results/openai_gpt55_rag_12t3_budget.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "artifact:results/api_audit_provenance.csv",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
@@ -587,7 +603,7 @@
     "check_id": "artifact:results/paper_ready_summary.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "24175",
+    "observed": "24365",
     "source": "results/paper_ready_summary.md",
     "status": "PASS"
   },
@@ -907,7 +923,7 @@
     "check_id": "artifact:supplement/reproducibility_checklist.md",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "4947",
+    "observed": "5327",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -1410,8 +1426,8 @@
   {
     "check_id": "supplement:reproducibility_checklist.md:sha256",
     "detail": "supplement file hash and byte count match manifest",
-    "expected": "0e648fe2a53f303a04f40fc5dadc43c623e81efc2a38fa4639095c8111e6b435",
-    "observed": "0e648fe2a53f303a04f40fc5dadc43c623e81efc2a38fa4639095c8111e6b435",
+    "expected": "2ff56f23dc4e1ea4285d5435801020f7415ef5a9c2a2db7f231a3fd0a2f4b490",
+    "observed": "2ff56f23dc4e1ea4285d5435801020f7415ef5a9c2a2db7f231a3fd0a2f4b490",
     "source": "supplement/reproducibility_checklist.md",
     "status": "PASS"
   },
@@ -3048,6 +3064,30 @@
     "status": "PASS"
   },
   {
+    "check_id": "gpt55_rag_budget:batch_shape",
+    "detail": "RAG-generation API budget splits the remaining optional run into bounded approval batches",
+    "expected": "5 batches, 50 pending calls, max 10 calls per batch",
+    "observed": "5 batches, 50 calls, max=10, tokens=51586",
+    "source": "results/openai_gpt55_rag_12t3_budget.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_rag_budget:batch_commands",
+    "detail": "RAG-generation batch commands use explicit persona subsets and no tracked local key path",
+    "expected": "persona subset commands, max-calls 10, no local key path marker",
+    "observed": "ok",
+    "source": "results/openai_gpt55_rag_12t3_budget.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "gpt55_rag_budget:markdown_boundary",
+    "detail": "RAG-generation budget markdown states no-call generation and paid-call approval boundary",
+    "expected": "no API calls, explicit approval language, no local path markers",
+    "observed": "ok",
+    "source": "results/openai_gpt55_rag_12t3_budget.md",
+    "status": "PASS"
+  },
+  {
     "check_id": "api_provenance:run_inventory",
     "detail": "API provenance manifest covers all cached or planned OpenAI audit runs",
     "expected": "gpt55_aux_48p;gpt55_doclocal_24p;gpt55_evidence_24p;gpt55_rag_12t3_plan;gpt55_rag_compact_pilot_2t3;legacy_openai_aux_doclocal",
@@ -3106,7 +3146,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=424 failures=0`.",
+    "expected": "Expected current result: `checks=429 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -3114,7 +3154,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=424 failures=0`.",
+    "expected": "Main claim verifier: `checks=429 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"
