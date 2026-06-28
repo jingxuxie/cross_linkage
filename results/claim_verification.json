@@ -809,9 +809,9 @@
   },
   {
     "check_id": "upload_checklist:Verified against the official worksh",
-    "detail": "upload checklist contains required fragment Verified against the official workshop page on 2026-06-27",
-    "expected": "Verified against the official workshop page on 2026-06-27",
-    "observed": "Verified against the official workshop page on 2026-06-27",
+    "detail": "upload checklist contains required fragment Verified against the official workshop page on 2026-06-28",
+    "expected": "Verified against the official workshop page on 2026-06-28",
+    "observed": "Verified against the official workshop page on 2026-06-28",
     "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
     "status": "PASS"
   },

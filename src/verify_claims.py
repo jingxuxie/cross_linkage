@@ -290,7 +290,7 @@ def main() -> None:
     colm_text = (paper_dir / "colm2026_submission.tex").read_text(encoding="utf-8")
     upload_checklist = (root / "SUBMISSION_UPLOAD_CHECKLIST.md").read_text(encoding="utf-8")
     upload_required_fragments = [
-        "Verified against the official workshop page on 2026-06-27",
+        "Verified against the official workshop page on 2026-06-28",
         "Workshop on Responsibly Enabling Data for Foundation Models at COLM 2026",
         "https://re-data-colm2026.github.io/",
         "Submission system: OpenReview",

@@ -36,7 +36,7 @@ Current verified state:
 - Submission source package clean-room compile: passed.
 - GPT-5.5 audit is cached; the default reproduction path remains API-free.
 
-Venue facts verified from the workshop site on 2026-06-27:
+Venue facts verified from the workshop site on 2026-06-28:
 
 - Short papers are up to 4 pages.
 - Full papers are up to 8 pages.

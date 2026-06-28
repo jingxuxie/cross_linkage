@@ -1,6 +1,6 @@
 # Venue Upload Checklist
 
-Verified against the official workshop page on 2026-06-27.
+Verified against the official workshop page on 2026-06-28.
 
 ## Venue Facts
 
