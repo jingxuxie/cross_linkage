@@ -24,9 +24,9 @@ Cross-Document Re-identification Risks in LLM-Ready Sensitive Text Corpora}
 Sensitive text corpora are commonly de-identified one document at a time before retrieval, evaluation, or model adaptation.
 We study a corpus-level failure mode for LLM-ready data: records with no direct identifiers can remain linkable through repeated quasi-identifiers such as role, region, schedule, institution type, family context, health context, and rare events.
 We introduce \bench, a fully synthetic multi-document benchmark with 120 controlled personas, 480 documents, risk tiers, decoy auxiliary profiles, varied template families, and utility labels.
-Direct redaction leaves auxiliary-profile matching unchanged at 0.708 top-1, while an off-the-shelf Presidio-style PII baseline remains highly matchable at 0.594.
+Direct redaction leaves auxiliary-profile matching unchanged at 0.71 top-1, while an off-the-shelf Presidio-style PII baseline remains highly matchable at 0.59.
 We propose \method, a simple corpus-aware generalization procedure that estimates cross-document linkage risk and generalizes high-risk quasi-identifiers until a target anonymity set is reached.
-At target $k=5$, \method{} reduces auxiliary top-1 accuracy to 0.042 while preserving issue classification and retrieval utility at 1.000; aggressive redaction reaches similar privacy but reduces issue accuracy to 0.350 and retrieval Recall@5 to 0.312.
+At target $k=5$, \method{} reduces auxiliary top-1 accuracy to 0.04 while preserving issue classification and retrieval utility at 1.00; aggressive redaction reaches similar privacy but reduces issue accuracy to 0.35 and retrieval Recall@5 to 0.31.
 Cached GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering, reinforcing that privacy evaluation for LLM-ready corpora should move beyond document-local PII removal and measure corpus-level linkage resistance.
 \end{abstract}
 
@@ -116,27 +116,26 @@ This utility evaluation is deliberately lightweight; it tests whether triage-rel
 Table~\ref{tab:paper_main_results} reports the main local sweep over 96 held-out personas.
 Direct redaction leaves auxiliary matching unchanged relative to original documents.
 This supports the central failure mode: removing direct identifiers is insufficient when repeated quasi-identifiers remain.
-The Presidio baseline removes direct PII through an off-the-shelf analyzer, but still leaves high auxiliary matching risk at 0.594 top-1 because the repeated quasi-identifiers remain.
+The Presidio baseline removes direct PII through an off-the-shelf analyzer, but still leaves high auxiliary matching risk at 0.59 top-1 because the repeated quasi-identifiers remain.
 The document-local proxy reduces some visible specificity, but auxiliary matching remains high.
-Consistent pseudonymization yields pairwise linkage F1 of 0.979, showing that stable handles can make cross-document linkage almost trivial.
-Exact quasi-identifier recovery tells the same story: direct redaction leaves exact recovery at 0.395, Presidio leaves 0.332, and the document-local proxy leaves 0.304.
-Bootstrap 95\% confidence intervals over held-out personas keep the main auxiliary-matching contrast separated: direct redaction 0.708 [0.615, 0.802], Presidio 0.594 [0.490, 0.698], and \method{} 0.042 [0.010, 0.083].
-Risk-tier stratification confirms that the benchmark varies linkage difficulty: under direct redaction Aux@1 rises from 0.156 on T1 to 0.969 on T2 and 1.000 on T3, while \method{} lowers the corresponding rates to 0.031, 0.000, and 0.094.
-A no-API robustness sweep over three independently generated corpus seeds preserves this ordering: direct redaction, Presidio, and the document-local proxy have mean auxiliary top-1 of 0.719, 0.628, and 0.663, while \method{} averages 0.045 with retrieval Recall@5 at 1.000.
-A noisy-style synthetic rerendering lowers mean template similarity to 0.306 and preserves the ordering: direct/Presidio/document-local Aux@1 0.656/0.562/0.594, \method{} 0.042 with issue/Ret@5 1.000, and aggressive redaction issue/Ret@5 0.473/0.635.
-Single-signal ablations of direct-redacted documents indicate that role/institution and location are the largest local drivers, reducing auxiliary top-1 to 0.500 and 0.521 when removed.
-Expanding the auxiliary candidate pool from 10 to 50 candidates preserves the ordering: direct redaction remains at 0.635 top-1, the document-local proxy at 0.500, and \method{} at 0.000 against a 0.020 chance baseline.
-Across word, character, hybrid TF-IDF, and field-weighted auxiliary matchers, direct redaction remains at 0.510--0.979 top-1 and the document-local proxy at 0.479--0.979, while \method{} remains lower at 0.031--0.240.
+Consistent pseudonymization yields pairwise linkage F1 of 0.98, showing that stable handles can make cross-document linkage almost trivial.
+Exact quasi-identifier recovery tells the same story: direct redaction leaves exact recovery at 0.39, Presidio leaves 0.33, and the document-local proxy leaves 0.30.
+Risk-tier stratification confirms that the benchmark varies linkage difficulty: under direct redaction Aux@1 rises from 0.16 on T1 to 0.97 on T2 and 1.00 on T3, while \method{} lowers the corresponding rates to 0.03, 0.00, and 0.09.
+A no-API robustness sweep over three independently generated corpus seeds preserves this ordering: direct redaction, Presidio, and the document-local proxy have mean auxiliary top-1 of 0.72, 0.63, and 0.66, while \method{} averages 0.05 with retrieval Recall@5 at 1.00.
+A noisy-style synthetic rerendering lowers mean template similarity to 0.31 and preserves the ordering: direct/Presidio/document-local Aux@1 0.66/0.56/0.59, \method{} 0.04 with issue/Ret@5 1.00, and aggressive redaction issue/Ret@5 0.47/0.64.
+Single-signal ablations of direct-redacted documents indicate that role/institution and location are the largest local drivers, reducing auxiliary top-1 to 0.50 and 0.52 when removed.
+Expanding the auxiliary candidate pool from 10 to 50 candidates preserves the ordering: direct redaction remains at 0.64 top-1, the document-local proxy at 0.50, and \method{} at 0.00 against a 0.02 chance baseline.
+Across word, character, hybrid TF-IDF, and field-weighted auxiliary matchers, direct redaction remains at 0.51--0.98 top-1 and the document-local proxy at 0.48--0.98, while \method{} remains lower at 0.03--0.24.
 The field-weighted attacker is strongest because it scans exact and generalized quasi-identifier fields; it exposes residual structured-context risk under \method{}, but still leaves a large gap from document-local baselines.
-In the RAG exposure diagnostic, exact profile queries against high-linkage T3 personas retrieve at least one target document in the top five for every direct-redacted, Presidio-redacted, and document-local corpus (Hit@5 1.000), and retrieve multiple target documents in the top ten for every such persona (Multi@10 1.000); \method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000.
-A deterministic top-5 RAG context-recovery scan on T3 profiles recovers 9.781 exact fields under direct redaction and 7.844 exact / 9.469 coarse fields under document-local anonymization, but only 0.000 exact / 0.438 coarse fields under \method{}.
+In the RAG exposure diagnostic, exact profile queries against high-linkage T3 personas retrieve at least one target document in the top five for every direct-redacted, Presidio-redacted, and document-local corpus (Hit@5 1.00), and retrieve multiple target documents in the top ten for every such persona (Multi@10 1.00); \method{} reduces T3 Hit@5 to 0.31 and Multi@10 to 0.00.
+A deterministic top-5 RAG context-recovery scan on T3 profiles recovers 9.78 exact fields under direct redaction and 7.84 exact / 9.47 coarse fields under document-local anonymization, but only 0.00 exact / 0.44 coarse fields under \method{}.
 
 \input{tables/paper_main_results}
 
 \paragraph{Corpus-aware generalization.}
-\method{} reduces auxiliary matching to 0.042 while preserving issue accuracy and retrieval Recall@5 at 1.000.
-Aggressive redaction reaches a similar privacy level, but issue accuracy falls to 0.350 and retrieval Recall@5 falls to 0.312.
-In a stricter body-only utility stress test that removes subject and contact scaffolding, \method{} scores 0.880, close to direct redaction at 0.870, while aggressive redaction falls to 0.438.
+\method{} reduces auxiliary matching to 0.04 while preserving issue accuracy and retrieval Recall@5 at 1.00.
+Aggressive redaction reaches a similar privacy level, but issue accuracy falls to 0.35 and retrieval Recall@5 falls to 0.31.
+In a stricter body-only utility stress test that removes subject and contact scaffolding, \method{} scores 0.88, close to direct redaction at 0.87, while aggressive redaction falls to 0.44.
 Thus, in this synthetic sprint, \method{} occupies a better privacy--utility point than blanket redaction.
 Figure~\ref{fig:frontier} visualizes this tradeoff.
 
@@ -149,10 +148,10 @@ Figure~\ref{fig:frontier} visualizes this tradeoff.
 
 \paragraph{Sensitivity to target $k$.}
 Table~\ref{tab:linkguard_sensitivity} shows that most of the privacy gain appears once \method{} moves from direct redaction ($k=1$) to target $k=2$.
-Auxiliary top-1 drops from 0.708 to 0.062, while higher targets provide diminishing attack reduction with modest additional edit cost.
-Exact quasi-identifier recovery also falls from 0.395 at $k=1$ to 0.007 at $k=2$ and 0.000 at $k=5$.
-Under the field-weighted stress attacker, top-1 falls from 0.979 at $k=1$ to 0.240 at $k=5$ and 0.104 at $k=20$, suggesting that corpus-aware generalization can be treated as a controllable risk budget rather than a single fixed transformation.
-A corpus-awareness ablation keeps true-corpus target-$k$ coverage at 1.000, while shuffled co-occurrence planning drops coverage to 0.917 and minimum true estimated $k$ to 1.000.
+Auxiliary top-1 drops from 0.71 to 0.06, while higher targets provide diminishing attack reduction with modest additional edit cost.
+Exact quasi-identifier recovery also falls from 0.39 at $k=1$ to 0.01 at $k=2$ and 0.00 at $k=5$.
+Under the field-weighted stress attacker, top-1 falls from 0.98 at $k=1$ to 0.24 at $k=5$ and 0.10 at $k=20$, suggesting that corpus-aware generalization can be treated as a controllable risk budget rather than a single fixed transformation.
+A corpus-awareness ablation keeps true-corpus target-$k$ coverage at 1.00, while shuffled co-occurrence planning drops coverage to 0.92 and minimum true estimated $k$ to 1.00.
 
 \input{tables/linkguard_sensitivity}
 
@@ -166,12 +165,12 @@ A corpus-awareness ablation keeps true-corpus target-$k$ coverage at 1.000, whil
 \paragraph{GPT-5.5 API stress audit.}
 We also ran a time-stamped GPT-5.5 auxiliary-matching audit on 48 T2/T3 personas, using synthetic data only, capped calls, cached responses, and \texttt{store=false}.
 Because API model behavior can change, we treat this as corroborating stress evidence rather than the main reproducible result.
-Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.000, 0.979, and 1.000 top-1.
-\method{} lowers top-1 to 0.438, with high model-reported uncertainty, while aggressive redaction is 0.333.
-A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
-An additional 24-case GPT-5.5 evidence-extraction audit finds that direct-redaction successful matches cite location in 1.000 and role in 0.750 of cases, while \method{} residual matches cite role, location, and institution at 0.000 and are uncertain in 0.875.
-Deterministic generated profile-like RAG queries also preserve the ordering: verbose-query Hit@5 is 0.375 for direct redaction and the document-local proxy, 0.260 for \method{}, and 0.031 for aggressive redaction.
-A completed 12-person T3 GPT-5.5 RAG-generation audit labels direct redaction, Presidio, and the document-local proxy as likely same-person at 1.000, while \method{} drops to 0.417 with uncertainty 1.000 and aggressive redaction drops to 0.000.
+Direct redaction, Presidio redaction, and the document-local proxy remain highly matchable at 1.00, 0.98, and 1.00 top-1.
+\method{} lowers top-1 to 0.44, with high model-reported uncertainty, while aggressive redaction is 0.33.
+A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.00 top-1, compared with 0.33 for \method{} on the same subset.
+An additional 24-case GPT-5.5 evidence-extraction audit finds that direct-redaction successful matches cite location in 1.00 and role in 0.75 of cases, while \method{} residual matches cite role, location, and institution at 0.00 and are uncertain in 0.88.
+Deterministic generated profile-like RAG queries also preserve the ordering: verbose-query Hit@5 is 0.38 for direct redaction and the document-local proxy, 0.26 for \method{}, and 0.03 for aggressive redaction.
+A completed 12-person T3 GPT-5.5 RAG-generation audit labels direct redaction, Presidio, and the document-local proxy as likely same-person at 1.00, while \method{} drops to 0.42 with uncertainty 1.00 and aggressive redaction drops to 0.00.
 
 \input{tables/gpt55_aux_audit}
 
