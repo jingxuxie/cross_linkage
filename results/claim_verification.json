@@ -1,0 +1,2274 @@
+[
+  {
+    "check_id": "artifact:results/main_results.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3334",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/benchmark_validation.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "5169",
+    "source": "results/benchmark_validation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/benchmark_validation.json",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "8589",
+    "source": "results/benchmark_validation.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/benchmark_validation.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "9840",
+    "source": "results/benchmark_validation.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/by_tier.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4200",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/aux_match_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "46182",
+    "source": "results/aux_match_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/attribute_leakage_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "792815",
+    "source": "results/attribute_leakage_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/ablation.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "404",
+    "source": "results/ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/linkguard_sensitivity.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3749",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/linkguard_sensitivity_field_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "42807",
+    "source": "results/linkguard_sensitivity_field_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/multiseed/claim_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "833",
+    "source": "results/multiseed/claim_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/candidate_sensitivity.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2115",
+    "source": "results/candidate_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/attack_sensitivity.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2610",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/linkguard_failure_analysis.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "6594",
+    "source": "results/linkguard_failure_analysis.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/utility_stress.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "900",
+    "source": "results/utility_stress.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_exposure.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1277",
+    "source": "results/rag_exposure.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_exposure_rows.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "50648",
+    "source": "results/rag_exposure_rows.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/rag_exposure_by_tier.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2124",
+    "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/noisy_style_results.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2663",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/noisy_style_compact_results.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "746",
+    "source": "results/noisy_style_stress/noisy_style_compact_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/noisy_style_diagnostic_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "139",
+    "source": "results/noisy_style_stress/noisy_style_diagnostic_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/noisy_style_stress.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1766",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/noisy_original_docs.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "568115",
+    "source": "results/noisy_style_stress/noisy_original_docs.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/transformed/c1_direct_redaction.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "544607",
+    "source": "results/noisy_style_stress/transformed/c1_direct_redaction.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/transformed/c1b_presidio_redaction.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "575188",
+    "source": "results/noisy_style_stress/transformed/c1b_presidio_redaction.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/transformed/c4_doc_local_anon.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "546308",
+    "source": "results/noisy_style_stress/transformed/c4_doc_local_anon.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/transformed/c5_linkguard.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "536335",
+    "source": "results/noisy_style_stress/transformed/c5_linkguard.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/noisy_style_stress/transformed/c6_aggressive_redaction.jsonl",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "515977",
+    "source": "results/noisy_style_stress/transformed/c6_aggressive_redaction.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_aux_match_summary.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "755",
+    "source": "results/openai_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/openai_audit_plan.csv",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "15894",
+    "source": "results/openai_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:results/paper_ready_summary.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "16830",
+    "source": "results/paper_ready_summary.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:SUBMISSION_UPLOAD_CHECKLIST.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3233",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/paper_main_results.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "950",
+    "source": "paper/tables/paper_main_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/linkguard_sensitivity.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "814",
+    "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/tier_aux_results.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "497",
+    "source": "paper/tables/tier_aux_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/openai_aux_audit.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "566",
+    "source": "paper/tables/openai_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/rag_exposure_t3.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "477",
+    "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/tables/noisy_style_stress.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "576",
+    "source": "paper/tables/noisy_style_stress.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/short_paper.pdf",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "297427",
+    "source": "paper/short_paper.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/colm2026_submission.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "13287",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/colm2026_submission.pdf",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "105826",
+    "source": "paper/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/colm2026_conference.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "7727",
+    "source": "paper/colm2026_conference.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/colm2026_conference.bst",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "26973",
+    "source": "paper/colm2026_conference.bst",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/natbib.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "45154",
+    "source": "paper/natbib.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/fancyhdr.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "20521",
+    "source": "paper/fancyhdr.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:paper/math_commands.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "12284",
+    "source": "paper/math_commands.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_submission.pdf",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "105826",
+    "source": "submission/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/colm2026_submission.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "13287",
+    "source": "submission/colm2026_source/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/colm2026_conference.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "7727",
+    "source": "submission/colm2026_source/colm2026_conference.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/colm2026_conference.bst",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "26973",
+    "source": "submission/colm2026_source/colm2026_conference.bst",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/natbib.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "45154",
+    "source": "submission/colm2026_source/natbib.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/fancyhdr.sty",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "20521",
+    "source": "submission/colm2026_source/fancyhdr.sty",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/math_commands.tex",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "12284",
+    "source": "submission/colm2026_source/math_commands.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_source/README_SUBMISSION_PACKAGE.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "241",
+    "source": "submission/colm2026_source/README_SUBMISSION_PACKAGE.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/colm2026_submission_source.zip",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "35636",
+    "source": "submission/colm2026_submission_source.zip",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/submission_manifest.json",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "3559",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:submission/submission_manifest.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "815",
+    "source": "submission/submission_manifest.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/SUPPLEMENT_INDEX.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "507",
+    "source": "supplement/SUPPLEMENT_INDEX.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/benchmark_card.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4092",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/noisy_style_examples.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "4121",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/reproducibility_checklist.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "1840",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/claim_trace.md",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "2265",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "artifact:supplement/supplement_manifest.json",
+    "detail": "required artifact exists and is non-empty",
+    "expected": "",
+    "observed": "896",
+    "source": "supplement/supplement_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Verified against the official worksh",
+    "detail": "upload checklist contains required fragment Verified against the official workshop page on 2026-06-27",
+    "expected": "Verified against the official workshop page on 2026-06-27",
+    "observed": "Verified against the official workshop page on 2026-06-27",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Workshop on Responsibly Enabling Dat",
+    "detail": "upload checklist contains required fragment Workshop on Responsibly Enabling Data for Foundation Models at COLM 2026",
+    "expected": "Workshop on Responsibly Enabling Data for Foundation Models at COLM 2026",
+    "observed": "Workshop on Responsibly Enabling Data for Foundation Models at COLM 2026",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:https://re-data-colm2026.github.io/",
+    "detail": "upload checklist contains required fragment https://re-data-colm2026.github.io/",
+    "expected": "https://re-data-colm2026.github.io/",
+    "observed": "https://re-data-colm2026.github.io/",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Submission system: OpenReview",
+    "detail": "upload checklist contains required fragment Submission system: OpenReview",
+    "expected": "Submission system: OpenReview",
+    "observed": "Submission system: OpenReview",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:COLM 2026 template",
+    "detail": "upload checklist contains required fragment COLM 2026 template",
+    "expected": "COLM 2026 template",
+    "observed": "COLM 2026 template",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:short paper",
+    "detail": "upload checklist contains required fragment short paper",
+    "expected": "short paper",
+    "observed": "short paper",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:up to 4 pages",
+    "detail": "upload checklist contains required fragment up to 4 pages",
+    "expected": "up to 4 pages",
+    "observed": "up to 4 pages",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:June 28, 2026 at 23:59 AoE",
+    "detail": "upload checklist contains required fragment June 28, 2026 at 23:59 AoE",
+    "expected": "June 28, 2026 at 23:59 AoE",
+    "observed": "June 28, 2026 at 23:59 AoE",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Accepted papers are non-archival",
+    "detail": "upload checklist contains required fragment Accepted papers are non-archival",
+    "expected": "Accepted papers are non-archival",
+    "observed": "Accepted papers are non-archival",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Concurrent submissions are allowed",
+    "detail": "upload checklist contains required fragment Concurrent submissions are allowed",
+    "expected": "Concurrent submissions are allowed",
+    "observed": "Concurrent submissions are allowed",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:submission/colm2026_submission.pdf",
+    "detail": "upload checklist contains required fragment submission/colm2026_submission.pdf",
+    "expected": "submission/colm2026_submission.pdf",
+    "observed": "submission/colm2026_submission.pdf",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:submission/colm2026_submission_sourc",
+    "detail": "upload checklist contains required fragment submission/colm2026_submission_source.zip",
+    "expected": "submission/colm2026_submission_source.zip",
+    "observed": "submission/colm2026_submission_source.zip",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:supplement/SUPPLEMENT_INDEX.md",
+    "detail": "upload checklist contains required fragment supplement/SUPPLEMENT_INDEX.md",
+    "expected": "supplement/SUPPLEMENT_INDEX.md",
+    "observed": "supplement/SUPPLEMENT_INDEX.md",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:src/reproduce_no_api.py --dry-run",
+    "detail": "upload checklist contains required fragment src/reproduce_no_api.py --dry-run",
+    "expected": "src/reproduce_no_api.py --dry-run",
+    "observed": "src/reproduce_no_api.py --dry-run",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:src/build_submission_package.py",
+    "detail": "upload checklist contains required fragment src/build_submission_package.py",
+    "expected": "src/build_submission_package.py",
+    "observed": "src/build_submission_package.py",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:src/make_supplement.py",
+    "detail": "upload checklist contains required fragment src/make_supplement.py",
+    "expected": "src/make_supplement.py",
+    "observed": "src/make_supplement.py",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:src/verify_claims.py",
+    "detail": "upload checklist contains required fragment src/verify_claims.py",
+    "expected": "src/verify_claims.py",
+    "observed": "src/verify_claims.py",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Claim verifier reports zero failures",
+    "detail": "upload checklist contains required fragment Claim verifier reports zero failures",
+    "expected": "Claim verifier reports zero failures",
+    "observed": "Claim verifier reports zero failures",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:paper/short_paper.pdf` has 4 pages",
+    "detail": "upload checklist contains required fragment paper/short_paper.pdf` has 4 pages",
+    "expected": "paper/short_paper.pdf` has 4 pages",
+    "observed": "paper/short_paper.pdf` has 4 pages",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:submission/submission_manifest.json`",
+    "detail": "upload checklist contains required fragment submission/submission_manifest.json` records `checks_passed: true`",
+    "expected": "submission/submission_manifest.json` records `checks_passed: true`",
+    "observed": "submission/submission_manifest.json` records `checks_passed: true`",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:supplement/supplement_manifest.json`",
+    "detail": "upload checklist contains required fragment supplement/supplement_manifest.json` lists all supplement file hashes",
+    "expected": "supplement/supplement_manifest.json` lists all supplement file hashes",
+    "observed": "supplement/supplement_manifest.json` lists all supplement file hashes",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:blank author metadata",
+    "detail": "upload checklist contains required fragment blank author metadata",
+    "expected": "blank author metadata",
+    "observed": "blank author metadata",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:anonymous submission header",
+    "detail": "upload checklist contains required fragment anonymous submission header",
+    "expected": "anonymous submission header",
+    "observed": "anonymous submission header",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:no author names",
+    "detail": "upload checklist contains required fragment no author names",
+    "expected": "no author names",
+    "observed": "no author names",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:synthetic personas only",
+    "detail": "upload checklist contains required fragment synthetic personas only",
+    "expected": "synthetic personas only",
+    "observed": "synthetic personas only",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:Upload `submission/colm2026_submissi",
+    "detail": "upload checklist contains required fragment Upload `submission/colm2026_submission.pdf`",
+    "expected": "Upload `submission/colm2026_submission.pdf`",
+    "observed": "Upload `submission/colm2026_submission.pdf`",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "upload_checklist:no_local_paths",
+    "detail": "upload checklist does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "SUBMISSION_UPLOAD_CHECKLIST.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_template:submission_mode",
+    "detail": "COLM submission copy uses official submission style option",
+    "expected": "submission style",
+    "observed": "present",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_template:no_custom_geometry",
+    "detail": "COLM submission copy does not set custom page geometry in the preamble",
+    "expected": "no geometry override",
+    "observed": "ok",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_template:inline_tables",
+    "detail": "COLM submission copy uses inline compact tables to avoid float reordering",
+    "expected": "no generated table inputs",
+    "observed": "ok",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "pdf:paper/short_paper.pdf:page_count",
+    "detail": "compiled PDF has expected page count",
+    "expected": "4",
+    "observed": "4",
+    "source": "paper/short_paper.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "pdf:paper/colm2026_submission.pdf:page_count",
+    "detail": "compiled PDF has expected page count",
+    "expected": "4",
+    "observed": "4",
+    "source": "paper/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "log:paper/short_paper.log:clean",
+    "detail": "LaTeX log has no unresolved refs, rerun warnings, undefined citations, or overfull boxes",
+    "expected": "0 problem lines",
+    "observed": "0",
+    "source": "paper/short_paper.log",
+    "status": "PASS"
+  },
+  {
+    "check_id": "log:paper/colm2026_submission.log:clean",
+    "detail": "LaTeX log has no unresolved refs, rerun warnings, undefined citations, or overfull boxes",
+    "expected": "0 problem lines",
+    "observed": "0",
+    "source": "paper/colm2026_submission.log",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_pdf:anonymous_header",
+    "detail": "COLM PDF text contains anonymous submission header",
+    "expected": "anonymous header",
+    "observed": "present",
+    "source": "paper/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_pdf:author_metadata_blank",
+    "detail": "COLM PDF has no author metadata",
+    "expected": "blank",
+    "observed": "blank",
+    "source": "paper/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm_pdf:no_local_paths",
+    "detail": "COLM PDF text does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "paper/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:checks_passed",
+    "detail": "submission package manifest records all package checks as passed",
+    "expected": "true",
+    "observed": "True",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:no_local_paths",
+    "detail": "submission manifest does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:clean_compile",
+    "detail": "submission source package compiles in a clean temporary directory",
+    "expected": "true",
+    "observed": "True",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:clean_compile_pdf_pages",
+    "detail": "clean-room compiled submission PDF has four pages",
+    "expected": "4",
+    "observed": "4",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:clean_compile_log_clean",
+    "detail": "clean-room compile log has no unresolved refs, rerun warnings, undefined citations, or overfull boxes",
+    "expected": "0",
+    "observed": "0",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:clean_compile_anonymous",
+    "detail": "clean-room compiled PDF remains anonymous and does not expose local paths",
+    "expected": "anonymous, blank author metadata, no local paths",
+    "observed": "anonymous=True,author_blank=True,no_paths=True",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_zip:members",
+    "detail": "submission source zip contains exactly the expected source files",
+    "expected": "README_SUBMISSION_PACKAGE.md, colm2026_conference.bst, colm2026_conference.sty, colm2026_submission.tex, fancyhdr.sty, math_commands.tex, natbib.sty",
+    "observed": "README_SUBMISSION_PACKAGE.md, colm2026_conference.bst, colm2026_conference.sty, colm2026_submission.tex, fancyhdr.sty, math_commands.tex, natbib.sty",
+    "source": "submission/colm2026_submission_source.zip",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest:zip_members",
+    "detail": "manifest source-zip member list matches expected source files",
+    "expected": "README_SUBMISSION_PACKAGE.md, colm2026_conference.bst, colm2026_conference.sty, colm2026_submission.tex, fancyhdr.sty, math_commands.tex, natbib.sty",
+    "observed": "README_SUBMISSION_PACKAGE.md, colm2026_conference.bst, colm2026_conference.sty, colm2026_submission.tex, fancyhdr.sty, math_commands.tex, natbib.sty",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_zip:sha256_matches_manifest",
+    "detail": "submission source zip SHA-256 matches manifest",
+    "expected": "3d8a18e48d35f52d9a3cd1c5825df65d08da5c3d4cc396ae72a144200d93ac52",
+    "observed": "3d8a18e48d35f52d9a3cd1c5825df65d08da5c3d4cc396ae72a144200d93ac52",
+    "source": "submission/colm2026_submission_source.zip",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_pdf:page_count",
+    "detail": "packaged submission PDF has expected page count",
+    "expected": "4",
+    "observed": "4",
+    "source": "submission/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_pdf:matches_paper_pdf",
+    "detail": "packaged submission PDF matches the compiled COLM PDF",
+    "expected": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342",
+    "observed": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342",
+    "source": "submission/colm2026_submission.pdf",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_source:hashes_match_manifest",
+    "detail": "packaged source-file hashes match the manifest",
+    "expected": "7",
+    "observed": "7",
+    "source": "submission/submission_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_zip:source_hashes_match_manifest",
+    "detail": "source zip member hashes match the manifest source hashes",
+    "expected": "all source hashes match",
+    "observed": "ok",
+    "source": "submission/colm2026_submission_source.zip",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_source:matches_paper_sources",
+    "detail": "packaged source files match the working COLM source and style files",
+    "expected": "paper source hashes",
+    "observed": "ok",
+    "source": "submission/colm2026_source",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest_md:summary",
+    "detail": "human-readable manifest summarizes clean package status",
+    "expected": "clean compile true, checks passed true, 4 pages",
+    "observed": "present",
+    "source": "submission/submission_manifest.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "submission_manifest_md:no_local_paths",
+    "detail": "human-readable manifest does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "submission/submission_manifest.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement_manifest:files",
+    "detail": "supplement manifest lists exactly the generated reviewer-facing files",
+    "expected": "SUPPLEMENT_INDEX.md, benchmark_card.md, claim_trace.md, noisy_style_examples.md, reproducibility_checklist.md",
+    "observed": "SUPPLEMENT_INDEX.md, benchmark_card.md, claim_trace.md, noisy_style_examples.md, reproducibility_checklist.md",
+    "source": "supplement/supplement_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement_manifest:no_local_paths",
+    "detail": "supplement manifest does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "supplement/supplement_manifest.json",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:SUPPLEMENT_INDEX.md:sha256",
+    "detail": "supplement file hash and byte count match manifest",
+    "expected": "686c54f53512409f8f3e299f3419ee305c454ebd1688a20f6f5d2acebdfb8b8f",
+    "observed": "686c54f53512409f8f3e299f3419ee305c454ebd1688a20f6f5d2acebdfb8b8f",
+    "source": "supplement/SUPPLEMENT_INDEX.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card.md:sha256",
+    "detail": "supplement file hash and byte count match manifest",
+    "expected": "cf260361873138b02d2e02d49ae232ece7d723fb4f6298b7e5962d01c724835c",
+    "observed": "cf260361873138b02d2e02d49ae232ece7d723fb4f6298b7e5962d01c724835c",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_style_examples.md:sha256",
+    "detail": "supplement file hash and byte count match manifest",
+    "expected": "f00cd5a08de0d21f834fb9bbf08892bd52715f0caafab481263c31cce1a7696a",
+    "observed": "f00cd5a08de0d21f834fb9bbf08892bd52715f0caafab481263c31cce1a7696a",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:reproducibility_checklist.md:sha256",
+    "detail": "supplement file hash and byte count match manifest",
+    "expected": "3276390d3b3e07436be48130c795df6bc9e9c29c83590a4145ebf2452bf969c7",
+    "observed": "3276390d3b3e07436be48130c795df6bc9e9c29c83590a4145ebf2452bf969c7",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace.md:sha256",
+    "detail": "supplement file hash and byte count match manifest",
+    "expected": "5056c122787cefff4153e9affbc36c763c9807801bda5fa2e96ae1ac75ee7f06",
+    "observed": "5056c122787cefff4153e9affbc36c763c9807801bda5fa2e96ae1ac75ee7f06",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:no_local_paths",
+    "detail": "supplement markdown does not expose local filesystem paths",
+    "expected": "no local paths",
+    "observed": "ok",
+    "source": "supplement/*.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:CrossDoc-PrivacyBench",
+    "detail": "benchmark card contains required fragment CrossDoc-PrivacyBench",
+    "expected": "CrossDoc-PrivacyBench",
+    "observed": "CrossDoc-PrivacyBench",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Synthetic-only benchmark",
+    "detail": "benchmark card contains required fragment Synthetic-only benchmark",
+    "expected": "Synthetic-only benchmark",
+    "observed": "Synthetic-only benchmark",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:No real people",
+    "detail": "benchmark card contains required fragment No real people",
+    "expected": "No real people",
+    "observed": "No real people",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Personas: 120",
+    "detail": "benchmark card contains required fragment Personas: 120",
+    "expected": "Personas: 120",
+    "observed": "Personas: 120",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Documents: 480",
+    "detail": "benchmark card contains required fragment Documents: 480",
+    "expected": "Documents: 480",
+    "observed": "Documents: 480",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Held-out personas for ma",
+    "detail": "benchmark card contains required fragment Held-out personas for main evaluation: 96",
+    "expected": "Held-out personas for main evaluation: 96",
+    "observed": "Held-out personas for main evaluation: 96",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Candidate set size: 10",
+    "detail": "benchmark card contains required fragment Candidate set size: 10",
+    "expected": "Candidate set size: 10",
+    "observed": "Candidate set size: 10",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:LinkGuard target k: 5",
+    "detail": "benchmark card contains required fragment LinkGuard target k: 5",
+    "expected": "LinkGuard target k: 5",
+    "observed": "LinkGuard target k: 5",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:Out-of-Scope Uses",
+    "detail": "benchmark card contains required fragment Out-of-Scope Uses",
+    "expected": "Out-of-Scope Uses",
+    "observed": "Out-of-Scope Uses",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:benchmark_card:formal anonymity guarant",
+    "detail": "benchmark card contains required fragment formal anonymity guarantees",
+    "expected": "formal anonymity guarantees",
+    "observed": "formal anonymity guarantees",
+    "source": "supplement/benchmark_card.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/reproduce_no_api.py",
+    "detail": "reproducibility checklist contains src/reproduce_no_api.py",
+    "expected": "src/reproduce_no_api.py",
+    "observed": "src/reproduce_no_api.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/noisy_style_stress.py",
+    "detail": "reproducibility checklist contains src/noisy_style_stress.py",
+    "expected": "src/noisy_style_stress.py",
+    "observed": "src/noisy_style_stress.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/make_supplement.py",
+    "detail": "reproducibility checklist contains src/make_supplement.py",
+    "expected": "src/make_supplement.py",
+    "observed": "src/make_supplement.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:src/verify_claims.py",
+    "detail": "reproducibility checklist contains src/verify_claims.py",
+    "expected": "src/verify_claims.py",
+    "observed": "src/verify_claims.py",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:planned_calls=120",
+    "detail": "reproducibility checklist contains planned_calls=120",
+    "expected": "planned_calls=120",
+    "observed": "planned_calls=120",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:repro:missing_or_dependent_calls=0",
+    "detail": "reproducibility checklist contains missing_or_dependent_calls=0",
+    "expected": "missing_or_dependent_calls=0",
+    "observed": "missing_or_dependent_calls=0",
+    "source": "supplement/reproducibility_checklist.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:P0002_D01",
+    "detail": "noisy-style supplement example contains P0002_D01",
+    "expected": "P0002_D01",
+    "observed": "P0002_D01",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:N0 noisy original",
+    "detail": "noisy-style supplement example contains N0 noisy original",
+    "expected": "N0 noisy original",
+    "observed": "N0 noisy original",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:C1 direct redaction",
+    "detail": "noisy-style supplement example contains C1 direct redaction",
+    "expected": "C1 direct redaction",
+    "observed": "C1 direct redaction",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:C5 LinkGuard",
+    "detail": "noisy-style supplement example contains C5 LinkGuard",
+    "expected": "C5 LinkGuard",
+    "observed": "C5 LinkGuard",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:C6 aggressive redaction",
+    "detail": "noisy-style supplement example contains C6 aggressive redaction",
+    "expected": "C6 aggressive redaction",
+    "observed": "C6 aggressive redaction",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:noisy_example:This example is synthetic",
+    "detail": "noisy-style supplement example contains This example is synthetic",
+    "expected": "This example is synthetic",
+    "observed": "This example is synthetic",
+    "source": "supplement/noisy_style_examples.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Direct PII redaction lea",
+    "detail": "claim trace contains Direct PII redaction leaves auxiliary matching risk",
+    "expected": "Direct PII redaction leaves auxiliary matching risk",
+    "observed": "Direct PII redaction leaves auxiliary matching risk",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Presidio-style PII redac",
+    "detail": "claim trace contains Presidio-style PII redaction remains linkable",
+    "expected": "Presidio-style PII redaction remains linkable",
+    "observed": "Presidio-style PII redaction remains linkable",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Stable pseudonyms create",
+    "detail": "claim trace contains Stable pseudonyms create linkage handles",
+    "expected": "Stable pseudonyms create linkage handles",
+    "observed": "Stable pseudonyms create linkage handles",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:LinkGuard improves the p",
+    "detail": "claim trace contains LinkGuard improves the privacy-utility frontier",
+    "expected": "LinkGuard improves the privacy-utility frontier",
+    "observed": "LinkGuard improves the privacy-utility frontier",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:Noisy-style synthetic re",
+    "detail": "claim trace contains Noisy-style synthetic rerendering preserves the ordering",
+    "expected": "Noisy-style synthetic rerendering preserves the ordering",
+    "observed": "Noisy-style synthetic rerendering preserves the ordering",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "supplement:claim_trace:results/noisy_style_stre",
+    "detail": "claim trace contains results/noisy_style_stress/noisy_style_results.csv",
+    "expected": "results/noisy_style_stress/noisy_style_results.csv",
+    "observed": "results/noisy_style_stress/noisy_style_results.csv",
+    "source": "supplement/claim_trace.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "benchmark_validation:all_pass",
+    "detail": "benchmark validation report has no failures",
+    "expected": "0",
+    "observed": "0",
+    "source": "results/benchmark_validation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "benchmark_validation:no_exact_direct_id_leaks",
+    "detail": "all transformed non-original conditions passed exact synthetic direct-ID leak checks",
+    "expected": "7 checks, 0 failures",
+    "observed": "7 checks, 0 failures",
+    "source": "results/benchmark_validation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "benchmark_validation:utility_retention_checks",
+    "detail": "utility-preserving conditions passed issue-phrase retention validation",
+    "expected": "7 checks, 0 failures",
+    "observed": "7 checks, 0 failures",
+    "source": "results/benchmark_validation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus:persona_count",
+    "detail": "persona count matches config and is stated in paper",
+    "expected": "120",
+    "observed": "120",
+    "source": "data/personas.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus:document_count",
+    "detail": "document count matches config and is stated in paper",
+    "expected": "480",
+    "observed": "480",
+    "source": "data/original_docs.jsonl",
+    "status": "PASS"
+  },
+  {
+    "check_id": "corpus:test_persona_count",
+    "detail": "held-out test size is stated in paper",
+    "expected": "96",
+    "observed": "96",
+    "source": "crossdoc_pipeline.split_personas",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:direct_aux",
+    "detail": "paper contains value 0.708",
+    "expected": "0.708",
+    "observed": "0.708",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:presidio_aux",
+    "detail": "paper contains value 0.594",
+    "expected": "0.594",
+    "observed": "0.594",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:stable_pair",
+    "detail": "paper contains value 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:lg_aux",
+    "detail": "paper contains value 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:lg_issue",
+    "detail": "paper contains value 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:lg_ret5",
+    "detail": "paper contains value 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:agg_issue",
+    "detail": "paper contains value 0.350",
+    "expected": "0.350",
+    "observed": "0.350",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:agg_ret5",
+    "detail": "paper contains value 0.312",
+    "expected": "0.312",
+    "observed": "0.312",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:direct_exact",
+    "detail": "paper contains value 0.395",
+    "expected": "0.395",
+    "observed": "0.395",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:presidio_exact",
+    "detail": "paper contains value 0.332",
+    "expected": "0.332",
+    "observed": "0.332",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "main:local_exact",
+    "detail": "paper contains value 0.304",
+    "expected": "0.304",
+    "observed": "0.304",
+    "source": "results/main_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:k2_aux",
+    "detail": "paper contains target-k sensitivity value 0.062",
+    "expected": "0.062",
+    "observed": "0.062",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:k2_exact",
+    "detail": "paper contains target-k sensitivity value 0.007",
+    "expected": "0.007",
+    "observed": "0.007",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:k5_exact",
+    "detail": "paper contains target-k sensitivity value 0.000",
+    "expected": "0.000",
+    "observed": "0.000",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:field_k1_aux",
+    "detail": "paper contains target-k sensitivity value 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:field_k5_aux",
+    "detail": "paper contains target-k sensitivity value 0.240",
+    "expected": "0.240",
+    "observed": "0.240",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "sensitivity:field_k20_aux",
+    "detail": "paper contains target-k sensitivity value 0.104",
+    "expected": "0.104",
+    "observed": "0.104",
+    "source": "results/linkguard_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "multiseed:c1_direct_redaction:aux_mean",
+    "detail": "paper contains three-seed mean Aux@1 0.719",
+    "expected": "0.719",
+    "observed": "0.719",
+    "source": "results/multiseed/claim_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "multiseed:c1b_presidio_redaction:aux_mean",
+    "detail": "paper contains three-seed mean Aux@1 0.628",
+    "expected": "0.628",
+    "observed": "0.628",
+    "source": "results/multiseed/claim_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "multiseed:c4_doc_local_anon:aux_mean",
+    "detail": "paper contains three-seed mean Aux@1 0.663",
+    "expected": "0.663",
+    "observed": "0.663",
+    "source": "results/multiseed/claim_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "multiseed:c5_linkguard:aux_mean",
+    "detail": "paper contains three-seed mean Aux@1 0.045",
+    "expected": "0.045",
+    "observed": "0.045",
+    "source": "results/multiseed/claim_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "ablation:role_org",
+    "detail": "paper contains ablation value 0.500",
+    "expected": "0.500",
+    "observed": "0.500",
+    "source": "results/ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "ablation:location",
+    "detail": "paper contains ablation value 0.521",
+    "expected": "0.521",
+    "observed": "0.521",
+    "source": "results/ablation.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "ci:direct:aux_top1",
+    "detail": "paper contains bootstrap CI 0.708 [0.615, 0.802]",
+    "expected": "0.708 [0.615, 0.802]",
+    "observed": "0.708 [0.615, 0.802]",
+    "source": "paper/tables/local_aux_bootstrap_ci.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "ci:presidio:aux_top1",
+    "detail": "paper contains bootstrap CI 0.594 [0.490, 0.698]",
+    "expected": "0.594 [0.490, 0.698]",
+    "observed": "0.594 [0.490, 0.698]",
+    "source": "paper/tables/local_aux_bootstrap_ci.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "ci:lg:aux_top1",
+    "detail": "paper contains bootstrap CI 0.042 [0.010, 0.083]",
+    "expected": "0.042 [0.010, 0.083]",
+    "observed": "0.042 [0.010, 0.083]",
+    "source": "paper/tables/local_aux_bootstrap_ci.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:direct_t1_aux",
+    "detail": "paper contains risk-tier stratification value 0.156",
+    "expected": "0.156",
+    "observed": "0.156",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:direct_t2_aux",
+    "detail": "paper contains risk-tier stratification value 0.969",
+    "expected": "0.969",
+    "observed": "0.969",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:direct_t3_aux",
+    "detail": "paper contains risk-tier stratification value 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:lg_t1_aux",
+    "detail": "paper contains risk-tier stratification value 0.031",
+    "expected": "0.031",
+    "observed": "0.031",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:lg_t2_aux",
+    "detail": "paper contains risk-tier stratification value 0.000",
+    "expected": "0.000",
+    "observed": "0.000",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "tier:lg_t3_aux",
+    "detail": "paper contains risk-tier stratification value 0.094",
+    "expected": "0.094",
+    "observed": "0.094",
+    "source": "results/by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "candidate:direct_50",
+    "detail": "paper contains candidate-pool sensitivity value 0.635",
+    "expected": "0.635",
+    "observed": "0.635",
+    "source": "results/candidate_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "candidate:local_50",
+    "detail": "paper contains candidate-pool sensitivity value 0.500",
+    "expected": "0.500",
+    "observed": "0.500",
+    "source": "results/candidate_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "candidate:lg_50",
+    "detail": "paper contains candidate-pool sensitivity value 0.000",
+    "expected": "0.000",
+    "observed": "0.000",
+    "source": "results/candidate_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "candidate:chance_50",
+    "detail": "paper contains candidate-pool sensitivity value 0.020",
+    "expected": "0.020",
+    "observed": "0.020",
+    "source": "results/candidate_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:direct:min",
+    "detail": "paper contains attack-family range value 0.510",
+    "expected": "0.510",
+    "observed": "0.510",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:direct:max",
+    "detail": "paper contains attack-family range value 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:local:min",
+    "detail": "paper contains attack-family range value 0.479",
+    "expected": "0.479",
+    "observed": "0.479",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:local:max",
+    "detail": "paper contains attack-family range value 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:lg:min",
+    "detail": "paper contains attack-family range value 0.031",
+    "expected": "0.031",
+    "observed": "0.031",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "attack:lg:max",
+    "detail": "paper contains attack-family range value 0.240",
+    "expected": "0.240",
+    "observed": "0.240",
+    "source": "results/attack_sensitivity.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "utility:c5_linkguard:stress_utility_score",
+    "detail": "paper contains body-only utility value 0.880",
+    "expected": "0.880",
+    "observed": "0.880",
+    "source": "results/utility_stress.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "utility:c1_direct_redaction:stress_utility_score",
+    "detail": "paper contains body-only utility value 0.870",
+    "expected": "0.870",
+    "observed": "0.870",
+    "source": "results/utility_stress.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "utility:c6_aggressive_redaction:stress_utility_score",
+    "detail": "paper contains body-only utility value 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "results/utility_stress.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:document_count",
+    "detail": "noisy-style stress corpus has one rerendered document per original document",
+    "expected": "480",
+    "observed": "480",
+    "source": "results/noisy_style_stress/noisy_style_diagnostic_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:template_similarity",
+    "detail": "noisy-style stress corpus is substantially less aligned to canonical templates",
+    "expected": "<0.35",
+    "observed": "0.306",
+    "source": "results/noisy_style_stress/noisy_style_diagnostic_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:ordering",
+    "detail": "noisy-style stress test preserves the main privacy ordering",
+    "expected": "direct/presidio/local high, LinkGuard/aggressive low",
+    "observed": "0.656/0.562/0.594/0.042/0.042",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:utility_frontier",
+    "detail": "noisy-style stress test preserves LinkGuard utility advantage over aggressive redaction",
+    "expected": "LinkGuard utility 1.000/1.000, aggressive lower",
+    "observed": "lg=1.000/1.000,agg=0.473/0.635",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:paper_fragment:template_similarity",
+    "detail": "both paper drafts contain noisy-style stress claim fragment 0.306",
+    "expected": "0.306",
+    "observed": "0.306",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:paper_fragment:direct_presidio_local",
+    "detail": "both paper drafts contain noisy-style stress claim fragment 0.656/0.562/0.594",
+    "expected": "0.656/0.562/0.594",
+    "observed": "0.656/0.562/0.594",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:paper_fragment:linkguard_aux_utility",
+    "detail": "both paper drafts contain noisy-style stress claim fragment 0.042 with issue/Ret@5 1.000",
+    "expected": "0.042 with issue/Ret@5 1.000",
+    "observed": "0.042 with issue/Ret@5 1.000",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:paper_fragment:aggressive_utility",
+    "detail": "both paper drafts contain noisy-style stress claim fragment 0.473/0.635",
+    "expected": "0.473/0.635",
+    "observed": "0.473/0.635",
+    "source": "results/noisy_style_stress/noisy_style_results.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:summary_fragment:0.656",
+    "detail": "noisy-style markdown summary contains value 0.656",
+    "expected": "0.656",
+    "observed": "0.656",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:summary_fragment:0.562",
+    "detail": "noisy-style markdown summary contains value 0.562",
+    "expected": "0.562",
+    "observed": "0.562",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:summary_fragment:0.594",
+    "detail": "noisy-style markdown summary contains value 0.594",
+    "expected": "0.594",
+    "observed": "0.594",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:summary_fragment:0.042",
+    "detail": "noisy-style markdown summary contains value 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "noisy_style:summary_fragment:0.473",
+    "detail": "noisy-style markdown summary contains value 0.473",
+    "expected": "0.473",
+    "observed": "0.473",
+    "source": "results/noisy_style_stress/noisy_style_stress.md",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag:direct_t3_hit5",
+    "detail": "paper contains RAG exposure claim fragment Hit@5 1.000",
+    "expected": "1.000",
+    "observed": "Hit@5 1.000",
+    "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag:direct_t3_multi10",
+    "detail": "paper contains RAG exposure claim fragment Multi@10 1.000",
+    "expected": "1.000",
+    "observed": "Multi@10 1.000",
+    "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag:lg_t3_hit5",
+    "detail": "paper contains RAG exposure claim fragment 0.312",
+    "expected": "0.312",
+    "observed": "0.312",
+    "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "rag:lg_t3_multi10",
+    "detail": "paper contains RAG exposure claim fragment Multi@10 to 0.000",
+    "expected": "0.000",
+    "observed": "Multi@10 to 0.000",
+    "source": "results/rag_exposure_by_tier.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "openai:c1_direct_redaction:top1",
+    "detail": "paper contains 12-person OpenAI top-1 value 0.750",
+    "expected": "n=12,0.750",
+    "observed": "n=12,0.750",
+    "source": "results/openai_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "openai:c4_doc_local_anon:top1",
+    "detail": "paper contains 12-person OpenAI top-1 value 0.750",
+    "expected": "n=12,0.750",
+    "observed": "n=12,0.750",
+    "source": "results/openai_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "openai:c4_openai_doc_local:top1",
+    "detail": "paper contains 12-person OpenAI top-1 value 0.667",
+    "expected": "n=12,0.667",
+    "observed": "n=12,0.667",
+    "source": "results/openai_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "openai:c5_linkguard:top1",
+    "detail": "paper contains 12-person OpenAI top-1 value 0.250",
+    "expected": "n=12,0.250",
+    "observed": "n=12,0.250",
+    "source": "results/openai_aux_match_summary.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:persona_count",
+    "detail": "COLM submission contains core claim fragment 120",
+    "expected": "120",
+    "observed": "120",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:document_count",
+    "detail": "COLM submission contains core claim fragment 480",
+    "expected": "480",
+    "observed": "480",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:test_persona_count",
+    "detail": "COLM submission contains core claim fragment 96 held-out personas",
+    "expected": "96 held-out personas",
+    "observed": "96 held-out personas",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:direct_aux",
+    "detail": "COLM submission contains core claim fragment 0.708",
+    "expected": "0.708",
+    "observed": "0.708",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:presidio_aux",
+    "detail": "COLM submission contains core claim fragment 0.594",
+    "expected": "0.594",
+    "observed": "0.594",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:stable_pair",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:local_aux",
+    "detail": "COLM submission contains core claim fragment 0.604",
+    "expected": "0.604",
+    "observed": "0.604",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:local_exact",
+    "detail": "COLM submission contains core claim fragment 0.304",
+    "expected": "0.304",
+    "observed": "0.304",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:lg_aux",
+    "detail": "COLM submission contains core claim fragment 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:lg_issue",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:lg_ret5",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:aggressive_aux",
+    "detail": "COLM submission contains core claim fragment 0.052",
+    "expected": "0.052",
+    "observed": "0.052",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:aggressive_issue",
+    "detail": "COLM submission contains core claim fragment 0.350",
+    "expected": "0.350",
+    "observed": "0.350",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:aggressive_ret5",
+    "detail": "COLM submission contains core claim fragment 0.312",
+    "expected": "0.312",
+    "observed": "0.312",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:stress_lg",
+    "detail": "COLM submission contains core claim fragment 0.880",
+    "expected": "0.880",
+    "observed": "0.880",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:stress_direct",
+    "detail": "COLM submission contains core claim fragment 0.870",
+    "expected": "0.870",
+    "observed": "0.870",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:stress_aggressive",
+    "detail": "COLM submission contains core claim fragment 0.438",
+    "expected": "0.438",
+    "observed": "0.438",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_direct_t1",
+    "detail": "COLM submission contains core claim fragment 0.156",
+    "expected": "0.156",
+    "observed": "0.156",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_direct_t2",
+    "detail": "COLM submission contains core claim fragment 0.969",
+    "expected": "0.969",
+    "observed": "0.969",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_direct_t3",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_lg_t1",
+    "detail": "COLM submission contains core claim fragment 0.031",
+    "expected": "0.031",
+    "observed": "0.031",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_lg_t2",
+    "detail": "COLM submission contains core claim fragment 0.000",
+    "expected": "0.000",
+    "observed": "0.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:tier_lg_t3",
+    "detail": "COLM submission contains core claim fragment 0.094",
+    "expected": "0.094",
+    "observed": "0.094",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:ci_direct",
+    "detail": "COLM submission contains core claim fragment 0.708 [0.615, 0.802]",
+    "expected": "0.708 [0.615, 0.802]",
+    "observed": "0.708 [0.615, 0.802]",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:ci_presidio",
+    "detail": "COLM submission contains core claim fragment 0.594 [0.490, 0.698]",
+    "expected": "0.594 [0.490, 0.698]",
+    "observed": "0.594 [0.490, 0.698]",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:ci_lg",
+    "detail": "COLM submission contains core claim fragment 0.042 [0.010, 0.083]",
+    "expected": "0.042 [0.010, 0.083]",
+    "observed": "0.042 [0.010, 0.083]",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:multiseed_direct",
+    "detail": "COLM submission contains core claim fragment 0.719",
+    "expected": "0.719",
+    "observed": "0.719",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:multiseed_presidio",
+    "detail": "COLM submission contains core claim fragment 0.628",
+    "expected": "0.628",
+    "observed": "0.628",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:multiseed_local",
+    "detail": "COLM submission contains core claim fragment 0.663",
+    "expected": "0.663",
+    "observed": "0.663",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:multiseed_lg",
+    "detail": "COLM submission contains core claim fragment 0.045",
+    "expected": "0.045",
+    "observed": "0.045",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_direct_min",
+    "detail": "COLM submission contains core claim fragment 0.510",
+    "expected": "0.510",
+    "observed": "0.510",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_direct_max",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_local_min",
+    "detail": "COLM submission contains core claim fragment 0.479",
+    "expected": "0.479",
+    "observed": "0.479",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_local_max",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_lg_min",
+    "detail": "COLM submission contains core claim fragment 0.031",
+    "expected": "0.031",
+    "observed": "0.031",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:attack_lg_max",
+    "detail": "COLM submission contains core claim fragment 0.240",
+    "expected": "0.240",
+    "observed": "0.240",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:field_k1",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:field_k5",
+    "detail": "COLM submission contains core claim fragment 0.240",
+    "expected": "0.240",
+    "observed": "0.240",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:field_k20",
+    "detail": "COLM submission contains core claim fragment 0.104",
+    "expected": "0.104",
+    "observed": "0.104",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_lg_t3_hit5",
+    "detail": "COLM submission contains core claim fragment 0.312",
+    "expected": "0.312",
+    "observed": "0.312",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_lg_t3_multi10",
+    "detail": "COLM submission contains core claim fragment Multi@10 to 0.000",
+    "expected": "Multi@10 to 0.000",
+    "observed": "Multi@10 to 0.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:openai_direct",
+    "detail": "COLM submission contains core claim fragment 0.750",
+    "expected": "0.750",
+    "observed": "0.750",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:openai_doc_local",
+    "detail": "COLM submission contains core claim fragment 0.667",
+    "expected": "0.667",
+    "observed": "0.667",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:openai_lg",
+    "detail": "COLM submission contains core claim fragment 0.250",
+    "expected": "0.250",
+    "observed": "0.250",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:openai_aggressive",
+    "detail": "COLM submission contains core claim fragment 0.167",
+    "expected": "0.167",
+    "observed": "0.167",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "openai:plan_fully_cached",
+    "detail": "OpenAI audit plan has no missing calls",
+    "expected": "120",
+    "observed": "120",
+    "source": "results/openai_audit_plan.csv",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/paper_main_results.tex:0.042",
+    "detail": "generated table contains 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "paper/tables/paper_main_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/paper_main_results.tex:0.350",
+    "detail": "generated table contains 0.350",
+    "expected": "0.350",
+    "observed": "0.350",
+    "source": "paper/tables/paper_main_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/openai_aux_audit.tex:0.250",
+    "detail": "generated table contains 0.250",
+    "expected": "0.250",
+    "observed": "0.250",
+    "source": "paper/tables/openai_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/openai_aux_audit.tex:12",
+    "detail": "generated table contains 12",
+    "expected": "12",
+    "observed": "12",
+    "source": "paper/tables/openai_aux_audit.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/linkguard_sensitivity.tex:0.062",
+    "detail": "generated table contains 0.062",
+    "expected": "0.062",
+    "observed": "0.062",
+    "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/linkguard_sensitivity.tex:0.000",
+    "detail": "generated table contains 0.000",
+    "expected": "0.000",
+    "observed": "0.000",
+    "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/linkguard_sensitivity.tex:0.104",
+    "detail": "generated table contains 0.104",
+    "expected": "0.104",
+    "observed": "0.104",
+    "source": "paper/tables/linkguard_sensitivity.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/tier_aux_results.tex:1.000",
+    "detail": "generated table contains 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/tables/tier_aux_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/tier_aux_results.tex:0.094",
+    "detail": "generated table contains 0.094",
+    "expected": "0.094",
+    "observed": "0.094",
+    "source": "paper/tables/tier_aux_results.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_exposure_t3.tex:0.312",
+    "detail": "generated table contains 0.312",
+    "expected": "0.312",
+    "observed": "0.312",
+    "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/rag_exposure_t3.tex:1.000",
+    "detail": "generated table contains 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/tables/rag_exposure_t3.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/noisy_style_stress.tex:0.656",
+    "detail": "generated table contains 0.656",
+    "expected": "0.656",
+    "observed": "0.656",
+    "source": "paper/tables/noisy_style_stress.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/noisy_style_stress.tex:0.042",
+    "detail": "generated table contains 0.042",
+    "expected": "0.042",
+    "observed": "0.042",
+    "source": "paper/tables/noisy_style_stress.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "table:paper/tables/noisy_style_stress.tex:0.473",
+    "detail": "generated table contains 0.473",
+    "expected": "0.473",
+    "observed": "0.473",
+    "source": "paper/tables/noisy_style_stress.tex",
+    "status": "PASS"
+  }
+]

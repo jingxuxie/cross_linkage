@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Local sprint privacy and utility results.}
+\label{tab:main_privacy_utility}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+condition & pair\_f1 & fixedk\_ari & aux\_top1 & aux\_top3 & attr\_exact\_recovery & attr\_coarse\_recovery & issue\_acc & retrieval\_recall\_at\_5 & fact\_preservation & edit\_ratio \\
+\midrule
+C0 original & 0.963 & 1.000 & 0.708 & 0.844 & 0.395 & 0.788 & 1.000 & 1.000 & 0.682 & 0.000 \\
+C1 direct redaction & 0.214 & 0.113 & 0.708 & 0.844 & 0.395 & 0.788 & 1.000 & 1.000 & 0.682 & 0.246 \\
+C1b Presidio redaction & 0.142 & 0.073 & 0.594 & 0.802 & 0.332 & 0.705 & 1.000 & 1.000 & 0.682 & 0.348 \\
+C2 consistent pseudonym & 0.979 & 1.000 & 0.427 & 0.677 & 0.273 & 0.696 & 1.000 & 1.000 & 0.679 & 0.299 \\
+C3 per-doc pseudonym & 0.148 & 0.072 & 0.427 & 0.677 & 0.273 & 0.696 & 1.000 & 1.000 & 0.679 & 0.315 \\
+C4 doc-local proxy & 0.155 & 0.089 & 0.604 & 0.844 & 0.304 & 0.788 & 1.000 & 1.000 & 0.682 & 0.288 \\
+C5 LinkGuard & 0.019 & -0.010 & 0.042 & 0.260 & 0.000 & 0.112 & 1.000 & 1.000 & 0.695 & 0.535 \\
+C6 aggressive redaction & 0.016 & -0.012 & 0.052 & 0.312 & 0.000 & 0.000 & 0.350 & 0.312 & 0.389 & 0.681 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Single-signal ablations from direct-redacted documents.}
+\label{tab:ablation_results}
+\begin{tabular}{lrrrr}
+\toprule
+Signal removed & Aux@1 & Drop & Aux@3 & MRR \\
+\midrule
+Role+org & 0.500 & 0.208 & 0.760 & 0.662 \\
+Location & 0.521 & 0.188 & 0.781 & 0.673 \\
+Family & 0.708 & 0.000 & 0.844 & 0.793 \\
+Health & 0.708 & 0.000 & 0.844 & 0.793 \\
+Rare event & 0.708 & 0.000 & 0.844 & 0.793 \\
+Schedule & 0.708 & 0.000 & 0.844 & 0.793 \\
+\bottomrule
+\end{tabular}
+\end{table}

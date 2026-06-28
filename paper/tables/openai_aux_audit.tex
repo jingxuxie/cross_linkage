@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\caption{Small-subset OpenAI auxiliary matching audit.}
+\label{tab:openai_aux_audit}
+\begin{tabular}{lrrrrr}
+\toprule
+Cond. & n & Aux@1 & Aux@3 & T2@1 & T3@1 \\
+\midrule
+C1 Redact & 12 & 0.750 & 0.917 & 0.500 & 1.000 \\
+C1b Presidio & 12 & 0.500 & 1.000 & 0.333 & 0.667 \\
+C4 Local & 12 & 0.750 & 0.833 & 0.500 & 1.000 \\
+C4 OpenAI & 12 & 0.667 & 1.000 & 0.333 & 1.000 \\
+C5 LG & 12 & 0.250 & 0.500 & 0.167 & 0.333 \\
+C6 Agg & 12 & 0.167 & 0.667 & 0.167 & 0.167 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,12 @@
+faker
+matplotlib
+networkx
+numpy
+openai
+pandas
+presidio-analyzer
+presidio-anonymizer
+pyyaml
+scikit-learn
+scipy
+spacy

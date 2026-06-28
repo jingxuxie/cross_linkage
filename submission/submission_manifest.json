@@ -1,0 +1,120 @@
+{
+  "checks_passed": true,
+  "clean_compile": {
+    "anonymous_header": true,
+    "author_metadata_blank": true,
+    "command": [
+      "latexmk",
+      "-g",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "colm2026_submission.tex"
+    ],
+    "log_problem_count": 0,
+    "log_problems": [],
+    "no_local_paths": true,
+    "pdf_pages": 4,
+    "returncode": 0,
+    "status": true,
+    "temp_dir": ""
+  },
+  "created_utc": "2026-06-27T20:29:51+00:00",
+  "package_dir": "submission",
+  "paper_pdf": {
+    "bytes": 105826,
+    "pages": 4,
+    "path": "paper/colm2026_submission.pdf",
+    "sha256": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342"
+  },
+  "paper_source_files": [
+    {
+      "bytes": 13287,
+      "path": "paper/colm2026_submission.tex",
+      "sha256": "79cd450ed18a6eef616c39000166cad797e3f1bcbdf63df2bda397297fa5327b"
+    },
+    {
+      "bytes": 7727,
+      "path": "paper/colm2026_conference.sty",
+      "sha256": "55962ae80c25a50335825c85d23eb5f1cd9015aa8e77f7af32b483b646c7483e"
+    },
+    {
+      "bytes": 26973,
+      "path": "paper/colm2026_conference.bst",
+      "sha256": "2d67552db7ed38ccfccb5957b52f95656e25c249724761d3cf5f7922ad1844c5"
+    },
+    {
+      "bytes": 45154,
+      "path": "paper/natbib.sty",
+      "sha256": "88bc70c0e48461934cab5b2accef06b74a8b3ac45ad03ccd3f2a6b7e0d6d530d"
+    },
+    {
+      "bytes": 20521,
+      "path": "paper/fancyhdr.sty",
+      "sha256": "b56ec4434b9f4607529a4b23dc68ad8d4b94f1f631c8cddaf7da78140d53a5ea"
+    },
+    {
+      "bytes": 12284,
+      "path": "paper/math_commands.tex",
+      "sha256": "90473c4d0542070db244cea73ef962d6cddc5b2a746757e6a40ddf5fdfb90ba9"
+    }
+  ],
+  "source_dir": "submission/colm2026_source",
+  "source_files": [
+    {
+      "bytes": 13287,
+      "path": "colm2026_source/colm2026_submission.tex",
+      "sha256": "79cd450ed18a6eef616c39000166cad797e3f1bcbdf63df2bda397297fa5327b"
+    },
+    {
+      "bytes": 7727,
+      "path": "colm2026_source/colm2026_conference.sty",
+      "sha256": "55962ae80c25a50335825c85d23eb5f1cd9015aa8e77f7af32b483b646c7483e"
+    },
+    {
+      "bytes": 26973,
+      "path": "colm2026_source/colm2026_conference.bst",
+      "sha256": "2d67552db7ed38ccfccb5957b52f95656e25c249724761d3cf5f7922ad1844c5"
+    },
+    {
+      "bytes": 45154,
+      "path": "colm2026_source/natbib.sty",
+      "sha256": "88bc70c0e48461934cab5b2accef06b74a8b3ac45ad03ccd3f2a6b7e0d6d530d"
+    },
+    {
+      "bytes": 20521,
+      "path": "colm2026_source/fancyhdr.sty",
+      "sha256": "b56ec4434b9f4607529a4b23dc68ad8d4b94f1f631c8cddaf7da78140d53a5ea"
+    },
+    {
+      "bytes": 12284,
+      "path": "colm2026_source/math_commands.tex",
+      "sha256": "90473c4d0542070db244cea73ef962d6cddc5b2a746757e6a40ddf5fdfb90ba9"
+    },
+    {
+      "bytes": 241,
+      "path": "colm2026_source/README_SUBMISSION_PACKAGE.md",
+      "sha256": "8a7b59e5da64b52c395fd100c95c2c98836ed519ca52a9589a11f2d2893b335e"
+    }
+  ],
+  "source_zip": {
+    "bytes": 35636,
+    "members": [
+      "colm2026_submission.tex",
+      "colm2026_conference.sty",
+      "colm2026_conference.bst",
+      "natbib.sty",
+      "fancyhdr.sty",
+      "math_commands.tex",
+      "README_SUBMISSION_PACKAGE.md"
+    ],
+    "path": "submission/colm2026_submission_source.zip",
+    "sha256": "3d8a18e48d35f52d9a3cd1c5825df65d08da5c3d4cc396ae72a144200d93ac52"
+  },
+  "submission_pdf": {
+    "bytes": 105826,
+    "pages": 4,
+    "path": "submission/colm2026_submission.pdf",
+    "sha256": "25a6e2e7cbf5fb34cad636a95d3c3281075943217de7bb9ecea71c206a9b1342"
+  }
+}

@@ -1,0 +1,18 @@
+cache/
+__pycache__/
+*/__pycache__/
+*.pyc
+.DS_Store
+
+# LaTeX scratch files. PDFs and source files are intentionally tracked.
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+
+# Local environments and editor state.
+.env
+.venv/
+venv/
+.pytest_cache/

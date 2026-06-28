@@ -1,0 +1,30 @@
+{
+  "created_utc": "2026-06-27T20:20:57+00:00",
+  "files": [
+    {
+      "bytes": 507,
+      "path": "supplement/SUPPLEMENT_INDEX.md",
+      "sha256": "686c54f53512409f8f3e299f3419ee305c454ebd1688a20f6f5d2acebdfb8b8f"
+    },
+    {
+      "bytes": 4092,
+      "path": "supplement/benchmark_card.md",
+      "sha256": "cf260361873138b02d2e02d49ae232ece7d723fb4f6298b7e5962d01c724835c"
+    },
+    {
+      "bytes": 4121,
+      "path": "supplement/noisy_style_examples.md",
+      "sha256": "f00cd5a08de0d21f834fb9bbf08892bd52715f0caafab481263c31cce1a7696a"
+    },
+    {
+      "bytes": 1840,
+      "path": "supplement/reproducibility_checklist.md",
+      "sha256": "3276390d3b3e07436be48130c795df6bc9e9c29c83590a4145ebf2452bf969c7"
+    },
+    {
+      "bytes": 2265,
+      "path": "supplement/claim_trace.md",
+      "sha256": "5056c122787cefff4153e9affbc36c763c9807801bda5fa2e96ae1ac75ee7f06"
+    }
+  ]
+}

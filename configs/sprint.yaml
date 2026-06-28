@@ -1,0 +1,25 @@
+seed: 20260627
+num_personas: 120
+docs_per_persona: 4
+candidate_set_size: 10
+target_k: 5
+template_variants_per_domain: 3
+
+data_dir: data
+results_dir: results
+
+domains:
+  - healthcare
+  - legal
+  - financial
+  - hr
+
+conditions:
+  - original
+  - c1_direct_redaction
+  - c1b_presidio_redaction
+  - c2_consistent_pseudonym
+  - c3_per_doc_pseudonym
+  - c4_doc_local_anon
+  - c5_linkguard
+  - c6_aggressive_redaction
