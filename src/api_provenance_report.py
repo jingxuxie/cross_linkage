@@ -118,6 +118,22 @@ RUNS = [
         paper_claim_status="compact_pilot_not_paper_claim",
         boundary_note="Cached 2-person parsing pilot only; not a paper generation result.",
     ),
+    AuditRun(
+        run_id="gpt55_rag_12t3_batch01",
+        label="GPT-5.5 RAG generation cache-fill batch 01",
+        model="gpt-5.5",
+        task_family="RAG generation",
+        plan_path="results/openai_gpt55_rag_12t3_batch01_audit_plan.csv",
+        usage_path="results/openai_gpt55_rag_12t3_batch01_audit_usage.csv",
+        notes_path="results/openai_gpt55_rag_12t3_batch01_audit_notes.md",
+        primary_outputs=(
+            "results/openai_gpt55_rag_12t3_batch01_rag_generation_rows.csv",
+            "results/openai_gpt55_rag_12t3_batch01_rag_generation_summary.csv",
+        ),
+        script="src/openai_rag_audit.py",
+        paper_claim_status="partial_cache_fill_not_paper_claim",
+        boundary_note="Completed 10-call batch that fills the shared 12-person RAG cache; not a standalone paper claim.",
+    ),
 ]
 
 

@@ -231,7 +231,7 @@
 
 - A compact 2-person T3 pilot parsed all generated JSON responses (minimum parse-success rate 1.000) and used 10 cached calls.
 - In the pilot, direct redaction and the document-local proxy have likely-same-person rate 1.000 and 1.000; LinkGuard and aggressive redaction are 0.000 and 0.000.
-- This validates the compact RAG-generation protocol only; the 12-person audit still has 50 pending calls and is not a paper claim.
+- This validates the compact RAG-generation protocol only; the 12-person audit still has 40 pending calls and is not a paper claim.
 
 | Cond.        | n | parsed | Parse | Hit@5 | Same  | Exact | Unc.  |
 | ------------ | - | ------ | ----- | ----- | ----- | ----- | ----- |
@@ -285,21 +285,21 @@
 
 ## Claim Verification
 
-- Claim verifier checks: 429.
+- Claim verifier checks: 438.
 - Claim verifier failures: 0.
 - Full report: `results/claim_verification.md`.
 
 ## API Accounting
 
-- Cached API responses: 625.
-- Total cached token usage: 575034 input, 117651 output, 692685 total.
+- Cached API responses: 635.
+- Total cached token usage: 583836 input, 119108 output, 702944 total.
 - The cache total includes legacy, exploratory, and compact RAG-pilot calls; paper-facing GPT-5.5 claims use the run-specific auxiliary, document-local, and evidence artifacts.
 - The full GPT-5.5 RAG-generation audit remains outside paper claims until the pending calls are explicitly approved and verified.
 - API provenance manifest: `results/api_audit_provenance.csv`.
 - Paper-facing GPT-5.5 API runs in the manifest: 3, all cached with 534535 run-specific tokens.
-- Optional GPT-5.5 RAG-generation plan remains at 10/60 cached calls.
+- Optional GPT-5.5 RAG-generation plan remains at 20/60 cached calls.
 - RAG-generation cache-fill budget: `results/openai_gpt55_rag_12t3_budget.csv`.
-- Remaining RAG-generation calls are split into 5 batches of at most 10 calls (51586 estimated tokens total).
+- Remaining RAG-generation calls are split into 4 batches of at most 10 calls (41322 estimated tokens total).
 
 ## Claims Supported Now
 

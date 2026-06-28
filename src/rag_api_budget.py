@@ -73,23 +73,35 @@ def estimate_tokens(plan: pd.DataFrame, pilot_plan: pd.DataFrame, pilot_usage: p
     return pd.DataFrame(rows)
 
 
-def build_batches(pending: pd.DataFrame, batch_personas: int) -> pd.DataFrame:
-    persona_order = list(dict.fromkeys(pending["persona_id"].tolist()))
+def build_batches(
+    estimated: pd.DataFrame,
+    batch_personas: int,
+    baseline_cached_personas: set[str],
+) -> pd.DataFrame:
+    persona_order = [
+        persona_id
+        for persona_id in dict.fromkeys(estimated["persona_id"].tolist())
+        if persona_id not in baseline_cached_personas
+    ]
     batch_rows = []
     for batch_index, start in enumerate(range(0, len(persona_order), batch_personas), start=1):
         personas = persona_order[start : start + batch_personas]
-        group = pending[pending["persona_id"].isin(personas)]
+        group = estimated[estimated["persona_id"].isin(personas)]
+        pending_group = group[~group["cached"].astype(bool)]
+        if pending_group.empty:
+            continue
         batch_rows.append(
             {
                 "batch_id": f"batch{batch_index:02d}",
                 "batch_run_name": f"{DEFAULT_RUN_NAME}_batch{batch_index:02d}",
                 "persona_ids": ",".join(personas),
-                "new_calls": len(group),
+                "new_calls": len(pending_group),
+                "selected_calls": len(group),
                 "conditions": group["condition"].nunique(),
-                "estimated_input_tokens": int(group["estimated_input_tokens"].sum()),
-                "estimated_output_tokens": int(group["estimated_output_tokens"].sum()),
-                "estimated_total_tokens": int(group["estimated_total_tokens"].sum()),
-                "mean_input_chars": round(float(group["input_chars"].mean()), 1),
+                "estimated_input_tokens": int(pending_group["estimated_input_tokens"].sum()),
+                "estimated_output_tokens": int(pending_group["estimated_output_tokens"].sum()),
+                "estimated_total_tokens": int(pending_group["estimated_total_tokens"].sum()),
+                "mean_input_chars": round(float(pending_group["input_chars"].mean()), 1),
                 "command": command_for_batch(
                     personas,
                     f"{DEFAULT_RUN_NAME}_batch{batch_index:02d}",
@@ -123,7 +135,8 @@ def main() -> None:
     pilot_usage = pd.read_csv(pilot_usage_path)
     estimated = estimate_tokens(plan, pilot_plan, pilot_usage)
     pending = estimated[~estimated["cached"].astype(bool)].copy()
-    batches = build_batches(pending, args.batch_personas)
+    baseline_cached_personas = set(pilot_plan["persona_id"].astype(str).unique())
+    batches = build_batches(estimated, args.batch_personas, baseline_cached_personas)
 
     out_csv = artifact(results_dir, args.run_name, "budget.csv")
     out_md = artifact(results_dir, args.run_name, "budget.md")

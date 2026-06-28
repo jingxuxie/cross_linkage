@@ -73,7 +73,7 @@ The optional GPT-5.5 RAG-generation audit has a compact 2-person pilot cached, b
 conda run -n cross_linkage python src/openai_rag_audit.py --config configs/sprint.yaml --model gpt-5.5 --run-name gpt55_rag_12t3 --max-personas 12 --tier T3 --max-calls 60 --reasoning-effort none --max-output-tokens 250 --plan-only
 ```
 
-Expected pre-approval status after the compact pilot: `planned_calls=60`, `cached_calls=10`, `missing_calls=50`.
+Expected pre-approval status after the compact pilot plus first cache-fill batch: `planned_calls=60`, `cached_calls=20`, `missing_calls=40`.
 
 The RAG API budget report splits the remaining optional RAG-generation calls into small approval units without making API calls:
 
@@ -81,7 +81,7 @@ The RAG API budget report splits the remaining optional RAG-generation calls int
 conda run -n cross_linkage python src/rag_api_budget.py --config configs/sprint.yaml
 ```
 
-Expected budget boundary: 5 batches, 10 calls per batch, using batch-specific run names that fill the shared response cache.
+Expected budget boundary: 4 remaining batches, 10 calls per batch, using batch-specific run names that fill the shared response cache.
 
 The API provenance manifest summarizes run names, cache completeness, token usage, claim status, and the `store=False` protocol without making API calls:
 
@@ -89,4 +89,4 @@ The API provenance manifest summarizes run names, cache completeness, token usag
 conda run -n cross_linkage python src/api_provenance_report.py --config configs/sprint.yaml
 ```
 
-Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and evidence audits are fully cached; the optional 12-person RAG-generation plan remains `10/60` cached and is not a paper claim.
+Expected manifest boundary: paper-facing GPT-5.5 auxiliary, document-local, and evidence audits are fully cached; the optional 12-person RAG-generation plan remains `20/60` cached and is not a paper claim.
