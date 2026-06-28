@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{lineno}
 \usepackage{amsmath}
+\usepackage{array}
 
 \definecolor{darkblue}{rgb}{0,0,0.5}
 \hypersetup{colorlinks=true, citecolor=darkblue, linkcolor=darkblue, urlcolor=darkblue}
@@ -21,6 +22,11 @@ Cross-Document Re-identification Risks in LLM-Ready Sensitive Text Corpora}
 
 \newcommand{\method}{LinkGuard}
 \newcommand{\bench}{CrossDoc-PrivacyBench}
+\newcommand{\figplaceholder}[2]{%
+\fbox{%
+\begin{minipage}[c][#1][c]{0.96\linewidth}
+\centering\small #2
+\end{minipage}}}
 
 \begin{document}
 \ifcolmsubmission
@@ -29,14 +35,13 @@ Cross-Document Re-identification Risks in LLM-Ready Sensitive Text Corpora}
 \maketitle
 
 \begin{abstract}
-Sensitive text corpora are commonly transformed one document at a time before retrieval, evaluation, sharing, or model adaptation.
-This workflow removes obvious direct identifiers, but it can leave a corpus-level privacy failure mode: records with no names, emails, or account numbers may remain linkable through repeated quasi-identifiers such as role, region, schedule, institution type, family context, health context, financial context, and rare events.
-We introduce \bench, a fully synthetic benchmark with 120 controlled personas, 480 documents, risk tiers, utility labels, and decoy auxiliary profiles.
-We evaluate document-local transformations under linkage, auxiliary-profile matching, RAG-style exposure, quasi-identifier recovery, and utility metrics.
-Direct redaction leaves auxiliary-profile matching unchanged at 0.71 top-1, while a Presidio-style PII baseline remains highly matchable at 0.59.
+Sensitive text corpora are increasingly prepared for retrieval, evaluation, sharing, and model adaptation by transforming one document at a time.
+This document-local workflow removes obvious direct identifiers, but it can leave a corpus-level failure mode: records with no names, emails, or account numbers may still be linkable through repeated quasi-identifiers such as role, region, institution type, family context, health context, financial context, schedules, and rare events.
+We introduce \bench, a fully synthetic benchmark with 120 personas, 480 documents, risk tiers, utility labels, decoy auxiliary profiles, and RAG-style exposure tasks.
+We show that common document-local transformations remain linkable: direct redaction leaves local auxiliary matching at 0.71 top-1, a Presidio-style PII baseline remains at 0.59, and a GPT-5.5 auxiliary attacker matches direct-redacted and document-local corpora almost perfectly on a 48-person T2/T3 stress audit.
 We propose \method, a simple corpus-aware generalization heuristic that estimates cross-document uniqueness and generalizes high-risk quasi-identifiers until a target anonymity set is reached.
-At target $k=5$, \method{} reduces auxiliary top-1 to 0.04 while preserving issue classification and retrieval Recall@5 at 1.00; aggressive redaction reaches similar privacy but drops issue accuracy to 0.35 and retrieval Recall@5 to 0.31.
-GPT-5.5 auxiliary and RAG-generation stress audits preserve this ordering, reinforcing that LLM-ready data transformations should be evaluated for corpus-level linkage resistance, not only document-local PII removal.
+At target $k=5$, \method{} reduces local auxiliary top-1 to 0.04 while preserving issue classification and retrieval Recall@5 at 1.00; aggressive redaction reaches similar local privacy but drops issue accuracy to 0.35 and retrieval Recall@5 to 0.31.
+These synthetic results suggest that LLM-ready data transformations should be evaluated for corpus-level linkage resistance, not only document-local PII removal.
 \end{abstract}
 
 \section{Introduction}
@@ -45,110 +50,84 @@ Sensitive data is often most useful when it is not isolated.
 A hospital may have clinical messages, billing notes, scheduling records, and accommodation requests about the same patient.
 A legal-aid organization may have intake notes, benefits appeals, landlord disputes, and follow-up emails about the same client.
 A company may have support tickets, HR notes, finance requests, and internal chat snippets about the same employee or customer.
-Foundation-model workflows, retrieval-augmented generation (RAG), evaluation-set construction, model adaptation, analytics, and data sharing, therefore often operate over \emph{multi-document} corpora rather than one-off documents.
+Modern foundation-model workflows---retrieval-augmented generation (RAG), evaluation-set construction, model adaptation, analytics, and data sharing---therefore often operate over \emph{multi-document} corpora rather than independent documents \citep{lewis2020rag,zeng2024ragprivacy,jiang2024ragthief}.
 
-The dominant operational response is document-local de-identification.
-A pipeline removes names, emails, phone numbers, mailing addresses, account numbers, and sometimes other spans that look individually identifying.
-This is necessary, but it is not sufficient.
-A rare combination such as a region, occupation, institution type, care schedule, family constraint, legal context, and local event may be harmless in one document yet become a stable signature when repeated across documents.
-Pseudonymization can make this worse: a stable pseudonym is useful for continuity, but it is also a linkage handle.
-Per-document pseudonyms remove the explicit handle, but they do not remove the repeated quasi-identifier structure.
+The dominant operational response is document-local de-identification: remove names, emails, phone numbers, mailing addresses, account numbers, and other spans that look identifying within one record.
+That response is necessary, but it misses the central lesson of quasi-identifier privacy: combinations of ordinary attributes can distinguish people even when direct identifiers are gone \citep{sweeney2002,narayanan2008,cohen2022attacks}.
+In text, this problem is harder because the identifiers are semantic rather than tabular.
+A region, occupation, institution type, care schedule, family constraint, legal context, and local event may each look harmless in isolation, yet together they can form a stable signature across documents.
+Pseudonymization can make the problem worse: a stable pseudonym helps preserve continuity for benign users, but it is also a cross-document linkage handle.
 
-This paper studies a focused question:
-\emph{after document-local anonymization or pseudonymization, can an attacker still link multiple transformed documents to the same person and match them to auxiliary background profiles?}
+LLM-ready data makes this failure mode more urgent.
+Recent work shows that language models can infer personal attributes from text even when the text does not contain explicit identifiers \citep{staab2024beyond}; text anonymization benchmarks increasingly emphasize residual re-identification risk rather than span recall alone \citep{pilan2022tab,krco2026ratbench}; and RAG privacy work shows that retrieval databases can leak private records through retrieval and generation channels \citep{zeng2024ragprivacy,jiang2024ragthief}.
+This paper studies a focused question: \emph{after document-local anonymization or pseudonymization, can an attacker still link multiple transformed documents to the same person and match them to auxiliary background profiles?}
 We intentionally avoid real-person data and real re-identification attempts.
-Instead, we build a controlled synthetic benchmark in which every persona, document, decoy, and utility label is generated synthetically to give us safe ground truth for controlled privacy auditing.
+Instead, every persona, document, decoy, and utility label is generated synthetically, giving us safe ground truth for controlled privacy auditing.
 
 Our contributions are:
 \begin{itemize}
     \setlength{\itemsep}{0pt}
     \setlength{\parsep}{0pt}
     \setlength{\topsep}{2pt}
-    \item \textbf{Benchmark:} \bench, a synthetic cross-document privacy benchmark with 120 personas, 480 documents, risk tiers, utility labels, templates, and decoy auxiliary profiles.
-    \item \textbf{Audit protocol:} pairwise linkage, fixed-$K$ clustering, auxiliary-profile matching, quasi-identifier recovery, RAG-style exposure, and utility retention.
-    \item \textbf{Finding:} direct redaction, Presidio-style PII removal, document-local anonymization, and stable pseudonyms all leave strong residual linkage risk.
-    \item \textbf{Defense:} \method, a simple corpus-aware generalization heuristic that improves the synthetic privacy--utility tradeoff over blanket aggressive redaction.
+    \item \textbf{Benchmark.} \bench{} is a synthetic cross-document privacy benchmark with 120 personas, 480 documents, risk tiers, utility labels, document templates, and decoy auxiliary profiles.
+    \item \textbf{Audit protocol.} We evaluate transformations with document linkage, auxiliary-profile matching, quasi-identifier recovery, RAG-style exposure, GPT-5.5 stress audits, and utility retention.
+    \item \textbf{Finding.} Direct redaction, Presidio-style PII removal, document-local anonymization, and stable pseudonyms all leave strong residual linkage risk.
+    \item \textbf{Defense.} \method{} is a simple corpus-aware generalization heuristic that improves the synthetic privacy--utility tradeoff over blanket aggressive redaction.
 \end{itemize}
 
-\section{Problem Setup and Threat Model}
+\begin{figure}[t]
+\centering
+\figplaceholder{1.65in}{\textbf{Replace with Figure 1: Overall problem and method.}\newline
+Draw a three-panel overview. \textbf{Left:} a multi-document sensitive corpus with four records for the same synthetic person (healthcare, legal, financial, HR). Direct identifiers are crossed out, but repeated quasi-identifiers such as city, role, schedule, institution type, and rare event remain highlighted. \textbf{Middle:} an attacker links the transformed documents and matches them to one auxiliary profile among decoys. \textbf{Right:} \method{} estimates corpus-level uniqueness and rewrites only high-linkage fields along exact $\rightarrow$ category $\rightarrow$ generic ladders, preserving task issue text. Use one visual callout: ``span-level PII removal is not corpus-level unlinkability.''}
+\caption{Conceptual overview of the cross-document linkage failure mode and the corpus-aware generalization defense.}
+\label{fig:overview}
+\end{figure}
+
+\section{Threat Model and Benchmark}
 
 \paragraph{Setting.}
 A data holder has a sensitive text corpus with multiple records per person, household, customer, patient, client, or employee.
 The corpus is transformed before it is indexed for RAG, shared internally, released for evaluation, or used in model-adaptation workflows.
-We consider transformations that operate on text, including direct redaction, pseudonymization, document-local anonymization, and corpus-aware generalization.
+The holder may know which records belong to the same account, case, patient, or synthetic persona; our method uses this grouping only to estimate repeated quasi-identifier risk.
 
-\paragraph{Attacker knowledge.}
+\paragraph{Attacker.}
 The attacker sees the transformed corpus.
 For the auxiliary-profile task, the attacker also receives a small candidate set containing one true synthetic auxiliary profile and decoys.
-This simulates background knowledge such as an external directory, leaked structured metadata, public biographical context, or another internal table.
-The attacker does not receive the original direct identifiers, and the candidate labels are neutralized to avoid leaking synthetic persona IDs.
+This simulates background knowledge such as a directory, leaked metadata table, public biographical context, or another internal database.
+The attacker does not receive original direct identifiers, and candidate labels are neutralized in API audits to avoid leaking synthetic persona IDs.
 
-\paragraph{Attacker goals.}
-We evaluate three defensive questions.
-First, can an attacker tell which transformed documents belong to the same synthetic persona?
-Second, can the attacker match a cluster of transformed documents to the correct auxiliary profile among decoys?
-Third, can profile-like queries retrieve target documents from a transformed corpus, creating a RAG exposure channel?
+\paragraph{Benchmark.}
+\bench{} contains 120 synthetic personas and 480 documents.
+Each persona has direct identifiers, utility labels, and quasi-identifiers: region, city, occupation, employer type, education, family structure, medical context, financial context, legal context, schedule pattern, community affiliation, and rare event.
+Each persona has four short service records spanning healthcare, legal, financial support, and HR.
+Personas are assigned to three risk tiers: T1 contains mostly generic context, T2 contains moderately specific context, and T3 contains high-linkage combinations.
+For each persona, we build a ten-candidate auxiliary set with one true profile and nine decoys that share partial attributes.
+This design lets us measure whether a transformation protects against both document linkage and background-knowledge matching while retaining task utility.
 
-\paragraph{Non-goals and ethics.}
-We do not collect, process, or attempt to re-identify real people.
-All personas, documents, auxiliary profiles, and decoys are synthetic.
-The benchmark is intended for defensive auditing of transformation methods, not for operational re-identification.
-Any extension to real data would require authorization, data minimization, security review, and domain-specific ethical oversight.
+\section{Transformations and \method{}}
 
-\section{\bench: A Synthetic Cross-Document Benchmark}
+We compare common document-local transformations against a corpus-aware alternative.
+C1 directly redacts names, email addresses, phone numbers, mailing addresses, and account IDs.
+C1b applies a Presidio-style PII analyzer plus local regex cleanup.
+C2 uses stable pseudonyms across the corpus, while C3 resets pseudonyms per document.
+C4 is a document-local anonymization proxy that generalizes selected local spans without seeing neighboring documents.
+C5 is \method{}.
+C6 is aggressive redaction, suppressing most quasi-identifiers and some task issue phrases.
+We also run GPT-5.5 document-local anonymization as an API stress baseline on a synthetic subset.
 
-\paragraph{Personas.}
-\bench{} contains 120 synthetic personas.
-Each persona has direct identifiers: name, email, phone number, address, and account ID, and a structured set of quasi-identifiers: region, city, occupation, employer type, education, family structure, medical context, financial context, legal context, schedule pattern, community affiliation, and rare event.
-Each persona also has utility labels for four domains.
-We use deterministic generation so that experiments are reproducible and no real individual is represented.
-
-\paragraph{Risk tiers.}
-Personas are assigned to three tiers.
-T1 documents contain mostly generic quasi-identifiers, so direct PII is the main privacy risk.
-T2 documents contain moderately specific but partly generalized context, such as a city within a region, employer category, broad health or legal context, and schedule constraints.
-T3 documents contain high-linkage combinations, such as exact city, occupation, employer type, education, family structure, treatment or schedule context, affiliation, and rare event.
-This tiering lets us check whether an attack and defense are sensitive to increasing quasi-identifier specificity.
-
-\paragraph{Documents.}
-Each persona has four documents spanning healthcare, legal, financial support, and HR.
-The documents are short service or support records with a direct-contact line and a task-oriented body.
-Each document includes an issue label, such as medication refill, benefits appeal, payment deferral, housing issue, accommodation request, or schedule change.
-The benchmark therefore contains 480 documents total and 384 held-out test documents from 96 held-out personas.
-
-\paragraph{Auxiliary profiles and decoys.}
-For each persona, we construct a ten-candidate auxiliary set.
-One candidate is the true profile; nine are decoys selected to share some attributes with the target, such as region, occupation family, or legal context.
-This makes matching harder than a trivial exact lookup and lets us report top-1, top-3, and mean reciprocal rank.
-The auxiliary-profile task is the central privacy test because it captures both linkage and background-knowledge use.
-
-
-\section{Transformations}
-
-We compare eight conditions.
-C0 is the original synthetic corpus.
-C1 performs direct redaction of names, first and last names, email addresses, phone numbers, mailing addresses, and account IDs.
-C1b applies a Presidio-based PII analyzer plus local regex cleanup for the synthetic account and address formats.
-C2 uses stable pseudonyms across the corpus, replacing direct identifiers and some locations/institutions with consistent tokens.
-C3 resets pseudonym mappings per document.
-C4 is a document-local anonymization proxy that removes direct identifiers and generalizes selected local spans, such as city and education, without seeing neighboring documents.
-C5 is \method.
-C6 is aggressive redaction, which suppresses most potentially identifying context, including quasi-identifiers and task issue phrases.
-
-\subsection{\method: Corpus-Aware Generalization}
-
-Document-local anonymizers ask whether a span is identifying inside one document.
-\method{} asks whether repeated details make a persona distinguishable in the corpus.
-It operates over persona groups in the synthetic benchmark, but the same logic could be applied to known customer, patient, case, or account groupings in a controlled deployment.
-
-For each persona and quasi-identifier field, \method{} defines a three-level transformation ladder:
+\paragraph{Key idea.}
+Document-local anonymizers ask, ``Is this span identifying in this document?''
+\method{} asks, ``Does this repeated detail make the person distinguishable in the corpus?''
+For each quasi-identifier field, \method{} defines a three-level ladder:
 \[
 \text{exact value} \rightarrow \text{semantic category} \rightarrow \text{generic suppression}.
 \]
-For example, a city can become a region and then ``a broad location''; an occupation can become a job family and then ``general worker''; a rare event can become a local-event category and then ``a local event.''
-The method starts from direct redaction and estimates how many personas share the current generalized representation.
-If the estimated anonymity set is smaller than the target $k$, \method{} selects another field to generalize.
-The selection score balances rarity, a specificity prior, and an approximate utility cost:
+For example, a city becomes a region and then ``a broad location''; an occupation becomes a job family and then ``general worker''; a rare event becomes a local-event category and then ``a local event.''
+
+\paragraph{Algorithm.}
+For each persona group, \method{} starts from direct redaction and computes the current estimated anonymity set: the number of personas sharing the same generalized quasi-identifier representation.
+If this estimate is below the target $k$, the method chooses another field to generalize.
+The field score balances value rarity, a specificity prior, and an approximate utility cost:
 \[
 s(f) =
 \frac{\mathrm{rarity}(f) + \mathrm{specificity}(f) + 1}
@@ -156,216 +135,147 @@ s(f) =
 \]
 Fields with rarer values, higher specificity, and lower expected utility cost are generalized first.
 The process stops when the estimated anonymity set reaches target $k$ or all fields have been generalized or suppressed.
-This is a heuristic risk-budgeting procedure, the estimate depends on the modeled population, the field schema, and the attacker's auxiliary knowledge.
+This is a heuristic risk-budgeting procedure, not a formal privacy guarantee: its estimate depends on the corpus, schema, grouping assumptions, and attacker knowledge.
 
 \section{Attacks and Metrics}
 
-\paragraph{Pairwise linkage.}
-We compute signature features over transformed documents, including explicit pseudonym handles and quasi-identifier phrases.
-Pairwise linkage is evaluated as same-person binary classification over held-out document pairs.
-We select a threshold on validation personas and report test F1.
-This metric is especially useful for showing that stable pseudonyms can become linkage handles.
+\paragraph{Linkage and auxiliary matching.}
+We evaluate same-person pairwise linkage, fixed-$K$ clustering, and auxiliary-profile matching.
+The main local auxiliary attacker uses word TF-IDF; robustness checks use character TF-IDF, hybrid TF-IDF, and a field-weighted matcher that explicitly scans exact and generalized schema fields.
+We report top-1 and top-3 auxiliary accuracy and mean reciprocal rank; lower is better for privacy.
 
-\paragraph{Fixed-$K$ clustering.}
-We also report fixed-$K$ clustering adjusted Rand index, where $K$ is the true number of held-out personas.
-Threshold graph clustering is brittle outside stable-handle settings, so we treat pairwise linkage and auxiliary matching as the main privacy evidence.
-
-\paragraph{Auxiliary-profile matching.}
-For each held-out persona, the attacker ranks the ten auxiliary candidates using the transformed documents.
-The main local attacker uses word TF-IDF similarity; robustness checks use character TF-IDF, hybrid TF-IDF, and a field-weighted matcher that explicitly scans exact and generalized schema fields.
-We report top-1, top-3, and mean reciprocal rank.
-Lower values indicate better privacy.
-
-\paragraph{Exact quasi-identifier recovery.}
-Auxiliary matching gives an end-to-end privacy signal, but it can hide which information leaked.
-We therefore scan transformed documents for exact recovery of quasi-identifier fields such as city, occupation, employer type, education, family context, medical context, financial context, legal context, schedule pattern, affiliation, and rare event.
-This is a structured profile-reconstruction diagnostic.
+\paragraph{Quasi-identifier recovery.}
+Auxiliary matching is an end-to-end privacy signal, but it does not explain what leaked.
+We therefore scan transformed documents for exact and coarse recovery of schema fields such as city, role, institution type, family context, medical context, legal context, schedule, affiliation, and rare event.
 
 \paragraph{RAG exposure.}
-To model retrieval exposure, we issue synthetic profile queries against the transformed corpus and measure whether target-persona documents appear in the top retrieved results.
-We report Hit@5, whether multiple target documents appear in the top ten, document recall at ten, and reciprocal rank.
-This diagnostic asks whether transformed records remain reachable from profile-like background knowledge even when they contain no direct identifiers.
+We issue profile-like queries against each transformed corpus and measure whether target-persona documents appear in the top retrieved results.
+We also run a small GPT-5.5 RAG-generation audit in which retrieved T3 contexts are passed to an instruction-following model to test whether it can infer that the documents describe the same synthetic person.
 
 \paragraph{Utility.}
-We evaluate lightweight task utility with issue classification, task-oriented retrieval Recall@5, and fact preservation.
-The classifiers and retrievers are local TF-IDF models trained on original synthetic documents.
-These metrics test whether service-triage information survives transformation; they do not claim to cover all downstream uses.
+Utility is measured with issue classification, task-oriented retrieval Recall@5, and lightweight fact preservation.
+These metrics test whether service-triage information survives transformation; they are not a complete downstream deployment evaluation.
 
 \section{Results}
 
-\subsection{Main Privacy--Utility Sweep}
-
-Table~\ref{tab:main} summarizes the main local sweep over 96 held-out personas.
-Direct redaction leaves auxiliary matching unchanged at 0.7 top-1, confirming that direct PII removal alone does not remove repeated quasi-identifier risk.
-The Presidio-style baseline improves over direct redaction but remains highly matchable at 0.6.
-The document-local proxy still leaves auxiliary top-1 at 0.6 and exact quasi-identifier recovery at 0.3.
-Consistent pseudonymization makes linkage nearly trivial, with pairwise F1 of 0.98, because the stable token itself becomes a cross-document handle.
-
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3.2pt}
-\begin{tabular}{lrrrrrrr}
-\toprule
-Cond. & Pair & Aux@1 & Exact & Issue & Ret@5 & Facts & Edit \\
-\midrule
-C0 Orig & 0.96 & 0.71 & 0.39 & 1.00 & 1.00 & 0.68 & 0.00 \\
-C1 Redact & 0.21 & 0.71 & 0.39 & 1.00 & 1.00 & 0.68 & 0.25 \\
-C1b Presidio & 0.14 & 0.59 & 0.33 & 1.00 & 1.00 & 0.68 & 0.35 \\
-C2 Stable & 0.98 & 0.43 & 0.27 & 1.00 & 1.00 & 0.68 & 0.30 \\
-C3 PerDoc & 0.15 & 0.43 & 0.27 & 1.00 & 1.00 & 0.68 & 0.31 \\
-C4 Local & 0.16 & 0.60 & 0.30 & 1.00 & 1.00 & 0.68 & 0.29 \\
-C5 \method{} & 0.02 & 0.04 & 0.00 & 1.00 & 1.00 & 0.70 & 0.54 \\
-C6 Agg & 0.02 & 0.05 & 0.00 & 0.35 & 0.31 & 0.39 & 0.68 \\
-\bottomrule
-\end{tabular}
-\caption{Main held-out results. Pair is pairwise linkage F1; Aux@1 is auxiliary-profile top-1 accuracy; Exact is exact quasi-identifier recovery; Issue and Ret@5 are utility metrics; Facts is lightweight fact preservation; Edit is character-level edit ratio. Lower Pair, Aux@1, Exact, and Edit are better for privacy or fidelity; higher Issue, Ret@5, and Facts are better for utility.}
-\label{tab:main}
-\end{table}
-
-\method{} reduces auxiliary top-1 to 0.04 and exact recovery to 0.0 while preserving issue accuracy and retrieval Recall@5 at 1.0.
-Aggressive redaction reaches a similar auxiliary top-1 of 0.05, but issue accuracy drops to 0.35 and retrieval Recall@5 to 0.31.
-Thus, in this synthetic sprint, corpus-aware generalization occupies a better privacy--utility point than blanket suppression.
-A stricter body-only utility stress test tells the same story: \method{} scores 0.88, direct redaction 0.87, and aggressive redaction 0.44.
-
-\subsection{Risk Tiers and Signal Ablations}
-
-The benchmark tiers behave as intended.
-Under direct redaction, Aux@1 rises from 0.16 on T1 to 0.97 on T2 and 1.00 on T3.
-\method{} lowers the corresponding rates to 0.03, 0.00, and 0.09, and reduces T3 exact quasi-identifier recovery to 0.00.
-The result indicates that direct redaction is adequate only in the tier where quasi-identifiers were intentionally generic; it fails as soon as the corpus contains repeated, moderately specific context.
-
-Single-signal ablations of direct-redacted documents indicate that role and institution are the largest local drivers.
-Removing role and organization drops Aux@1 from 0.71 to 0.50, while removing location drops it to 0.52.
-Family, health, rare event, and schedule ablations have little effect individually in this synthetic corpus, but they still matter in combination and under the field-weighted stress attacker.
-This is consistent with the central claim: linkage risk is often combinatorial, not span-local.
-
-\begin{table}[t]
-\centering
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lrrrr}
-\toprule
-Cond. & T1 Aux@1 & T2 Aux@1 & T3 Aux@1 & T3 Exact \\
-\midrule
-C1 Redact & 0.16 & 0.97 & 1.00 & 1.00 \\
-C1b Presidio & 0.09 & 0.69 & 1.00 & 0.88 \\
-C4 Local & 0.16 & 0.66 & 1.00 & 0.82 \\
-C5 \method{} & 0.03 & 0.00 & 0.09 & 0.00 \\
-C6 Agg & 0.06 & 0.00 & 0.09 & 0.00 \\
-\bottomrule
-\end{tabular}
-\caption{Risk-tier stratification. Direct and document-local baselines fail most strongly on high-linkage T3 personas; \method{} reduces both auxiliary matching and exact quasi-identifier recovery.}
-\label{tab:tier}
-\end{table}
-
-\subsection{Sensitivity to the Linkage Risk Budget}
-
-Table~\ref{tab:sensitivity} varies the target anonymity set size used by \method{}.
-Moving from direct redaction ($k=1$) to $k=2$ drops Aux@1 from 0.71 to 0.06 and exact recovery from 0.39 to 0.01; $k=5$ removes exact recovery and lowers the field-weighted attacker to 0.24.
-Larger $k$ mainly helps the field-weighted stress attacker, which falls to 0.10 at $k=20$, so corpus-aware generalization acts as a tunable risk budget.
-A corpus-awareness ablation confirms that true corpus statistics matter: target-$k$ coverage is 1.00 with true planning but 0.92 under shuffled quasi-identifier co-occurrences, while a global level-1 rule leaves field-aware top-1 at 0.98.
-
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{lrrrrrrrr}
-\toprule
-$k$ & Min k & Edit & Pair & Aux@1 & Field@1 & Exact & Issue & Ret@5 \\
-\midrule
-1 & 1 & 0.25 & 0.21 & 0.71 & 0.98 & 0.39 & 1.00 & 1.00 \\
-2 & 2 & 0.52 & 0.04 & 0.06 & 0.35 & 0.01 & 1.00 & 1.00 \\
-3 & 3 & 0.53 & 0.03 & 0.05 & 0.33 & 0.00 & 1.00 & 1.00 \\
-5 & 5 & 0.54 & 0.02 & 0.04 & 0.24 & 0.00 & 1.00 & 1.00 \\
-8 & 8 & 0.54 & 0.02 & 0.04 & 0.17 & 0.00 & 1.00 & 1.00 \\
-12 & 12 & 0.54 & 0.02 & 0.04 & 0.12 & 0.00 & 1.00 & 1.00 \\
-20 & 20 & 0.54 & 0.02 & 0.04 & 0.10 & 0.00 & 1.00 & 1.00 \\
-\bottomrule
-\end{tabular}
-\caption{\method{} sensitivity to the target anonymity set size. The main auxiliary matcher drops sharply by $k=2$, while the field-weighted stress attacker continues improving at larger $k$.}
-\label{tab:sensitivity}
-\end{table}
-
-\subsection{Attack Robustness, RAG Exposure, and API Audit}
-
-Across word, character, hybrid TF-IDF, and field-weighted auxiliary matchers, direct redaction ranges from 0.51 to 0.98 top-1 and the document-local proxy ranges from 0.48 to 0.98.
-\method{} remains lower, from 0.03 to 0.24, but the field-weighted result exposes residual structured-context risk.
-The residual analysis finds four \method{} top-1 residual matches under the main word attacker; none retain exact quasi-identifier fields, and the median score margin is only 0.00.
-This means that \method{} does not eliminate all matching signal, but the remaining matches are weak and mostly coarse.
-
-The RAG-style exposure diagnostic shows why linkage evaluation matters for LLM-ready corpora.
-For high-linkage T3 personas, exact profile queries retrieve a target document for every direct-redacted, Presidio-redacted, and document-local corpus; \method{} reduces T3 Hit@5 to 0.31 and Multi@10 to 0.00, while aggressive redaction reduces Hit@5 to 0.03 at much higher utility cost.
-Deterministic generated profile-like queries preserve the ordering: verbose-query Hit@5 is 0.38 for direct redaction and the document-local proxy, 0.26 for \method{}, and 0.03 for aggressive redaction; short role-region queries separate direct redaction from \method{} at 0.35 versus 0.02.
-A deterministic top-5 RAG context-recovery scan on T3 profiles shows that direct redaction exposes 9.78 exact quasi-identifier fields on average and the document-local proxy exposes 7.84 exact / 9.47 coarse fields, while \method{} exposes 0.00 exact / 0.44 coarse fields.
-This diagnostic is not a full RAG attack, but it shows that transformed corpora can remain searchable by auxiliary profiles.
-
-Finally, GPT-5.5 stress audits use synthetic data only and capped calls.
-Auxiliary matching preserves the ordering: direct, Presidio, and document-local transformations score 1.00, 0.98, and 1.00 top-1, while \method{} drops to 0.44 with uncertainty 0.92 and aggressive redaction scores 0.33.
-A 24-person GPT-5.5 document-local anonymization baseline remains fully matchable at 1.00 top-1.
-An additional 24-case GPT-5.5 evidence-extraction audit finds that direct-redaction successful matches cite location in 1.00 and role in 0.75 of cases, while \method{} residual matches cite role, location, and institution at 0.00 and are uncertain in 0.88.
-A completed 12-person T3 RAG-generation audit labels direct/Presidio/document-local contexts as same-person at 1.00, versus 0.42 uncertain for \method{} and 0.00 for aggressive redaction.
-Because API model behavior can change, these are stress audits rather than the main statistical evidence.
+\paragraph{Summary.}
+The main result is simple: document-local transformations preserve cross-document signatures, while corpus-aware generalization removes most local linkage signal without the utility loss of blanket redaction.
+Table~\ref{tab:core} reports the compact version of the story.
+Detailed robustness numbers are better visualized than read as dense prose; Figures~\ref{fig:frontier_placeholder}--\ref{fig:api_rag_placeholder} specify the plots we recommend adding.
 
 \begin{table}[t]
 \centering
 \small
 \setlength{\tabcolsep}{3pt}
-\caption{GPT-5.5 qualitative evidence extraction over 24 selected synthetic cases. Entries are case-level rates for signal families in the extracted explanations.}
-\label{tab:gpt55_evidence_signals}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{llrrrr}
 \toprule
-Case & n & Role & Loc. & Inst. & High-spec. & Unc. \\
+Cond. & Transformation & Local Aux@1 & GPT Aux@1 & Issue & Ret@5 \\
 \midrule
-Direct success & 8 & 0.75 & 1.00 & 0.50 & 0.47 & 0.00 \\
-LG residual & 8 & 0.00 & 0.00 & 0.00 & 0.07 & 0.88 \\
-Agg failure & 8 & 0.00 & 0.00 & 0.00 & 0.18 & 0.75 \\
+C1 & direct PII redaction & 0.71 & 1.00 & 1.00 & 1.00 \\
+C1b & Presidio-style PII & 0.59 & 0.98 & 1.00 & 1.00 \\
+C4 & document-local anon. & 0.60 & 1.00 & 1.00 & 1.00 \\
+C5 & \method{} & 0.04 & 0.44 & 1.00 & 1.00 \\
+C6 & aggressive redaction & 0.05 & 0.33 & 0.35 & 0.31 \\
 \bottomrule
 \end{tabular}
+\caption{Core privacy--utility summary. Local Aux@1 is measured on 96 held-out personas using the deterministic local attacker. GPT Aux@1 is the 48-person T2/T3 GPT-5.5 auxiliary-matching stress audit. Issue and Ret@5 are local utility metrics. Lower Aux@1 is better for privacy; higher Issue and Ret@5 are better for utility.}
+\label{tab:core}
 \end{table}
+
+\paragraph{Document-local transformations remain linkable.}
+Direct redaction preserves the quasi-identifier signature: the local auxiliary attacker matches the correct profile as often as on the original corpus.
+The Presidio-style baseline removes more obvious spans, but still leaves high residual matching.
+The document-local anonymization proxy and GPT-5.5 document-local anonymizer show the same weakness: because each document is transformed independently, repeated role, location, schedule, institution, and rare-event patterns remain available across the corpus.
+Stable pseudonyms create a different failure mode: the pseudonym itself becomes a linkage handle, making pairwise linkage nearly trivial.
+
+\paragraph{\method{} improves the privacy--utility frontier.}
+\method{} sharply reduces local auxiliary matching and exact quasi-identifier recovery while preserving issue classification and retrieval utility.
+Aggressive redaction reaches a similar local privacy level, but it removes task-relevant issue information and hurts retrieval.
+This contrast is the main practical lesson: for LLM-ready corpora, the best transformation is not always the most destructive one; it is the one that removes the high-linkage fields while retaining task information.
+
+\begin{figure}[t]
+\centering
+\figplaceholder{1.5in}{\textbf{Replace with Figure 2: Privacy--utility frontier.}\newline
+Plot each transformation as a point. X-axis: residual linkage risk, preferably Local Aux@1 (lower is better). Y-axis: utility, preferably a combined utility score or two small panels for Issue accuracy and Retrieval Recall@5 (higher is better). Label C1, C1b, C4, C5, C6. Put \method{} in the desirable lower-right region: low linkage risk and high utility. Put aggressive redaction low-risk but low-utility. Optionally add a second marker shape or small inset for GPT-5.5 Aux@1 to show the same ordering under the stronger attacker.}
+\caption{Recommended visual summary of the main privacy--utility tradeoff.}
+\label{fig:frontier_placeholder}
+\end{figure}
+
+\paragraph{The risk is corpus-level, not just span-level.}
+Risk-tier analysis confirms the benchmark behaves as intended: direct redaction is mostly adequate on generic T1 personas, but fails on T2 and T3 personas where repeated quasi-identifiers are more specific.
+Ablations show that role/institution and location are the largest single drivers, while family, health, schedule, and rare-event fields become important in combination or under a field-aware attacker.
+A corpus-awareness ablation further supports the method design: using true corpus co-occurrence statistics reaches the target anonymity coverage, while shuffled co-occurrence planning and global one-level generalization either miss the target or leave strong field-aware matching.
+
+\begin{figure}[t]
+\centering
+\figplaceholder{1.65in}{\textbf{Replace with Figure 3: Why linkage happens and how $k$ controls it.}\newline
+Use two panels. \textbf{Panel A:} grouped bars for Aux@1 by risk tier (T1, T2, T3) for C1, C1b, C4, C5, and C6. This should visually show that direct/document-local methods fail on T2/T3 while \method{} stays low. \textbf{Panel B:} line plot for \method{} target $k$ on the x-axis (1, 2, 3, 5, 8, 12, 20) and three y-series: local Aux@1, field-weighted Aux@1, and edit ratio. The reader should see that most local privacy gain occurs by $k=2$, while the field-aware attacker continues to improve as $k$ increases.}
+\caption{Recommended visualization for the corpus-level mechanism: linkage rises with quasi-identifier specificity, and \method{} gives a tunable risk budget.}
+\label{fig:k_placeholder}
+\end{figure}
+
+\paragraph{GPT-5.5 and RAG audits corroborate the local story.}
+The GPT-5.5 auxiliary audit is intentionally a time-stamped stress test rather than the main reproducible evidence, but it strengthens the conclusion.
+On the T2/T3 subset, the model almost perfectly matches direct-redacted, Presidio-redacted, and document-local corpora; \method{} remains substantially less matchable and much more uncertain, though not risk-free.
+A GPT-5.5 evidence-extraction audit explains why: successful direct-redaction matches cite location and role, while \method{} residual matches rarely cite high-specificity fields and are usually marked uncertain.
+The RAG diagnostics tell the same story from a retrieval perspective: exact and generated profile-like queries easily retrieve high-linkage direct/document-local records, whereas \method{} greatly reduces exact field recovery in retrieved contexts.
+
+\begin{figure}[t]
+\centering
+\figplaceholder{1.7in}{\textbf{Replace with Figure 4: API and RAG stress audits.}\newline
+Use three compact panels. \textbf{Panel A:} grouped bars for GPT-5.5 Aux@1 and model-reported uncertainty for C1, C1b, C4, C5, C6. \textbf{Panel B:} RAG profile-query Hit@5 for T3 personas, comparing exact profile queries and deterministic generated short/medium/verbose queries. \textbf{Panel C:} GPT-5.5 RAG-generation audit: bars for ``likely same person'' and exact-field recovery. The visual message should be: LLM and RAG stress audits preserve the ordering, but \method{} is a risk reduction method rather than a guarantee.}
+\caption{Recommended visualization for the GPT-5.5 and RAG stress audits.}
+\label{fig:api_rag_placeholder}
+\end{figure}
+
+\paragraph{Robustness.}
+The qualitative ordering holds across three synthetic corpus seeds, a noisy-style rerendering of the documents, auxiliary candidate sets of size 10/20/50, and word/character/hybrid/field-weighted local attackers.
+The most important caveat is that the field-weighted attacker still finds residual coarse-context signal under \method{}.
+This is expected: \method{} generalizes high-risk fields; it does not erase all semantics.
 
 \section{Related Work}
 
-Classic work on $k$-anonymity formalized how released records can remain re-identifiable through combinations of quasi-identifiers and motivated generalization and suppression \citep{sweeney2002}.
-Subsequent privacy models such as $\ell$-diversity and $t$-closeness highlighted that anonymity-set size alone is insufficient when sensitive attributes remain homogeneous or distributionally revealing \citep{machanavajjhala2007ldiversity,li2007tcloseness}.
-Sparse-data attacks showed that high-dimensional records can be de-anonymized with limited auxiliary knowledge \citep{narayanan2008}, and later work examined how practical de-identification defenses can fail under background knowledge and downcoding attacks \citep{cohen2022attacks}.
+Classic quasi-identifier privacy work motivates our setting.
+$k$-anonymity introduced generalization and suppression as ways to reduce record uniqueness \citep{sweeney2002}, while later work showed that sparse or high-dimensional records can be de-anonymized with limited auxiliary knowledge \citep{narayanan2008}.
+Subsequent attacks and critiques show that quasi-identifier de-identification can fail even when many attributes are treated as potential identifiers \citep{cohen2022attacks}.
+Related privacy models such as $\ell$-diversity and $t$-closeness address sensitive-attribute homogeneity and distributional leakage, but they remain difficult to apply directly to free text \citep{machanavajjhala2007ldiversity,li2007tcloseness}.
 
-Text anonymization benchmarks such as TAB evaluate anonymization decisions and utility in legal text \citep{pilan2022tab}.
-RAT-Bench recently reframes text anonymization around re-identification risk from both direct and indirect identifiers \citep{krco2026ratbench}.
-Surveys of text anonymization and anonymization metrics emphasize that privacy, utility, legal requirements, and user-centered expectations are often measured inconsistently \citep{deusser2025textanon,ren2025metrics}.
-Presidio and OpenAI Privacy Filter illustrate the practical importance of PII detection tools, but such tools are not by themselves complete anonymization guarantees \citep{presidio,openai2026privacyfilter}.
+Text anonymization benchmarks increasingly move beyond named-entity deletion.
+TAB provides legal-text annotations and privacy-oriented evaluation for text anonymization \citep{pilan2022tab}.
+RAT-Bench explicitly evaluates residual re-identification risk from direct and indirect identifiers in text, which is closely aligned with our emphasis on quasi-identifiers \citep{krco2026ratbench}.
+Surveys of anonymization techniques and metrics emphasize that privacy, utility, legal requirements, and human expectations are often measured inconsistently \citep{deusser2025textanon,ren2025metrics}.
+Tools such as Presidio and OpenAI Privacy Filter are useful PII-detection components, but PII detection alone is not a complete anonymization guarantee \citep{presidio,openai2026privacyfilter}.
 
-Recent work on LLM privacy shows that language models can infer personal attributes from text beyond direct memorization \citep{staab2024beyond}, and that large models can memorize and reveal training data under extraction attacks \citep{carlini2021extracting,nasr2023scalable}.
-RAG privacy work shows that retrieval databases can leak private records through retrieval and generation channels \citep{zeng2024ragprivacy}.
-Autoregressive infilling attacks on de-identified documents further show that background knowledge can help recover masked spans \citep{charpentier2025infilling}.
+LLM privacy work motivates stronger attackers.
+Language models can infer private attributes from text beyond direct memorization \citep{staab2024beyond}, and large models can reveal memorized training data under extraction attacks \citep{carlini2021extracting,nasr2023scalable}.
+RAG systems add a retrieval database that can itself leak sensitive records \citep{zeng2024ragprivacy,jiang2024ragthief}.
 Our contribution is complementary: we focus on cross-document linkage after document-level transformations, where repeated corpus-level quasi-identifiers can survive otherwise reasonable LLM-ready anonymization workflows.
 
 \section{Limitations and Ethics}
 
 The benchmark is synthetic and template-controlled.
-This is necessary for safe ground truth and reproducibility, but it limits external validity.
+This gives safe ground truth and reproducibility, but limits external validity.
 Real sensitive corpora may contain richer writing styles, temporal dependencies, institutional terminology, missing fields, contradictions, OCR errors, and adversary knowledge.
-Our local attacks are lightweight, and
-\method{} is a heuristic generalization method.
-The field-weighted attacker shows that residual generalized context can still be informative.
-Utility is measured with issue labels, retrieval, and lightweight fact checks rather than full downstream deployment tasks.
+The GPT-5.5 audits are cached, time-stamped synthetic subset stress tests; deterministic local sweeps remain the main reproducible evidence.
+\method{} is a heuristic generalization method, not a formal privacy guarantee.
+Utility is measured with issue labels, retrieval, and lightweight fact checks rather than full downstream deployments.
 
 The benchmark is intended for defensive auditing.
 We do not collect, process, or attempt to re-identify real people.
 All examples are synthetic and generated from a controlled schema.
 Any extension to real data would require authorization, data minimization, access controls, logging, and ethical review.
-Practitioners should not treat successful performance on this benchmark as proof that a real corpus is safe to release or train on.
+Practitioners should not treat success on this benchmark as proof that a real corpus is safe to release, index, or train on.
 
 \section{Conclusion}
 
 Document-local PII removal is not enough for LLM-ready sensitive corpora.
 In a multi-document setting, repeated quasi-identifiers can support linkage, auxiliary-profile matching, and profile-query retrieval even after direct identifiers are removed.
 Our synthetic benchmark suggests that privacy evaluation should include corpus-level linkage resistance, not only span-level PII recall.
-It also suggests that simple corpus-aware generalization can improve the privacy--utility frontier relative to document-local anonymization and blanket redaction.
+It also suggests that simple corpus-aware generalization can improve the privacy--utility frontier relative to both document-local anonymization and blanket redaction.
 The broader lesson is that data transformation for foundation models should ask what a capable attacker can still infer across the corpus, not only what identifying spans were removed from each document.
 
 \bibliographystyle{colm2026_conference}
-\begin{thebibliography}{16}
+\begin{thebibliography}{20}
 
 \bibitem[Carlini et~al.(2021)]{carlini2021extracting}
 Nicholas Carlini, Florian Tram{\`e}r, Eric Wallace, Matthew Jagielski, Ariel Herbert-Voss, Katherine Lee, Adam Roberts, Tom Brown, Dawn Song, {\'U}lfar Erlingsson, Alina Oprea, and Colin Raffel.
@@ -387,10 +297,20 @@ Theresa Deu{\ss}er, Andreas Kirsch, Florian Matthes, and Simon Mayer.
 \newblock SoK: A survey of text anonymization techniques.
 \newblock \emph{arXiv:2508.15433}, 2025.
 
+\bibitem[Jiang et~al.(2024)]{jiang2024ragthief}
+Changyue Jiang, Xudong Pan, Geng Hong, Chenfu Bao, and Min Yang.
+\newblock RAG-Thief: Scalable extraction of private data from retrieval-augmented generation applications with agent-based attacks.
+\newblock \emph{arXiv:2411.14110}, 2024.
+
 \bibitem[Kr{\v{c}}o et~al.(2026)]{krco2026ratbench}
 Nata{\v{s}}a Kr{\v{c}}o, Zexi Yao, Matthieu Meeus, and Yves-Alexandre de Montjoye.
 \newblock RAT-Bench: A comprehensive benchmark for text anonymization.
 \newblock \emph{arXiv:2602.12806}, 2026.
+
+\bibitem[Lewis et~al.(2020)]{lewis2020rag}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive NLP tasks.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2020.
 
 \bibitem[Li et~al.(2007)]{li2007tcloseness}
 Ninghui Li, Tiancheng Li, and Suresh Venkatasubramanian.
@@ -443,7 +363,7 @@ Latanya Sweeney.
 \newblock \emph{International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems}, 2002.
 
 \bibitem[Zeng et~al.(2024)]{zeng2024ragprivacy}
-Shenglai Zeng, Jiankun Zhang, Pengfei He, Yiding Liu, Yiming Liu, Hanxu Hu, Lianhui Qin, Yue Xing, Mengdi Wang, and Jiliang Tang.
+Shenglai Zeng, Jiankun Zhang, Pengfei He, Yue Xing, Yiding Liu, Han Xu, Jie Ren, Shuaiqiang Wang, Dawei Yin, Yi Chang, and Jiliang Tang.
 \newblock The good and the bad: Exploring privacy issues in retrieval-augmented generation.
 \newblock \emph{arXiv:2402.16893}, 2024.
 
