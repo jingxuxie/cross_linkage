@@ -152,6 +152,7 @@ Table~\ref{tab:linkguard_sensitivity} shows that most of the privacy gain appear
 Auxiliary top-1 drops from 0.708 to 0.062, while higher targets provide diminishing attack reduction with modest additional edit cost.
 Exact quasi-identifier recovery also falls from 0.395 at $k=1$ to 0.007 at $k=2$ and 0.000 at $k=5$.
 Under the field-weighted stress attacker, top-1 falls from 0.979 at $k=1$ to 0.240 at $k=5$ and 0.104 at $k=20$, suggesting that corpus-aware generalization can be treated as a controllable risk budget rather than a single fixed transformation.
+A corpus-awareness ablation keeps true-corpus target-$k$ coverage at 1.000, while shuffled co-occurrence planning drops coverage to 0.917 and minimum true estimated $k$ to 1.000.
 
 \input{tables/linkguard_sensitivity}
 
@@ -169,6 +170,7 @@ Direct redaction, Presidio redaction, and the document-local proxy remain highly
 \method{} lowers top-1 to 0.438, with high model-reported uncertainty, while aggressive redaction is 0.333.
 A separate 24-person GPT-5.5 document-local anonymization baseline also remains fully matchable at 1.000 top-1, compared with 0.333 for \method{} on the same subset.
 An additional 24-case GPT-5.5 evidence-extraction audit finds that direct-redaction successful matches cite location in 1.000 and role in 0.750 of cases, while \method{} residual matches cite role, location, and institution at 0.000 and are uncertain in 0.875.
+Deterministic generated profile-like RAG queries also preserve the ordering: verbose-query Hit@5 is 0.375 for direct redaction and the document-local proxy, 0.260 for \method{}, and 0.031 for aggressive redaction.
 
 \input{tables/gpt55_aux_audit}
 

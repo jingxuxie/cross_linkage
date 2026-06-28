@@ -267,10 +267,9 @@ C6 Agg & 0.062 & 0.000 & 0.094 & 0.000 \\
 \subsection{Sensitivity to the Linkage Risk Budget}
 
 Table~\ref{tab:sensitivity} varies the target anonymity set size used by \method{}.
-Most of the privacy gain appears when moving from direct redaction ($k=1$) to target $k=2$: Aux@1 drops from 0.708 to 0.062 and exact recovery drops from 0.395 to 0.007.
-Increasing the target to $k=5$ removes exact recovery and lowers the field-weighted stress attacker to 0.240.
-Larger targets provide diminishing improvements for the main word attacker but continue to reduce field-weighted matching, which falls to 0.104 at $k=20$.
-This suggests that corpus-aware generalization can be treated as a tunable risk budget rather than a single fixed transformation.
+Moving from direct redaction ($k=1$) to $k=2$ drops Aux@1 from 0.708 to 0.062 and exact recovery from 0.395 to 0.007; $k=5$ removes exact recovery and lowers the field-weighted attacker to 0.240.
+Larger $k$ mainly helps the field-weighted stress attacker, which falls to 0.104 at $k=20$, so corpus-aware generalization acts as a tunable risk budget.
+A corpus-awareness ablation confirms that true corpus statistics matter: target-$k$ coverage is 1.000 with true planning but 0.917 under shuffled quasi-identifier co-occurrences, while a global level-1 rule leaves field-aware top-1 at 0.979.
 
 \begin{table}[t]
 \centering
@@ -301,9 +300,9 @@ The residual analysis finds four \method{} top-1 residual matches under the main
 This means that \method{} does not eliminate all matching signal, but the remaining matches are weak and mostly coarse.
 
 The RAG-style exposure diagnostic shows why linkage evaluation matters for LLM-ready corpora.
-For high-linkage T3 personas, exact synthetic profile queries retrieve at least one target document in the top five for every direct-redacted, Presidio-redacted, and document-local corpus, and retrieve multiple target documents in the top ten for every such persona.
-\method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000; aggressive redaction reduces Hit@5 further to 0.031 but at much higher utility cost.
-A deterministic top-5 RAG context-recovery scan on the same T3 profiles shows that direct redaction exposes 9.781 exact quasi-identifier fields on average and the document-local proxy exposes 7.844 exact / 9.469 coarse fields, while \method{} exposes 0.000 exact / 0.438 coarse fields.
+For high-linkage T3 personas, exact profile queries retrieve a target document for every direct-redacted, Presidio-redacted, and document-local corpus; \method{} reduces T3 Hit@5 to 0.312 and Multi@10 to 0.000, while aggressive redaction reduces Hit@5 to 0.031 at much higher utility cost.
+Deterministic generated profile-like queries preserve the ordering: verbose-query Hit@5 is 0.375 for direct redaction and the document-local proxy, 0.260 for \method{}, and 0.031 for aggressive redaction; short role-region queries separate direct redaction from \method{} at 0.354 versus 0.021.
+A deterministic top-5 RAG context-recovery scan on T3 profiles shows that direct redaction exposes 9.781 exact quasi-identifier fields on average and the document-local proxy exposes 7.844 exact / 9.469 coarse fields, while \method{} exposes 0.000 exact / 0.438 coarse fields.
 This diagnostic is not a full RAG attack, but it shows that transformed corpora can remain searchable by auxiliary profiles.
 
 Finally, we ran a time-stamped GPT-5.5 auxiliary-matching audit on 48 T2/T3 personas, using synthetic data only, capped calls, cached responses, and \texttt{store=false}.

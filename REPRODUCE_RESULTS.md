@@ -167,7 +167,7 @@ match the source artifacts:
 conda run -n cross_linkage python src/verify_claims.py --config configs/sprint.yaml
 ```
 
-Expected current result: `checks=408 failures=0`.
+Expected current result: `checks=417 failures=0`.
 
 The verifier writes:
 

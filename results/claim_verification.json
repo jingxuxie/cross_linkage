@@ -715,7 +715,7 @@
     "check_id": "artifact:paper/short_paper.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "298473",
+    "observed": "298797",
     "source": "paper/short_paper.pdf",
     "status": "PASS"
   },
@@ -723,7 +723,7 @@
     "check_id": "artifact:paper/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "32536",
+    "observed": "32728",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -731,7 +731,7 @@
     "check_id": "artifact:paper/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "152090",
+    "observed": "152327",
     "source": "paper/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -779,7 +779,7 @@
     "check_id": "artifact:submission/colm2026_submission.pdf",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "152090",
+    "observed": "152327",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -787,7 +787,7 @@
     "check_id": "artifact:submission/colm2026_source/colm2026_submission.tex",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "32536",
+    "observed": "32728",
     "source": "submission/colm2026_source/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -843,7 +843,7 @@
     "check_id": "artifact:submission/colm2026_submission_source.zip",
     "detail": "required artifact exists and is non-empty",
     "expected": "",
-    "observed": "41782",
+    "observed": "41855",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -1290,8 +1290,8 @@
   {
     "check_id": "submission_zip:sha256_matches_manifest",
     "detail": "submission source zip SHA-256 matches manifest",
-    "expected": "fe078e52a3c92d61b0f0664a9a40d4c1a35cd368b986df6431a401a6547aa9f9",
-    "observed": "fe078e52a3c92d61b0f0664a9a40d4c1a35cd368b986df6431a401a6547aa9f9",
+    "expected": "230e3915331d86ba488b68c89edd7e3f3ecdc240456f82d67606720a29c694ab",
+    "observed": "230e3915331d86ba488b68c89edd7e3f3ecdc240456f82d67606720a29c694ab",
     "source": "submission/colm2026_submission_source.zip",
     "status": "PASS"
   },
@@ -1306,8 +1306,8 @@
   {
     "check_id": "submission_pdf:matches_paper_pdf",
     "detail": "packaged submission PDF matches the compiled COLM PDF",
-    "expected": "6f0c8fc5d25deb1af53edac03b37caca53df7ead370222e7e7ddd67822127953",
-    "observed": "6f0c8fc5d25deb1af53edac03b37caca53df7ead370222e7e7ddd67822127953",
+    "expected": "48d1747a42899426be1a8c83c4e87207a173564d46858c1ff4a31b6d3383d4ef",
+    "observed": "48d1747a42899426be1a8c83c4e87207a173564d46858c1ff4a31b6d3383d4ef",
     "source": "submission/colm2026_submission.pdf",
     "status": "PASS"
   },
@@ -2784,6 +2784,38 @@
     "status": "PASS"
   },
   {
+    "check_id": "colm:corpus_awareness_true_cover",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:corpus_awareness_shuffled_cover",
+    "detail": "COLM submission contains core claim fragment 0.917",
+    "expected": "0.917",
+    "observed": "0.917",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:corpus_awareness_shuffled_min",
+    "detail": "COLM submission contains core claim fragment 1.000",
+    "expected": "1.000",
+    "observed": "1.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:corpus_awareness_global_field",
+    "detail": "COLM submission contains core claim fragment 0.979",
+    "expected": "0.979",
+    "observed": "0.979",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
     "check_id": "colm:rag_lg_t3_hit5",
     "detail": "COLM submission contains core claim fragment 0.312",
     "expected": "0.312",
@@ -2796,6 +2828,46 @@
     "detail": "COLM submission contains core claim fragment Multi@10 to 0.000",
     "expected": "Multi@10 to 0.000",
     "observed": "Multi@10 to 0.000",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_query_verbose_direct",
+    "detail": "COLM submission contains core claim fragment 0.375",
+    "expected": "0.375",
+    "observed": "0.375",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_query_verbose_lg",
+    "detail": "COLM submission contains core claim fragment 0.260",
+    "expected": "0.260",
+    "observed": "0.260",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_query_verbose_aggressive",
+    "detail": "COLM submission contains core claim fragment 0.031",
+    "expected": "0.031",
+    "observed": "0.031",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_query_short_direct",
+    "detail": "COLM submission contains core claim fragment 0.354",
+    "expected": "0.354",
+    "observed": "0.354",
+    "source": "paper/colm2026_submission.tex",
+    "status": "PASS"
+  },
+  {
+    "check_id": "colm:rag_query_short_lg",
+    "detail": "COLM submission contains core claim fragment 0.021",
+    "expected": "0.021",
+    "observed": "0.021",
     "source": "paper/colm2026_submission.tex",
     "status": "PASS"
   },
@@ -2978,7 +3050,7 @@
   {
     "check_id": "reproduce_results:claim_verifier_count",
     "detail": "reproduction guide reports the current claim verifier count",
-    "expected": "Expected current result: `checks=408 failures=0`.",
+    "expected": "Expected current result: `checks=417 failures=0`.",
     "observed": "ok",
     "source": "REPRODUCE_RESULTS.md",
     "status": "PASS"
@@ -2986,7 +3058,7 @@
   {
     "check_id": "submission_readiness:claim_verifier_count",
     "detail": "submission readiness audit reports the current claim verifier count",
-    "expected": "Main claim verifier: `checks=408 failures=0`.",
+    "expected": "Main claim verifier: `checks=417 failures=0`.",
     "observed": "ok",
     "source": "SUBMISSION_READINESS.md",
     "status": "PASS"

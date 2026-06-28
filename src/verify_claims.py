@@ -1512,8 +1512,17 @@ def main() -> None:
         "field_k1": fmt(sensitivity.iloc[0]["field_aux_top1"]),
         "field_k5": fmt(k5["field_aux_top1"]),
         "field_k20": fmt(k20["field_aux_top1"]),
+        "corpus_awareness_true_cover": fmt(ca_true["target_k_coverage"]),
+        "corpus_awareness_shuffled_cover": fmt(ca_shuffled["target_k_coverage"]),
+        "corpus_awareness_shuffled_min": fmt(ca_shuffled["min_true_estimated_k"]),
+        "corpus_awareness_global_field": fmt(ca_global["field_aux_top1"]),
         "rag_lg_t3_hit5": fmt(rag_t3_value("c5_linkguard", "hit_at_5")),
         "rag_lg_t3_multi10": "Multi@10 to 0.000",
+        "rag_query_verbose_direct": fmt(rag_query_value("c1_direct_redaction", "verbose")),
+        "rag_query_verbose_lg": fmt(rag_query_value("c5_linkguard", "verbose")),
+        "rag_query_verbose_aggressive": fmt(rag_query_value("c6_aggressive_redaction", "verbose")),
+        "rag_query_short_direct": fmt(rag_query_value("c1_direct_redaction", "short")),
+        "rag_query_short_lg": fmt(rag_query_value("c5_linkguard", "short")),
         "rag_context_direct_exact": fmt(
             rag_context_t3_value("c1_direct_redaction", "exact_fields_recovered")
         ),
@@ -1675,23 +1684,23 @@ def main() -> None:
     add_check(
         checks,
         "reproduce_results:claim_verifier_count",
-        "Expected current result: `checks=408 failures=0`." in reproduce_text,
+        "Expected current result: `checks=417 failures=0`." in reproduce_text,
         "reproduction guide reports the current claim verifier count",
         "REPRODUCE_RESULTS.md",
-        expected="Expected current result: `checks=408 failures=0`.",
+        expected="Expected current result: `checks=417 failures=0`.",
         observed="ok"
-        if "Expected current result: `checks=408 failures=0`." in reproduce_text
+        if "Expected current result: `checks=417 failures=0`." in reproduce_text
         else "missing",
     )
     add_check(
         checks,
         "submission_readiness:claim_verifier_count",
-        "Main claim verifier: `checks=408 failures=0`." in readiness_text,
+        "Main claim verifier: `checks=417 failures=0`." in readiness_text,
         "submission readiness audit reports the current claim verifier count",
         "SUBMISSION_READINESS.md",
-        expected="Main claim verifier: `checks=408 failures=0`.",
+        expected="Main claim verifier: `checks=417 failures=0`.",
         observed="ok"
-        if "Main claim verifier: `checks=408 failures=0`." in readiness_text
+        if "Main claim verifier: `checks=417 failures=0`." in readiness_text
         else "missing",
     )
     add_check(
