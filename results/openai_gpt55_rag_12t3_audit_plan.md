@@ -5,7 +5,7 @@ Model: `gpt-5.5`
 Reasoning effort: `none`
 Top retrieved documents: `5`
 Max output tokens: `900`
-Git commit: `7ec5e26`
+Git commit: `73e1d13`
 Personas planned: P0002, P0008, P0011, P0014, P0017, P0023, P0026, P0029, P0032, P0038, P0041, P0044
 Total planned calls: 60
 Cached calls: 0

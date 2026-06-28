@@ -80,14 +80,21 @@ Run the no-API profile-query RAG exposure diagnostic:
 conda run -n cross_linkage python src/rag_exposure.py --config configs/sprint.yaml
 ```
 
+Run the no-API top-5 RAG context-recovery scan:
+
+```bash
+conda run -n cross_linkage python src/rag_context_recovery.py --config configs/sprint.yaml
+```
+
 Run the no-API noisy synthetic style stress test:
 
 ```bash
 conda run -n cross_linkage python src/noisy_style_stress.py --config configs/sprint.yaml
 ```
 
-Run the small cached OpenAI audit. This uses synthetic data only and should stay
-capped. For live calls, set `OPENAI_API_KEY` or pass `--api-key-file`:
+Run the legacy small cached OpenAI audit. This uses synthetic data only and should stay
+capped. For live calls, set `OPENAI_API_KEY` or pass `--api-key-file`; for ordinary
+reproduction, prefer `--plan-only` checks so no new calls are made.
 
 ```bash
 conda run -n cross_linkage python src/openai_audit.py \
@@ -97,6 +104,63 @@ conda run -n cross_linkage python src/openai_audit.py \
   --tasks doc-local,aux-match \
   --conditions c1_direct_redaction,c1b_presidio_redaction,c4_doc_local_anon,c4_openai_doc_local,c5_linkguard,c6_aggressive_redaction
 ```
+
+Verify the cached GPT-5.5 paper-facing auxiliary-matching audit without making
+new API calls:
+
+```bash
+conda run -n cross_linkage python src/openai_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_48p \
+  --max-personas 48 \
+  --tiers T2,T3 \
+  --max-calls 300 \
+  --tasks aux-match \
+  --conditions c1_direct_redaction,c1b_presidio_redaction,c4_doc_local_anon,c5_linkguard,c6_aggressive_redaction \
+  --reasoning-effort none \
+  --aux-compact-output \
+  --aux-max-output-tokens 400 \
+  --plan-only
+```
+
+Verify the cached GPT-5.5 document-local anonymization baseline and its
+auxiliary-matching evaluation:
+
+```bash
+conda run -n cross_linkage python src/openai_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_doclocal_24p \
+  --doc-local-condition c4_openai_doc_local_gpt55_24p \
+  --max-personas 24 \
+  --tiers T2,T3 \
+  --max-calls 300 \
+  --tasks doc-local,aux-match \
+  --conditions c1_direct_redaction,c1b_presidio_redaction,c4_doc_local_anon,c4_openai_doc_local_gpt55_24p,c5_linkguard,c6_aggressive_redaction \
+  --reasoning-effort none \
+  --aux-compact-output \
+  --aux-max-output-tokens 400 \
+  --plan-only
+```
+
+Verify the cached GPT-5.5 qualitative evidence-extraction audit:
+
+```bash
+conda run -n cross_linkage python src/openai_evidence_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_evidence_24p \
+  --cases-per-bucket 8 \
+  --max-calls 24 \
+  --reasoning-effort none \
+  --max-output-tokens 650 \
+  --plan-only
+```
+
+The GPT-5.5 RAG-generation audit is intentionally plan-only unless a new live
+API run is explicitly approved. The existing 3-person pilot is a debug artifact
+that exposed output truncation and should not be reported as a paper result.
 
 Regenerate paper-facing tables, figures, and the result brief:
 
@@ -150,11 +214,16 @@ Main outputs:
 - `results/utility_stress.csv`
 - `results/rag_exposure.csv`
 - `results/rag_exposure_by_tier.csv`
+- `results/rag_context_recovery_by_tier.csv`
 - `results/noisy_style_stress/noisy_style_stress.md`
 - `results/noisy_style_stress/noisy_style_results.csv`
 - `results/claim_verification.md`
 - `results/multiseed/multiseed_summary.md`
 - `results/openai_aux_match_summary.csv`
+- `results/openai_gpt55_48p_aux_match_summary.csv`
+- `results/openai_gpt55_doclocal_24p_aux_match_summary.csv`
+- `results/openai_gpt55_evidence_24p_evidence_summary.csv`
+- `results/openai_gpt55_rag_12t3_audit_plan.md`
 - `results/paper_ready_summary.md`
 - `results/privacy_utility.png`
 - `results/research_notes.md`
@@ -182,7 +251,7 @@ Main outputs:
 
 The current pipeline is API-free by default. It uses deterministic synthetic
 personas, varied-template and noisy-style synthetic documents, local transformations, TF-IDF and
-field-aware linkage attacks, auxiliary-profile matching, Presidio-based PII redaction, and local utility
-classifiers. This keeps the first iteration fast and cheap. OpenAI calls are
-isolated in `src/openai_audit.py`, cached under `cache/api_responses/`, and
-guarded by `--max-calls`.
+field-aware linkage attacks, auxiliary-profile matching, Presidio-based PII redaction, local utility
+classifiers, and no-API RAG exposure/context-recovery diagnostics. This keeps the first iteration fast and cheap.
+OpenAI calls are isolated in `src/openai_audit.py`, `src/openai_evidence_audit.py`, and
+`src/openai_rag_audit.py`, cached under `cache/api_responses/`, and guarded by `--max-calls`.

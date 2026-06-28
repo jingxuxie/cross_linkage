@@ -4,8 +4,9 @@ This project has two reproducibility paths:
 
 1. A no-API path that regenerates the synthetic corpus, deterministic attacks,
    robustness checks, paper tables, figures, PDFs, submission bundle, reviewer supplement, and claim verifier.
-2. A cached OpenAI audit path that verifies the 12-person audit plan is fully
-   cached without making new API calls.
+2. Cached OpenAI audit checks that verify the legacy 12-person audit plus the
+   paper-facing GPT-5.5 stress-audit, document-local baseline, and evidence-extraction
+   artifacts without making new API calls.
 
 ## No-API End-to-End Run
 
@@ -72,6 +73,67 @@ conda run -n cross_linkage python src/openai_audit.py \
 
 Expected current result: `planned_calls=120`, `cached_calls=120`, and
 `missing_or_dependent_calls=0`.
+
+The paper-facing GPT-5.5 auxiliary-matching audit is also cached:
+
+```bash
+conda run -n cross_linkage python src/openai_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_48p \
+  --max-personas 48 \
+  --tiers T2,T3 \
+  --max-calls 300 \
+  --tasks aux-match \
+  --conditions c1_direct_redaction,c1b_presidio_redaction,c4_doc_local_anon,c5_linkguard,c6_aggressive_redaction \
+  --reasoning-effort none \
+  --aux-compact-output \
+  --aux-max-output-tokens 400 \
+  --plan-only
+```
+
+Expected current result: `planned_calls=240`, `cached_calls=240`, and
+`missing_or_dependent_calls=0`.
+
+The GPT-5.5 document-local anonymization baseline and auxiliary-matching evaluation
+are cached:
+
+```bash
+conda run -n cross_linkage python src/openai_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_doclocal_24p \
+  --doc-local-condition c4_openai_doc_local_gpt55_24p \
+  --max-personas 24 \
+  --tiers T2,T3 \
+  --max-calls 300 \
+  --tasks doc-local,aux-match \
+  --conditions c1_direct_redaction,c1b_presidio_redaction,c4_doc_local_anon,c4_openai_doc_local_gpt55_24p,c5_linkguard,c6_aggressive_redaction \
+  --reasoning-effort none \
+  --aux-compact-output \
+  --aux-max-output-tokens 400 \
+  --plan-only
+```
+
+Expected current result: `planned_calls=240`, `cached_calls=240`, and
+`missing_or_dependent_calls=0`.
+
+The GPT-5.5 qualitative evidence-extraction audit is cached:
+
+```bash
+conda run -n cross_linkage python src/openai_evidence_audit.py \
+  --config configs/sprint.yaml \
+  --model gpt-5.5 \
+  --run-name gpt55_evidence_24p \
+  --cases-per-bucket 8 \
+  --max-calls 24 \
+  --reasoning-effort none \
+  --max-output-tokens 650 \
+  --plan-only
+```
+
+Expected current result: `planned_calls=24`, `cached_calls=24`, and
+`missing_calls=0`.
 
 The optional GPT-5.5 RAG-generation audit is plan-only unless a live API run is
 explicitly approved:
