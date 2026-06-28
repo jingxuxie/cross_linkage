@@ -1,6 +1,6 @@
 # Submission Package Manifest
 
-- Created UTC: `2026-06-28T11:28:47+00:00`
+- Created UTC: `2026-06-28T12:04:09+00:00`
 - Source zip: `submission/colm2026_submission_source.zip`
 - PDF: `submission/colm2026_submission.pdf`
 - PDF pages: 8

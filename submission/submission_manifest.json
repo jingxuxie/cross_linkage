@@ -19,13 +19,13 @@
     "status": true,
     "temp_dir": ""
   },
-  "created_utc": "2026-06-28T11:28:47+00:00",
+  "created_utc": "2026-06-28T12:04:09+00:00",
   "package_dir": "submission",
   "paper_pdf": {
     "bytes": 152090,
     "pages": 8,
     "path": "paper/colm2026_submission.pdf",
-    "sha256": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6"
+    "sha256": "6f0c8fc5d25deb1af53edac03b37caca53df7ead370222e7e7ddd67822127953"
   },
   "paper_source_files": [
     {
@@ -109,12 +109,12 @@
       "README_SUBMISSION_PACKAGE.md"
     ],
     "path": "submission/colm2026_submission_source.zip",
-    "sha256": "ff6bcd17a22d6bd2ce0bc7b2b3faf7a8fbfb12de9b7a221593f31375435d5c1c"
+    "sha256": "fe078e52a3c92d61b0f0664a9a40d4c1a35cd368b986df6431a401a6547aa9f9"
   },
   "submission_pdf": {
     "bytes": 152090,
     "pages": 8,
     "path": "submission/colm2026_submission.pdf",
-    "sha256": "0efe74d9f941c460aaaecbce27bc1902eff0151a5d2bfd1d0a34912332eeecb6"
+    "sha256": "6f0c8fc5d25deb1af53edac03b37caca53df7ead370222e7e7ddd67822127953"
   }
 }
