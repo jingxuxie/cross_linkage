@@ -22,11 +22,6 @@ Cross-Document Re-identification Risks in LLM-Ready Sensitive Text Corpora}
 
 \newcommand{\method}{LinkGuard}
 \newcommand{\bench}{CrossDoc-PrivacyBench}
-\newcommand{\figplaceholder}[2]{%
-\fbox{%
-\begin{minipage}[c][#1][c]{0.96\linewidth}
-\centering\small #2
-\end{minipage}}}
 
 \begin{document}
 \ifcolmsubmission
@@ -50,7 +45,7 @@ Sensitive data is often most useful when it is not isolated.
 A hospital may have clinical messages, billing notes, scheduling records, and accommodation requests about the same patient.
 A legal-aid organization may have intake notes, benefits appeals, landlord disputes, and follow-up emails about the same client.
 A company may have support tickets, HR notes, finance requests, and internal chat snippets about the same employee or customer.
-Modern foundation-model workflows---retrieval-augmented generation (RAG), evaluation-set construction, model adaptation, analytics, and data sharing---therefore often operate over \emph{multi-document} corpora rather than independent documents \citep{lewis2020rag,zeng2024ragprivacy,jiang2024ragthief}.
+Modern foundation-model workflows, retrieval-augmented generation (RAG), evaluation-set construction, model adaptation, analytics, and data sharing, therefore often operate over \emph{multi-document} corpora rather than independent documents \citep{lewis2020rag,zeng2024ragprivacy,jiang2024ragthief}.
 
 The dominant operational response is document-local de-identification: remove names, emails, phone numbers, mailing addresses, account numbers, and other spans that look identifying within one record.
 That response is necessary, but it misses the central lesson of quasi-identifier privacy: combinations of ordinary attributes can distinguish people even when direct identifiers are gone \citep{sweeney2002,narayanan2008,cohen2022attacks}.
@@ -61,7 +56,7 @@ Pseudonymization can make the problem worse: a stable pseudonym helps preserve c
 LLM-ready data makes this failure mode more urgent.
 Recent work shows that language models can infer personal attributes from text even when the text does not contain explicit identifiers \citep{staab2024beyond}; text anonymization benchmarks increasingly emphasize residual re-identification risk rather than span recall alone \citep{pilan2022tab,krco2026ratbench}; and RAG privacy work shows that retrieval databases can leak private records through retrieval and generation channels \citep{zeng2024ragprivacy,jiang2024ragthief}.
 This paper studies a focused question: \emph{after document-local anonymization or pseudonymization, can an attacker still link multiple transformed documents to the same person and match them to auxiliary background profiles?}
-We intentionally avoid real-person data and real re-identification attempts.
+We avoid real-person data and real re-identification attempts.
 Instead, every persona, document, decoy, and utility label is generated synthetically, giving us safe ground truth for controlled privacy auditing.
 
 Our contributions are:
@@ -77,8 +72,7 @@ Our contributions are:
 
 \begin{figure}[t]
 \centering
-\figplaceholder{1.65in}{\textbf{Replace with Figure 1: Overall problem and method.}\newline
-Draw a three-panel overview. \textbf{Left:} a multi-document sensitive corpus with four records for the same synthetic person (healthcare, legal, financial, HR). Direct identifiers are crossed out, but repeated quasi-identifiers such as city, role, schedule, institution type, and rare event remain highlighted. \textbf{Middle:} an attacker links the transformed documents and matches them to one auxiliary profile among decoys. \textbf{Right:} \method{} estimates corpus-level uniqueness and rewrites only high-linkage fields along exact $\rightarrow$ category $\rightarrow$ generic ladders, preserving task issue text. Use one visual callout: ``span-level PII removal is not corpus-level unlinkability.''}
+\includegraphics[width=\linewidth]{paper_figures/figure1_overview.png}
 \caption{Conceptual overview of the cross-document linkage failure mode and the corpus-aware generalization defense.}
 \label{fig:overview}
 \end{figure}
@@ -94,7 +88,7 @@ The holder may know which records belong to the same account, case, patient, or 
 The attacker sees the transformed corpus.
 For the auxiliary-profile task, the attacker also receives a small candidate set containing one true synthetic auxiliary profile and decoys.
 This simulates background knowledge such as a directory, leaked metadata table, public biographical context, or another internal database.
-The attacker does not receive original direct identifiers, and candidate labels are neutralized in API audits to avoid leaking synthetic persona IDs.
+The attacker does not receive original direct identifiers, and candidate labels are neutralized in to avoid leaking synthetic persona IDs.
 
 \paragraph{Benchmark.}
 \bench{} contains 120 synthetic personas and 480 documents.
@@ -113,7 +107,7 @@ C2 uses stable pseudonyms across the corpus, while C3 resets pseudonyms per docu
 C4 is a document-local anonymization proxy that generalizes selected local spans without seeing neighboring documents.
 C5 is \method{}.
 C6 is aggressive redaction, suppressing most quasi-identifiers and some task issue phrases.
-We also run GPT-5.5 document-local anonymization as an API stress baseline on a synthetic subset.
+We also run GPT-5.5 document-local anonymization as an stress baseline on a synthetic subset.
 
 \paragraph{Key idea.}
 Document-local anonymizers ask, ``Is this span identifying in this document?''
@@ -154,14 +148,14 @@ We also run a small GPT-5.5 RAG-generation audit in which retrieved T3 contexts 
 
 \paragraph{Utility.}
 Utility is measured with issue classification, task-oriented retrieval Recall@5, and lightweight fact preservation.
-These metrics test whether service-triage information survives transformation; they are not a complete downstream deployment evaluation.
+These metrics test whether service-triage information survives transformation.
 
 \section{Results}
 
 \paragraph{Summary.}
 The main result is simple: document-local transformations preserve cross-document signatures, while corpus-aware generalization removes most local linkage signal without the utility loss of blanket redaction.
 Table~\ref{tab:core} reports the compact version of the story.
-Detailed robustness numbers are better visualized than read as dense prose; Figures~\ref{fig:frontier_placeholder}--\ref{fig:api_rag_placeholder} specify the plots we recommend adding.
+Detailed robustness numbers are easier to compare visually; Figures~\ref{fig:frontier_placeholder}--\ref{fig:api_rag_placeholder} summarize the privacy--utility frontier, corpus-level mechanism, and RAG stress audits.
 
 \begin{table}[t]
 \centering
@@ -195,9 +189,8 @@ This contrast is the main practical lesson: for LLM-ready corpora, the best tran
 
 \begin{figure}[t]
 \centering
-\figplaceholder{1.5in}{\textbf{Replace with Figure 2: Privacy--utility frontier.}\newline
-Plot each transformation as a point. X-axis: residual linkage risk, preferably Local Aux@1 (lower is better). Y-axis: utility, preferably a combined utility score or two small panels for Issue accuracy and Retrieval Recall@5 (higher is better). Label C1, C1b, C4, C5, C6. Put \method{} in the desirable lower-right region: low linkage risk and high utility. Put aggressive redaction low-risk but low-utility. Optionally add a second marker shape or small inset for GPT-5.5 Aux@1 to show the same ordering under the stronger attacker.}
-\caption{Recommended visual summary of the main privacy--utility tradeoff.}
+\includegraphics[width=\linewidth]{paper_figures/figure2_privacy_utility.png}
+\caption{Privacy--utility frontier and stronger-attacker stress audit. Left: local auxiliary top-1 versus task utility. Right: deterministic local matching and GPT-5.5 auxiliary matching preserve the same qualitative ordering.}
 \label{fig:frontier_placeholder}
 \end{figure}
 
@@ -208,9 +201,8 @@ A corpus-awareness ablation further supports the method design: using true corpu
 
 \begin{figure}[t]
 \centering
-\figplaceholder{1.65in}{\textbf{Replace with Figure 3: Why linkage happens and how $k$ controls it.}\newline
-Use two panels. \textbf{Panel A:} grouped bars for Aux@1 by risk tier (T1, T2, T3) for C1, C1b, C4, C5, and C6. This should visually show that direct/document-local methods fail on T2/T3 while \method{} stays low. \textbf{Panel B:} line plot for \method{} target $k$ on the x-axis (1, 2, 3, 5, 8, 12, 20) and three y-series: local Aux@1, field-weighted Aux@1, and edit ratio. The reader should see that most local privacy gain occurs by $k=2$, while the field-aware attacker continues to improve as $k$ increases.}
-\caption{Recommended visualization for the corpus-level mechanism: linkage rises with quasi-identifier specificity, and \method{} gives a tunable risk budget.}
+\includegraphics[width=\linewidth]{paper_figures/figure3_linkage_mechanism.png}
+\caption{Corpus-level linkage mechanism. Left: residual auxiliary matching rises with quasi-identifier specificity under document-local transformations. Right: \method{} gives a tunable target-$k$ risk budget that trades residual linkage against edit distance.}
 \label{fig:k_placeholder}
 \end{figure}
 
@@ -222,9 +214,8 @@ The RAG diagnostics tell the same story from a retrieval perspective: exact and 
 
 \begin{figure}[t]
 \centering
-\figplaceholder{1.7in}{\textbf{Replace with Figure 4: API and RAG stress audits.}\newline
-Use three compact panels. \textbf{Panel A:} grouped bars for GPT-5.5 Aux@1 and model-reported uncertainty for C1, C1b, C4, C5, C6. \textbf{Panel B:} RAG profile-query Hit@5 for T3 personas, comparing exact profile queries and deterministic generated short/medium/verbose queries. \textbf{Panel C:} GPT-5.5 RAG-generation audit: bars for ``likely same person'' and exact-field recovery. The visual message should be: LLM and RAG stress audits preserve the ordering, but \method{} is a risk reduction method rather than a guarantee.}
-\caption{Recommended visualization for the GPT-5.5 and RAG stress audits.}
+\includegraphics[width=\linewidth]{paper_figures/figure4_api_rag_stress.png}
+\caption{RAG stress audits. GPT-5.5 auxiliary matching, profile-query retrieval, and RAG generation preserve the local ordering: \method{} reduces corpus-level linkage risk, but does not provide a formal guarantee.}
 \label{fig:api_rag_placeholder}
 \end{figure}
 
@@ -256,7 +247,7 @@ Our contribution is complementary: we focus on cross-document linkage after docu
 The benchmark is synthetic and template-controlled.
 This gives safe ground truth and reproducibility, but limits external validity.
 Real sensitive corpora may contain richer writing styles, temporal dependencies, institutional terminology, missing fields, contradictions, OCR errors, and adversary knowledge.
-The GPT-5.5 audits are cached, time-stamped synthetic subset stress tests; deterministic local sweeps remain the main reproducible evidence.
+
 \method{} is a heuristic generalization method, not a formal privacy guarantee.
 Utility is measured with issue labels, retrieval, and lightweight fact checks rather than full downstream deployments.
 
